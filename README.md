@@ -1,12 +1,12 @@
-# Project Name
+# Sharemap
 
-> Pithy project description
+Share points of interest with friends and keep a record of your travels and experiences.
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Tim Chin
+  - __Scrum Master__: Graham Perich
+  - __Development Team Members__: Steven Jing, Chris "Strong Guy" Lu
 
 ## Table of Contents
 
@@ -37,9 +37,8 @@
 From within the root directory:
 
 ```sh
-sudo npm install -g bower
 npm install
-bower install
+npm start
 ```
 
 ### Roadmap
