@@ -10,9 +10,11 @@ import {
   StackNavigation,
   TabNavigation,
   TabNavigationItem,
+  NavigationProvider,
 } from '@exponent/ex-navigation';
 import {
   FontAwesome,
+  Ionicons,
 } from '@exponent/vector-icons';
 
 import Alerts from '../constants/Alerts';
@@ -21,7 +23,7 @@ import registerForPushNotificationsAsync from '../api/registerForPushNotificatio
 
 export default class RootNavigation extends React.Component {
   componentDidMount() {
-    this._notificationSubscription = this._registerForPushNotifications();
+    // this._notificationSubscription = this._registerForPushNotifications();
   }
 
   componentWillUnmount() {
@@ -35,19 +37,25 @@ export default class RootNavigation extends React.Component {
         initialTab="home">
         <TabNavigationItem
           id="home"
-          renderIcon={isSelected => this._renderIcon('home', isSelected)}>
+          renderIcon={isSelected => this._renderIcon('md-home', isSelected)}>
           <StackNavigation initialRoute="home" />
         </TabNavigationItem>
 
         <TabNavigationItem
-          id="links"
-          renderIcon={isSelected => this._renderIcon('book', isSelected)}>
-          <StackNavigation initialRoute="links" />
+          id="profile"
+          renderIcon={isSelected => this._renderIcon('md-person', isSelected)}>
+          <StackNavigation initialRoute="profile" />
+        </TabNavigationItem>
+
+        <TabNavigationItem
+          id="friends"
+          renderIcon={isSelected => this._renderIcon('md-people', isSelected)}>
+          <StackNavigation initialRoute="friends" />
         </TabNavigationItem>
 
         <TabNavigationItem
           id="settings"
-          renderIcon={isSelected => this._renderIcon('cog', isSelected)}>
+          renderIcon={isSelected => this._renderIcon('md-cog', isSelected)}>
           <StackNavigation initialRoute="settings" />
         </TabNavigationItem>
 
@@ -65,7 +73,7 @@ export default class RootNavigation extends React.Component {
 
   _renderIcon(name, isSelected) {
     return (
-      <FontAwesome
+      <Ionicons
         name={name}
         size={32}
         color={isSelected ? Colors.tabIconSelected : Colors.tabIconDefault}
