@@ -1,10 +1,10 @@
 import React from 'react';
 import {
   TouchableHighlight,
-  Text,
   ScrollView,
   StatusBar,
   StyleSheet,
+  Text,
   View,
 } from 'react-native';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
