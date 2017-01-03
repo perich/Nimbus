@@ -19,8 +19,9 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      id: null,
+      authToken: null,
+      name: null,
     };
   }
 
@@ -88,7 +89,7 @@ export default class Login extends React.Component {
                 Don't have an account yet? 
               </Text>
               <TouchableOpacity>
-                <Text>Sign up.</Text>
+                <Text style={styles.signUpText}>Sign up.</Text>
               </TouchableOpacity>
             </View>
 
@@ -98,7 +99,7 @@ export default class Login extends React.Component {
     );
   }
 
-  _signInWithFacebook = async () => {
+  async _signInWithFacebook() {
     const result = await Facebook.logInWithReadPermissionsAsync(
       '1348413101897052', {
       permissions: ['public_profile'],
@@ -109,12 +110,22 @@ export default class Login extends React.Component {
       let response = await fetch(`https://graph.facebook.com/me?access_token=${result.token}`);
       let info = await response.json();
 
+      console.log('result*******************', result);
+      console.log('info*********************', info);
+
+
       // this.props.dispatch(Actions.signIn(new User({
       //   id: info.id,
       //   authToken: result.token,
       //   name: info.name,
       //   isGuest: false,
       // })));
+
+      // this.setState({
+      //   id: info.id,
+      //   authToken: result.token,
+      //   name: info.name,
+      // });
     }
   }
 }
@@ -180,6 +191,9 @@ const styles = StyleSheet.create({
   },
   signUp: {
     alignItems: 'flex-end',
+  },
+  signUpText: {
+    fontStyle: 'italic',
   },
   textInput: {
     height: 40, 
