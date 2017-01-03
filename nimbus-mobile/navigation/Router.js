@@ -18,5 +18,6 @@ export default createRouter(() => ({
   settings: () => SettingsScreen,
   addPin: () => AddPinScreen,
   login: () => LoginScreen,
+  addPin: () => AddPinScreen,
   rootNavigation: () => RootNavigation,
 }));

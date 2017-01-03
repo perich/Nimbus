@@ -121,5 +121,10 @@ const styles = StyleSheet.create({
   descriptionBox: {
     height: 40,
     margin: 5,
+    paddingTop: 15,
+  },
+  addPhotoContainer: {
+    flex: 5,
+    backgroundColor: 'skyblue',
   }
 });
