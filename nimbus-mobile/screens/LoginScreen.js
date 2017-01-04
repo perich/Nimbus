@@ -26,6 +26,10 @@ export default class Login extends React.Component {
     };
   }
 
+  signup() {
+    this.props.navigator.push('signup');
+  }
+
   render() {
     return (
       <KeyboardAwareScrollView style={styles.container}>
@@ -89,7 +93,7 @@ export default class Login extends React.Component {
               <Text>
                 Don't have an account yet? 
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.signup.bind(this)}>
                 <Text style={styles.signUpText}>Sign up.</Text>
               </TouchableOpacity>
             </View>
