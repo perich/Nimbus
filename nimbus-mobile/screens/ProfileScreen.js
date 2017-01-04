@@ -1,11 +1,12 @@
 import React from 'react';
 import {
-  View,
+  Dimensions,
   Image,
-  Text,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 import {
   Components
@@ -13,6 +14,8 @@ import {
 import {
   ExponentLinksView,
 } from '@exponent/samples';
+
+const { width, height } = Dimensions.get('window');
 
 export default class ProfileScreen extends React.Component {
   constructor(props) {
