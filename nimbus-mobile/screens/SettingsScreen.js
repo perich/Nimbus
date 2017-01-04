@@ -20,7 +20,7 @@ export default class SettingsScreen extends React.Component {
   logout() {
     window.alert('There is no spoon');
   }
-
+ 
   render() {
     return (
       <ScrollView>
