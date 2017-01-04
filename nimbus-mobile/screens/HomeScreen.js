@@ -19,23 +19,31 @@ export default class HomeScreen extends React.Component {
     this.state = {
       markers: [
         {
-          key: 0,
-          latlng: {
+          id: 0,
+          location: {
             latitude: 37.78825,
             longitude: -122.4324,
           },
-          title: 'Marker1',
-          description: 'This is a marker',
+          mediaURL: 'https://s-media-cache-ak0.pinimg.com/originals/87/29/42/87294250588d80ca52a0dea8ffe3fee9.jpg',
+          likes: 34,
+          description: 'I had some really good food here!',
+          user: 'Peter Parker',
+          profilePic: 'http://rkuykendall.com/assets/where-to-start-reading-spiderman/thumb-usm1.jpg',
+          createdAt: '5 hours ago',
           pinColor:  '#4286f4',
         },
         {
-          key: 1,
-          latlng: {
+          id: 1,
+          location: {
             latitude: 37.8,
             longitude: -122.4,
           },
-          title: 'Marker2',
-          description: 'This is a marker',
+          mediaURL: 'http://sportsrants.com/wp-content/uploads/2016/09/la-sp-stephen-curry-20160206.jpg',
+          likes: 497,
+          description: 'Just saw Stephen Curry on the streets!! OMG',
+          user: 'Carol Denver',
+          profilePic: 'http://vignette2.wikia.nocookie.net/avengersalliance2/images/9/94/CaptainmarvelMN_5_fly-fight-win.png/revision/latest?cb=20160413181359',
+          createdAt: '36 minutes ago',
           pinColor:  '#17a821',
         }
       ]
@@ -52,6 +60,10 @@ export default class HomeScreen extends React.Component {
     this.props.navigator.push('addPin');
   }
 
+  displayPin(marker) {
+    this.props.navigator.push('pinView', marker);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -61,11 +73,10 @@ export default class HomeScreen extends React.Component {
         <Components.MapView style={{flex: 1}} initialRegion={{latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421,}}>
           {this.state.markers.map(marker => (
               <Components.MapView.Marker
-                key={marker.key}
-                coordinate={marker.latlng}
-                title={marker.title}
-                description={marker.description}
+                key={marker.id}
+                coordinate={marker.location}
                 pinColor={marker.pinColor}
+                onSelect={this.displayPin.bind(this, marker)}
               />
             ))}
         </Components.MapView>
@@ -89,7 +100,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 50,
     width: 50,
-    top: 25,
+    bottom: 25,
     right: 15,
     zIndex: 999,
   },

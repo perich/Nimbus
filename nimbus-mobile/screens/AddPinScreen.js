@@ -82,7 +82,7 @@ export default class AddPinScreen extends React.Component {
           </View>
         </View>
 
-        <TextInput style={styles.descriptionBox} multiline={false} numberOfLines={2} onChangeText={(text) => this.setState({text})} placeholder='Enter a description...' value={this.state.description}/>
+        <TextInput style={styles.descriptionBox} multiline={false} numberOfLines={2} onChangeText={(text) => this.setState({text})} placeholder='Enter a description...' value={this.state.description} />
         
         <TouchableOpacity style={styles.pickImageContainer} onPress={this._goBack.bind(this)}>
           <View>
