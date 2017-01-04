@@ -12,13 +12,38 @@ import TouchableNativeFeedback from '@exponent/react-native-touchable-native-fee
 const { width, height } = Dimensions.get('window');
 
 export default class SignupScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: null,
+      password: null,
+    };
+  }
 
   login() {
     this.props.navigator.pop();
   }
 
   signup() {
-    console.log('Hello, World!');
+    fetch('http://107.170.233.162:1337/users', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: this.state,
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((responseJson) => {
+      // if response is successful, redirect the user to the login page
+      // otherwise, alert the user of error
+    })
+    .catch((error) => {
+      console.error('An error occurred when posting to /users');
+      throw error;
+    });
   }
 
   render() {
@@ -31,11 +56,19 @@ export default class SignupScreen extends React.Component {
 
       <View style={styles.body}>
         <View style={styles.inputWrapper}>
-          <TextInput style={styles.input} placeholder="USERNAME"></TextInput>
+          <TextInput 
+            style={styles.input} 
+            placeholder={'USERNAME'}
+            onChangeText={(username) => this.setState({username})}
+          />
         </View>
 
         <View style={styles.inputWrapper}>
-          <TextInput style={styles.input} placeholder="PASSWORD"></TextInput>
+          <TextInput 
+            style={styles.input} 
+            placeholder={'PASSWORD'}
+            onChangeText={(password) => this.setState({password})}
+          />
         </View>
 
         <TouchableNativeFeedback onPress={this.signup.bind(this)}>
