@@ -82,7 +82,7 @@ export default class AddPinScreen extends React.Component {
           </View>
         </View>
 
-        <TextInput style={styles.descriptionBox} multiline={false} numberOfLines={2} onChangeText={(text) => this.setState({text})} placeholder='Enter a description...' value={this.state.description}/>
+        <TextInput style={styles.descriptionBox} multiline={false} numberOfLines={2} onChangeText={(text) => this.setState({text})} placeholder='Enter a description...' value={this.state.description} />
         
         <TouchableOpacity style={styles.pickImageContainer} onPress={this._goBack.bind(this)}>
           <View>
@@ -121,5 +121,10 @@ const styles = StyleSheet.create({
   descriptionBox: {
     height: 40,
     margin: 5,
+    paddingTop: 15,
+  },
+  addPhotoContainer: {
+    flex: 5,
+    backgroundColor: 'skyblue',
   }
 });
