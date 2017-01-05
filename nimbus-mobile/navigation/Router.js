@@ -5,6 +5,7 @@ import {
 
 import HomeScreen from '../screens/HomeScreen';
 import FriendsScreen from '../screens/FriendsScreen';
+import FriendProfileScreen from '../screens/FriendProfileScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import AddPinScreen from '../screens/AddPinScreen';
@@ -22,4 +23,5 @@ export default createRouter(() => ({
   addPin: () => AddPinScreen,
   rootNavigation: () => RootNavigation,
   pinView: () => PinScreen,
+  friendProfile: () => FriendProfileScreen,
 }));
