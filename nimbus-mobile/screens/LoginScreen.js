@@ -10,7 +10,6 @@ import {
   View,
 } from 'react-native';
 import { Facebook } from 'exponent';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 
 const { width, height } = Dimensions.get('window');
@@ -26,13 +25,9 @@ export default class Login extends React.Component {
     };
   }
 
-  signup() {
-    this.props.navigator.push('signup');
-  }
-
   render() {
     return (
-      <KeyboardAwareScrollView style={styles.container}>
+      <View style={styles.container}>
         <Image 
           source={background} 
           style={styles.background} 
@@ -93,31 +88,61 @@ export default class Login extends React.Component {
               <Text>
                 Don't have an account yet? 
               </Text>
-              <TouchableOpacity onPress={this.signup.bind(this)}>
+              <TouchableOpacity>
                 <Text style={styles.signUpText}>Sign up.</Text>
               </TouchableOpacity>
             </View>
 
           </View>
         </Image>
-      </KeyboardAwareScrollView>
+      </View>
     );
   }
 
   async _signInWithFacebook() {
     const result = await Facebook.logInWithReadPermissionsAsync(
+      // Steven's FB Key, put in environment variable
       '1348413101897052', {
-      permissions: ['public_profile'],
+      permissions: ['public_profile', 'user_photos'],
       behavior: Platform.OS === 'ios' ? 'web' : 'system',
     });
 
     if (result.type === 'success') {
-      let response = await fetch(`https://graph.facebook.com/me?access_token=${result.token}`);
+      let response = await fetch(`https://graph.facebook.com/me?access_token=${result.token}&fields=id,name`);
       let info = await response.json();
+      // gets larger user photo
+      let userPhoto = await fetch(`https://graph.facebook.com/${info.id}/picture?type=large`);
 
       console.log('result*******************', result);
       console.log('info*********************', info);
+  
+      let fullName = info.name.split(' ');
+      let firstName = fullName[0];
+      let lastName = fullName[1];
 
+      fetch('http://localhost:1337/api/users/', {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+          "firstName": firstName,
+          "lastName": lastName,
+          "fbID": info.id,
+          "photoUrl": userPhoto.url
+        })
+      })
+        .then(function (result) {
+          if (result.status === 201) {
+            // do something with the data
+            // return result.json();
+          }
+        })
+        .catch(function (err) {
+          console.log("*** ERROR ***");
+          console.log(err);
+        });
 
       // this.props.dispatch(Actions.signIn(new User({
       //   id: info.id,
