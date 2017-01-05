@@ -1,11 +1,14 @@
 import React from 'react';
 import {
+  TouchableHighlight,
   ScrollView,
+  StatusBar,
   StyleSheet,
+  Text,
+  View,
 } from 'react-native';
-import {
-  ExponentConfigView,
-} from '@exponent/samples';
+import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
+import { MaterialIcons } from '@exponent/vector-icons';
 
 export default class SettingsScreen extends React.Component {
   static route = {
@@ -14,9 +17,33 @@ export default class SettingsScreen extends React.Component {
     },
   }
 
+  logout() {
+    window.alert('There is no spoon');
+  }
+ 
   render() {
     return (
-      <ScrollView style={styles.container} contentContainerStyle={this.props.route.getContentContainerStyle()}>
+      <ScrollView>
+        <View style={styles.cardLabel}>
+          <Text style={styles.cardLabelText}>Your account</Text>
+        </View>
+
+        <View style={styles.card}>
+          <TouchableNativeFeedback
+            onPress={this.logout}
+            fallback={TouchableHighlight}
+            underlayColor="#eee">
+            <View style={[styles.cardBody, {flexDirection: 'row'}]}>
+              <MaterialIcons
+                name="exit-to-app"
+                size={25}
+                style={{transform: [{rotate: '180deg'}]}}
+              />
+
+              <Text style={styles.signOutText}>Sign Out</Text>
+            </View>
+          </TouchableNativeFeedback>
+        </View>
       </ScrollView>
     );
   }
@@ -25,5 +52,30 @@ export default class SettingsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FBFBFB',
+  },
+  card: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: 'grey',
+    backgroundColor: '#fff',
+  },
+  cardBody: {
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+  },
+  cardLabel: {
+    marginTop: 20,
+    paddingLeft: 8,
+    paddingBottom: 5,
+  },
+  cardLabelText: {
+    fontSize: 15,
+    color: '#313131',
+  },
+  signOutText: {
+    fontSize: 15,
+    marginLeft: 8,
+    marginTop: 1,
   },
 });

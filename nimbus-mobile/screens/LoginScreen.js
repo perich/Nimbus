@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import { Facebook } from 'exponent';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 
 const { width, height } = Dimensions.get('window');
@@ -25,9 +26,13 @@ export default class Login extends React.Component {
     };
   }
 
+  signup() {
+    this.props.navigator.push('signup');
+  }
+
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAwareScrollView style={styles.container}>
         <Image 
           source={background} 
           style={styles.background} 
@@ -88,14 +93,14 @@ export default class Login extends React.Component {
               <Text>
                 Don't have an account yet? 
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.signup.bind(this)}>
                 <Text style={styles.signUpText}>Sign up.</Text>
               </TouchableOpacity>
             </View>
 
           </View>
         </Image>
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 
