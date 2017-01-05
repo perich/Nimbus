@@ -5,6 +5,7 @@ import {
   Text,
   Image,
   ScrollView,
+  TouchableHighlight,
   StyleSheet,
   Dimensions,
 } from 'react-native';
@@ -21,6 +22,10 @@ export default class PinScreen extends React.Component {
     },
   }
 
+  goToFriendsProfile() {
+    this.props.navigator.push('friendProfile', this.props.route.params);
+  }
+
   render() {
     return (
       <ScrollView style={styles.container} contentContainerStyle={{flex: 1}}>
@@ -31,7 +36,9 @@ export default class PinScreen extends React.Component {
         </View>
         <View style={styles.profileContainer}>
           <View style={styles.profilePictureContainer}>
-            <Image style={styles.profilePicture} source={{uri: this.props.route.params.profilePic}}></Image>
+            <TouchableHighlight underlayColor={'transparent'} onPress={this.goToFriendsProfile.bind(this)}>
+              <Image style={styles.profilePicture} source={{uri: this.props.route.params.profilePic}}></Image>
+            </TouchableHighlight>
           </View>
           <View style={styles.profileDetailsContainer}>
             <View style={styles.profileNameContainer}>
@@ -40,7 +47,7 @@ export default class PinScreen extends React.Component {
             <View style={styles.profileTimeContainer}>
               <Text>{this.props.route.params.createdAt}</Text>
             </View>
-          </View>
+            </View>
         </View>
         <View style={styles.mediaContainer}>
           <Image style={styles.media} source={{uri: this.props.route.params.mediaURL}}></Image>

@@ -5,12 +5,14 @@ import {
 
 import HomeScreen from '../screens/HomeScreen';
 import FriendsScreen from '../screens/FriendsScreen';
+import FriendProfileScreen from '../screens/FriendProfileScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import AddPinScreen from '../screens/AddPinScreen';
 import PinScreen from '../screens/PinScreen';
 import RootNavigation from './RootNavigation';
 import LoginScreen from '../screens/LoginScreen';
+import SignupScreen from '../screens/SignupScreen';
 
 export default createRouter(() => ({
   home: () => HomeScreen,
@@ -19,7 +21,8 @@ export default createRouter(() => ({
   settings: () => SettingsScreen,
   addPin: () => AddPinScreen,
   login: () => LoginScreen,
-  addPin: () => AddPinScreen,
+  signup: () => SignupScreen,
   rootNavigation: () => RootNavigation,
   pinView: () => PinScreen,
+  friendProfile: () => FriendProfileScreen,
 }));

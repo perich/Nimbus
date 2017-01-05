@@ -1,4 +1,5 @@
 import React from 'react';
+import Exponent from 'exponent';
 import { Components } from 'exponent';
 import {
   Image,
@@ -11,12 +12,17 @@ import {
   View,
 } from 'react-native';
 import { MonoText } from '../components/StyledText';
-import { Router } from '../navigation/Router';
+import Router from '../navigation/Router';
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      userLocation: {
+        latitude: null,
+        longitude: null,
+      },
+      mapIsReady: false,
       markers: [
         {
           id: 0,
@@ -29,6 +35,7 @@ export default class HomeScreen extends React.Component {
           description: 'I had some really good food here!',
           user: 'Peter Parker',
           profilePic: 'http://rkuykendall.com/assets/where-to-start-reading-spiderman/thumb-usm1.jpg',
+          email: 'spider.man@avengers.com',
           createdAt: '5 hours ago',
           pinColor:  '#4286f4',
         },
@@ -43,6 +50,7 @@ export default class HomeScreen extends React.Component {
           description: 'Just saw Stephen Curry on the streets!! OMG',
           user: 'Carol Denver',
           profilePic: 'http://vignette2.wikia.nocookie.net/avengersalliance2/images/9/94/CaptainmarvelMN_5_fly-fight-win.png/revision/latest?cb=20160413181359',
+          email: 'ms.marvel@avengers.com',
           createdAt: '36 minutes ago',
           pinColor:  '#17a821',
         }
@@ -56,6 +64,19 @@ export default class HomeScreen extends React.Component {
     },
   }
 
+  componentWillMount() {
+    var that = this;
+    navigator.geolocation.getCurrentPosition(function(location) {
+      that.setState({
+        userLocation: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        },
+        mapIsReady: true,
+      });
+    })
+  }
+
   goToAddPin() {
     this.props.navigator.push('addPin');
   }
@@ -65,23 +86,29 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <TouchableHighlight style={styles.addButton} underlayColor={'transparent'} onPress={this.goToAddPin.bind(this)}>
-          <Text style={styles.addText}>+</Text>
-        </TouchableHighlight>
-        <Components.MapView style={{flex: 1}} initialRegion={{latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421,}}>
-          {this.state.markers.map(marker => (
-              <Components.MapView.Marker
-                key={marker.id}
-                coordinate={marker.location}
-                pinColor={marker.pinColor}
-                onSelect={this.displayPin.bind(this, marker)}
-              />
-            ))}
-        </Components.MapView>
-      </View>
-    );
+    if (this.state.mapIsReady) {    
+      return (
+        <View style={styles.container}>
+          <TouchableHighlight style={styles.addButton} underlayColor={'transparent'} onPress={this.goToAddPin.bind(this)}>
+            <Text style={styles.addText}>+</Text>
+          </TouchableHighlight>
+          <Components.MapView style={{flex: 1}} showsUserLocation={true} initialRegion={{latitude: this.state.userLocation.latitude, longitude: this.state.userLocation.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421,}}>
+            {this.state.markers.map(marker => (
+                <Components.MapView.Marker
+                  key={marker.id}
+                  coordinate={marker.location}
+                  pinColor={marker.pinColor}
+                  onSelect={this.displayPin.bind(this, marker)}
+                />
+              ))}
+          </Components.MapView>
+        </View>
+      );
+    } else {
+      return (
+        <Exponent.Components.AppLoading />
+      );
+    }
   }
 }
 
