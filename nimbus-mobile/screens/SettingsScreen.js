@@ -1,10 +1,10 @@
 import React from 'react';
 import {
   TouchableHighlight,
-  Text,
   ScrollView,
   StatusBar,
   StyleSheet,
+  Text,
   View,
 } from 'react-native';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
@@ -20,7 +20,7 @@ export default class SettingsScreen extends React.Component {
   logout() {
     window.alert('There is no spoon');
   }
-
+ 
   render() {
     return (
       <ScrollView>
