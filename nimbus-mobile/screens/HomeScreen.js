@@ -145,12 +145,12 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     borderWidth: 2,
     borderColor: 'grey',
-    borderRadius: 10,
+    borderRadius: 50,
     height: 50,
     width: 50,
-    bottom: 25,
+    bottom: 15,
     right: 15,
-    zIndex: 999,
+    zIndex: 999
   },
   refreshButton: {
     justifyContent: 'center',
@@ -169,6 +169,7 @@ const styles = StyleSheet.create({
   addText: {
     textAlign: 'center',
     color: 'grey',
-    fontSize: 24,
+    backgroundColor: 'transparent',
+    fontSize: 30
   }
 });
