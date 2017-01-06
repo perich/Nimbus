@@ -57,9 +57,16 @@ export default class AddPinScreen extends React.Component {
 
         </View>
 
-        <TextInput style={styles.descriptionBox} multiline={false} numberOfLines={2} onChangeText={(text) => this.setState({text})} placeholder='Enter a description...' value={this.state.description} />
-        
-        <TouchableOpacity style={styles.pickImageContainer} onPress={this.postPin.bind(this)}>
+        <TextInput 
+          style={styles.descriptionBox} 
+          multiline={false} 
+          numberOfLines={2} 
+          onChangeText={(description) => this.setState({description})} 
+          placeholder='Enter a description...' 
+          value={this.state.description} 
+        />
+      
+        <TouchableOpacity style={styles.pickImageContainer} onPress={this._handlePinPost.bind(this)}>
           <View>
             <Text style={styles.pickImageText}>Submit</Text>
           </View>
@@ -67,6 +74,42 @@ export default class AddPinScreen extends React.Component {
 
       </ScrollView>
     );
+  }
+
+  _handlePinPost = async () => {
+    let { image, description } = this.state;
+    let pinData = {
+      location: null,
+      mediaUrl: image,
+      likes: 0,
+      description,
+      user_id: null,
+      createdAt: new Date(),
+    };
+
+    try {
+      let response = await this._postPin(pinData);
+      this.props.navigator.push('home');
+
+    } catch(e) {
+      console.log('_handlePinPost: An error occurred');
+      throw e;
+      alert('Pin post failed, sorry :(');
+    }
+  }
+
+  _postPin = async (pinData) => {
+    const postUrl = `http://localhost:1337/postpin`;
+    let options = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify(pinData),
+    };
+
+    return fetch(postUrl, options);
   }
 
   _pickImage = async () => {
