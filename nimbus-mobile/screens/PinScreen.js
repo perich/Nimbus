@@ -12,6 +12,7 @@ import {
 import {
   ExponentLinksView,
 } from '@exponent/samples';
+import TimeAgo from 'react-native-timeago';
 
 export default class PinScreen extends React.Component {
   static route = {
@@ -45,9 +46,9 @@ export default class PinScreen extends React.Component {
               <Text>{this.props.route.params.firstName} {this.props.route.params.lastName}</Text>
             </View>
             <View style={styles.profileTimeContainer}>
-              <Text>{this.props.route.params.createdAt}</Text>
+              <TimeAgo time={JSON.parse(this.props.route.params.createdAt)}/>
             </View>
-            </View>
+          </View>
         </View>
         <View style={styles.mediaContainer}>
           <Image style={styles.media} source={{uri: this.props.route.params.mediaURL}}></Image>
