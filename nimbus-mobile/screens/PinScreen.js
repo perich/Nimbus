@@ -18,7 +18,7 @@ export default class PinScreen extends React.Component {
   static route = {
     navigationBar: {
       title(params) {
-        return `${params.user}'s Post`;
+        return `${params.firstName} ${params.lastName}'s Post`;
       }
     },
   }
