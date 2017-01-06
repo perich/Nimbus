@@ -18,7 +18,7 @@ export default class PinScreen extends React.Component {
   static route = {
     navigationBar: {
       title(params) {
-        return `${params.firstName} ${params.lastName}'s Post`;
+        return `${params.user}'s Post`;
       }
     },
   }
@@ -43,12 +43,12 @@ export default class PinScreen extends React.Component {
           </View>
           <View style={styles.profileDetailsContainer}>
             <View style={styles.profileNameContainer}>
-              <Text>{this.props.route.params.firstName} {this.props.route.params.lastName}</Text>
+              <Text>{this.props.route.params.user}</Text>
             </View>
             <View style={styles.profileTimeContainer}>
-              <Text>{TimeAgo(this.props.route.params.createdAt)}</Text>
+              <TimeAgo time={JSON.parse(this.props.route.params.createdAt)}/>
             </View>
-            </View>
+          </View>
         </View>
         <View style={styles.mediaContainer}>
           <Image style={styles.media} source={{uri: this.props.route.params.mediaURL}}></Image>
