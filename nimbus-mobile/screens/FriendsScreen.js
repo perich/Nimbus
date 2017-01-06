@@ -17,20 +17,7 @@ export default class FriendsScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      friends: [
-        {
-          id: 0,
-          user: 'Peter Parker',
-          profilePic: 'http://rkuykendall.com/assets/where-to-start-reading-spiderman/thumb-usm1.jpg',
-          email: 'spider.man@avengers.com',
-        },
-        {
-          id: 1,
-          user: 'Carol Denver',
-          profilePic: 'http://vignette2.wikia.nocookie.net/avengersalliance2/images/9/94/CaptainmarvelMN_5_fly-fight-win.png/revision/latest?cb=20160413181359',
-          email: 'ms.marvel@avengers.com',
-        }
-      ]
+      friends: []
     }
   }
 
@@ -38,6 +25,38 @@ export default class FriendsScreen extends React.Component {
     navigationBar: {
       title: 'Friends',
     },
+  }
+
+  componentWillMount() {
+    var that = this;
+    console.log('Fetching all users...');
+    fetch('http://107.170.233.162:1337/api/users', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Data is: ', data);
+      var friends = [];
+      for (var i = 0; i < data.length; i++) {
+        friends.push({
+          id: i,
+          firstName: data[i].firstName,
+          lastName: data[i].lastName,
+          profileURL: data[i].photo,
+          email: data[i].email === 'No email' ? 'Facebook User' : data[i].email,
+        });
+      }
+      that.setState({
+        friends: friends,
+      });
+    })
+    .catch((error) => {
+      console.warn(error);
+    }).done();
   }
 
   goToFriend(friend) {
@@ -56,7 +75,7 @@ export default class FriendsScreen extends React.Component {
                     name="account-circle"
                     size={25}
                   />
-                  <Text style={styles.signOutText}>{friend.user}</Text>
+                  <Text style={styles.signOutText}>{friend.firstName} {friend.lastName}</Text>
                 </View>
               </TouchableNativeFeedback>
             </View>
@@ -74,7 +93,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBFBFB',
   },
   card: {
-    borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: 'grey',
     backgroundColor: '#fff',
