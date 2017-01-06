@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     height: 50,
     width: 50,
-    bottom: 25,
+    bottom: 15,
     right: 15,
     zIndex: 999
   },
