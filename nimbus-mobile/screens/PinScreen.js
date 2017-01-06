@@ -43,7 +43,7 @@ export default class PinScreen extends React.Component {
           </View>
           <View style={styles.profileDetailsContainer}>
             <View style={styles.profileNameContainer}>
-              <Text>{this.props.route.params.user}</Text>
+              <Text>{this.props.route.params.firstName} {this.props.route.params.lastName}</Text>
             </View>
             <View style={styles.profileTimeContainer}>
               <TimeAgo time={JSON.parse(this.props.route.params.createdAt)}/>
