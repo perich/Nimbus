@@ -3,6 +3,8 @@ import {
   NavigationProvider,
 } from '@exponent/ex-navigation';
 
+import LoginScreen from '../screens/LoginScreen';
+import SignupScreen from '../screens/SignupScreen';
 import HomeScreen from '../screens/HomeScreen';
 import FriendsScreen from '../screens/FriendsScreen';
 import FriendProfileScreen from '../screens/FriendProfileScreen';
@@ -11,17 +13,15 @@ import SettingsScreen from '../screens/SettingsScreen';
 import AddPinScreen from '../screens/AddPinScreen';
 import PinScreen from '../screens/PinScreen';
 import RootNavigation from './RootNavigation';
-import LoginScreen from '../screens/LoginScreen';
-import SignupScreen from '../screens/SignupScreen';
 
 export default createRouter(() => ({
+  login: () => LoginScreen,
+  signup: () => SignupScreen,
   home: () => HomeScreen,
   friends: () => FriendsScreen,
   profile: () => ProfileScreen,
   settings: () => SettingsScreen,
   addPin: () => AddPinScreen,
-  login: () => LoginScreen,
-  signup: () => SignupScreen,
   rootNavigation: () => RootNavigation,
   pinView: () => PinScreen,
   friendProfile: () => FriendProfileScreen,
