@@ -17,7 +17,7 @@ export default class FriendProfileScreen extends React.Component {
   static route = {
     navigationBar: {
       title(params) {
-        return `${params.user}'s Profile`;
+        return `${params.firstName} ${params.lastName}'s Profile`;
       }
     },
   }
@@ -26,14 +26,14 @@ export default class FriendProfileScreen extends React.Component {
     return (
       <ScrollView>
         <View style={styles.container}>
-          <Image style={styles.pictureContainer} source={{uri: this.props.route.params.profilePic}}>
+          <Image style={styles.pictureContainer} source={{uri: this.props.route.params.profileURL}}>
             <Components.BlurView tint="default" intensity={90} style={StyleSheet.absoluteFill}>
               <View style={styles.pictureDetails}>
-                <Image style={styles.picture} source={{uri: this.props.route.params.profilePic}}/>
+                <Image style={styles.picture} source={{uri: this.props.route.params.profileURL}}/>
               </View>
             </Components.BlurView>
           </Image>
-          <Text style={styles.name}>{this.props.route.params.user}</Text>
+          <Text style={styles.name}>{this.props.route.params.firstName} {this.props.route.params.lastName}</Text>
           <Text style={styles.email}>{this.props.route.params.email}</Text>
         </View>
       </ScrollView>
