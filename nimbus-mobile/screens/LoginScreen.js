@@ -120,7 +120,7 @@ export default class Login extends React.Component {
       let firstName = fullName[0];
       let lastName = fullName[1];
 
-      fetch('http://localhost:1337/api/users/', {
+      fetch('http://107.170.233.162:1337/api/users/', {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
