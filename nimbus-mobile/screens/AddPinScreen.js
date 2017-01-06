@@ -19,6 +19,7 @@ export default class AddPinScreen extends React.Component {
     super(props);
     this.state = {
       image: null,
+      description: null,
     }
   }
 
@@ -34,8 +35,6 @@ export default class AddPinScreen extends React.Component {
       aspect: [4,3]
     });
 
-    // console.log(result);
-
     if (!result.cancelled) {
       this.setState({image: result.uri});
     }
@@ -47,14 +46,28 @@ export default class AddPinScreen extends React.Component {
       aspect: [4,3]
     });
 
-    // console.log(result);
-
     if (!result.cancelled) {
       this.setState({image: result.uri});
     }
   }
 
-  _goBack() {
+  postPin() {
+    fetch(link, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        image: this.state.image,
+        description: this.state.description,
+      })
+    })
+    .then((response) => response)
+    .catch((error) => {
+      console.warn(error);
+    }).done();
+
     this.props.navigator.pop();
   }
 
@@ -84,7 +97,7 @@ export default class AddPinScreen extends React.Component {
 
         <TextInput style={styles.descriptionBox} multiline={false} numberOfLines={2} onChangeText={(text) => this.setState({text})} placeholder='Enter a description...' value={this.state.description} />
         
-        <TouchableOpacity style={styles.pickImageContainer} onPress={this._goBack.bind(this)}>
+        <TouchableOpacity style={styles.pickImageContainer} onPress={this.postPin.bind(this)}>
           <View>
             <Text style={styles.pickImageText}>Submit</Text>
           </View>
