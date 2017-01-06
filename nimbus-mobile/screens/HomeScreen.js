@@ -66,7 +66,7 @@ export default class HomeScreen extends React.Component {
           // Replaced with sessions
           firstName: 'Peter',
           lastName: 'Parker',
-          profilePic: 'http://rkuykendall.com/assets/where-to-start-reading-spiderman/thumb-usm1.jpg',
+          profileURL: 'http://rkuykendall.com/assets/where-to-start-reading-spiderman/thumb-usm1.jpg',
           email: 'spider.man@avengers.com',
           // Replaced with sessions
           pinColor:  '#4286f4',

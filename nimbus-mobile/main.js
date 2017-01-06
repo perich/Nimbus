@@ -10,21 +10,44 @@ import {
 import {
   NavigationProvider,
   StackNavigation,
+  withNavigation,
 } from '@exponent/ex-navigation';
 import {
   FontAwesome,
 } from '@exponent/vector-icons';
 
+import LoginScreen from './screens/LoginScreen';
+
 import Router from './navigation/Router';
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 
 class AppContainer extends React.Component {
+  render() {
+    return (
+      <NavigationProvider router={Router}>
+        <App {...this.props} />
+      </NavigationProvider>
+    );
+  }
+}
+
+@withNavigation
+class App extends React.Component {
   state = {
     appIsReady: false,
+    userIsLoggedIn: true,
   }
 
   componentWillMount() {
     this._loadAssetsAsync();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.state.appIsReady) {
+      return;
+    }
+    const rootNavigator = this.props.navigation.getNavigator('root');
+    rootNavigator.replace('rootNavigation');
   }
 
   async _loadAssetsAsync() {
@@ -49,12 +72,24 @@ class AppContainer extends React.Component {
     }
   }
 
+  login() {
+    this.setState({
+      userIsLoggedIn: true,
+    })
+  }
+
+  logout() {
+    this.setState({
+      userIsLoggedIn: false,
+    })
+  }
+
   render() {
     if (this.state.appIsReady) {
       return (
         <View style={styles.container}>
           <NavigationProvider router={Router}>
-            <StackNavigation id="root" initialRoute={Router.getRoute('rootNavigation')} />
+            <StackNavigation id="root" initialRoute={Router.getRoute('login')} />
           </NavigationProvider>
 
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
