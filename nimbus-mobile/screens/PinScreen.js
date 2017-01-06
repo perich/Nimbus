@@ -38,7 +38,7 @@ export default class PinScreen extends React.Component {
         <View style={styles.profileContainer}>
           <View style={styles.profilePictureContainer}>
             <TouchableHighlight underlayColor={'transparent'} onPress={this.goToFriendsProfile.bind(this)}>
-              <Image style={styles.profilePicture} source={{uri: this.props.route.params.profilePic}}></Image>
+              <Image style={styles.profilePicture} source={{uri: this.props.route.params.profileURL}}></Image>
             </TouchableHighlight>
           </View>
           <View style={styles.profileDetailsContainer}>

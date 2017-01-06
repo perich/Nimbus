@@ -25,6 +25,14 @@ export default class Login extends React.Component {
     };
   }
 
+  goToSignUp() {
+    this.props.navigator.push('signup');
+  }
+
+  log() {
+    console.log(this.props);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -60,7 +68,7 @@ export default class Login extends React.Component {
                   Forgot Password?
                 </Text>
               </View>
-            </TouchableOpacity>            
+            </TouchableOpacity>
 
             <TouchableNativeFeedback>
               <View style={styles.loginButton}>
@@ -88,7 +96,7 @@ export default class Login extends React.Component {
               <Text>
                 Don't have an account yet? 
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.goToSignUp.bind(this)}>
                 <Text style={styles.signUpText}>Sign up.</Text>
               </TouchableOpacity>
             </View>
@@ -143,19 +151,6 @@ export default class Login extends React.Component {
           console.log("*** ERROR ***");
           console.log(err);
         });
-
-      // this.props.dispatch(Actions.signIn(new User({
-      //   id: info.id,
-      //   authToken: result.token,
-      //   name: info.name,
-      //   isGuest: false,
-      // })));
-
-      // this.setState({
-      //   id: info.id,
-      //   authToken: result.token,
-      //   name: info.name,
-      // });
     }
   }
 }
