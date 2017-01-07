@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'grey',
     backgroundColor: 'transparent',
-    fontSize: 30
+    fontSize: 30,
+    bottom: 2
   }
 });
