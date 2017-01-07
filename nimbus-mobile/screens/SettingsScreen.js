@@ -18,7 +18,7 @@ export default class SettingsScreen extends React.Component {
   }
 
   logout() {
-    this.props.navigation.getNavigator('root').replace('login');
+    this.props.logoutUser();
   }
  
   render() {

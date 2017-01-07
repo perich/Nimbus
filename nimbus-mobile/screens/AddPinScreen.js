@@ -20,7 +20,7 @@ export default class AddPinScreen extends React.Component {
     super(props);
     this.state = {
       image: null,
-      description: null,
+      description: null
     }
   }
 
@@ -77,28 +77,34 @@ export default class AddPinScreen extends React.Component {
   }
 
   _handlePinPost = async () => {
-    let { image, description } = this.state;
-    let pinData = {
-      location: null,
-      mediaUrl: image,
-      likes: 0,
-      description,
-      user_id: null,
-      createdAt: new Date(),
-    };
+    var that = this;
+    var pinData = {};
+    navigator.geolocation.getCurrentPosition(async function(location) {
+      console.log(location);
+      pinData = {
+        location: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        },
+        mediaUrl: that.state.image,
+        description: that.state.description,
+      };
 
-    try {
-      let response = await this._postPin(pinData);
-      this.props.navigator.push('home');
-    } catch(e) {
-      console.log('_handlePinPost: An error occurred');
-      throw e;
-      alert('Pin post failed, sorry :(');
-    }
+      try {
+        console.log('Pin Data is: ', pinData);
+        console.log('User ID is: ', that.props.route.params);
+        let response = await that._postPin(pinData);
+        that.props.navigator.pop();
+      } catch(e) {
+        console.log('_handlePinPost: An error occurred: ', e);
+        throw e;
+        alert('Pin post failed, sorry :(');
+      }
+    })
   }
 
   _postPin = async (pinData) => {
-    const postUrl = `http://localhost:1337/postpin`;
+    var postUrl = 'http://107.170.233.162:1337/api/users/' + this.props.route.params.userId + '/pins';
     let options = {
       method: 'POST',
       headers: {
@@ -109,15 +115,6 @@ export default class AddPinScreen extends React.Component {
     };
 
     return fetch(postUrl, options);
-  }
-
-  _pickImage = async () => {
-    let pickerResult = await Exponent.ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4,3]
-    });
-
-    this._handleImagePicked(pickerResult);
   }
 
   _handleImagePicked = async (pickerResult) => {
@@ -140,7 +137,7 @@ export default class AddPinScreen extends React.Component {
   }
 
   uploadImageAsync = async (uri) => {
-    let apiUrl = `http://localhost:1337/upload`;
+    let apiUrl = `http://107.170.233.162:1337/upload`;
 
     let uriParts = uri.split('.');
     let fileType = uriParts[uriParts.length - 1];
@@ -165,14 +162,30 @@ export default class AddPinScreen extends React.Component {
   }
 
   _takePhoto = async () => {
-    let result = await Exponent.ImagePicker.launchCameraAsync({
+    // let result = await Exponent.ImagePicker.launchCameraAsync({
+    //   allowsEditing: true,
+    //   aspect: [4,3]
+    // });
+
+    // if (!result.cancelled) {
+    //   this.setState({image: result.uri});
+    //   this._handleImagePicked(result);
+    // }
+    let pickerResult = await Exponent.ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4,3]
     });
 
-    if (!result.cancelled) {
-      this.setState({image: result.uri});
-    }
+    this._handleImagePicked(pickerResult);
+  }
+
+  _pickImage = async () => {
+    let pickerResult = await Exponent.ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4,3]
+    });
+
+    this._handleImagePicked(pickerResult);
   }
 
   _goBack() {
