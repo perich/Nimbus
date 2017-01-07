@@ -90,7 +90,6 @@ export default class AddPinScreen extends React.Component {
     try {
       let response = await this._postPin(pinData);
       this.props.navigator.push('home');
-
     } catch(e) {
       console.log('_handlePinPost: An error occurred');
       throw e;
