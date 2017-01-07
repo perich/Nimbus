@@ -29,8 +29,8 @@ export default class Login extends React.Component {
     this.props.navigator.push('signup');
   }
 
-  log() {
-    console.log(this.props);
+  login() {
+    this.props.navigator.push('rootNavigation');
   }
 
   render() {
@@ -70,7 +70,7 @@ export default class Login extends React.Component {
               </View>
             </TouchableOpacity>
 
-            <TouchableNativeFeedback>
+            <TouchableNativeFeedback onPress={this.login.bind(this)}>
               <View style={styles.loginButton}>
                 <Text style={styles.loginButtonText}>
                   LOGIN
@@ -84,7 +84,7 @@ export default class Login extends React.Component {
               </Text>
             </View>
 
-            <TouchableNativeFeedback onPress={this._signInWithFacebook}>
+            <TouchableNativeFeedback onPress={this._signInWithFacebook.bind(this)}>
               <View style={styles.facebookButton}>
                 <Text style={styles.facebookButtonText}>
                   Sign in with Facebook
@@ -123,6 +123,8 @@ export default class Login extends React.Component {
 
       console.log('result*******************', result);
       console.log('info*********************', info);
+
+      this.props.navigator.push('rootNavigation');
   
       let fullName = info.name.split(' ');
       let firstName = fullName[0];
