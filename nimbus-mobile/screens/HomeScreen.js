@@ -39,6 +39,7 @@ export default class HomeScreen extends React.Component {
   }
 
   getPins() {
+    console.log(this.props.currentUser);
     var that = this;
     console.log('Fetching pins...');
     fetch('http://107.170.233.162:1337/api/users/' + this.state.userId + '/pins', {
