@@ -32,6 +32,7 @@ export default class RootNavigation extends React.Component {
       currentUser:'noUser'
     };
     this.loginUser = this.loginUser.bind(this);
+    this.logoutUser = this.logoutUser.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +45,10 @@ export default class RootNavigation extends React.Component {
 
   loginUser(user) {
     this.setState({currentUser: user});
+  }
+
+  logoutUser() {
+    this.setState({currentUser: 'noUser'});
   }
 
   render() {
@@ -80,7 +85,7 @@ export default class RootNavigation extends React.Component {
           <TabNavigationItem
             id="settings"
             renderIcon={isSelected => this._renderIcon('md-cog', isSelected)}>
-            <StackNavigation initialRoute={Router.getRoute('settings', {currentUser: this.state.currentUser})}/>
+            <StackNavigation initialRoute={Router.getRoute('settings', {currentUser: this.state.currentUser, logoutUser: this.logoutUser})}/>
           </TabNavigationItem>
         </TabNavigation>
       );

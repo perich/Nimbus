@@ -125,6 +125,13 @@ export default class Login extends React.Component {
       let firstName = fullName[0];
       let lastName = fullName[1];
 
+      this.props.loginUser({
+        userId: info.id,
+        firstName: firstName,
+        lastName: lastName,
+        profileUrl: userPhoto.url, 
+      });
+
       this.props.navigator.push(Router.getRoute('rootNavigation'));
 
       fetch('http://107.170.233.162:1337/api/users/', {
