@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Facebook } from 'exponent';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
+import Router from '../navigation/Router';
 
 const { width, height } = Dimensions.get('window');
 const background = require('../assets/images/background.jpg');
@@ -27,10 +28,6 @@ export default class Login extends React.Component {
 
   goToSignUp() {
     this.props.navigator.push('signup');
-  }
-
-  login() {
-    this.props.navigator.push('rootNavigation');
   }
 
   render() {
@@ -70,7 +67,7 @@ export default class Login extends React.Component {
               </View>
             </TouchableOpacity>
 
-            <TouchableNativeFeedback onPress={this.login.bind(this)}>
+            <TouchableNativeFeedback onPress={function(){this.props.loginUser('GRAHAM:D')}.bind(this)}>
               <View style={styles.loginButton}>
                 <Text style={styles.loginButtonText}>
                   LOGIN
@@ -123,12 +120,12 @@ export default class Login extends React.Component {
 
       console.log('result*******************', result);
       console.log('info*********************', info);
-
-      this.props.navigator.push('rootNavigation');
   
       let fullName = info.name.split(' ');
       let firstName = fullName[0];
       let lastName = fullName[1];
+
+      this.props.navigator.push(Router.getRoute('rootNavigation'));
 
       fetch('http://107.170.233.162:1337/api/users/', {
         headers: {
