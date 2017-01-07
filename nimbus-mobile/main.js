@@ -31,24 +31,24 @@ class AppContainer extends React.Component {
   }
 }
 
-@withNavigation
+// @withNavigation
 class App extends React.Component {
   state = {
     appIsReady: false,
-    userIsLoggedIn: true,
+    // userIsLoggedIn: true,
   }
 
   componentWillMount() {
     this._loadAssetsAsync();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!this.state.appIsReady) {
-      return;
-    }
-    const rootNavigator = this.props.navigation.getNavigator('root');
-    rootNavigator.replace('rootNavigation');
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (!this.state.appIsReady) {
+  //     return;
+  //   }
+  //   const rootNavigator = this.props.navigation.getNavigator('root');
+  //   rootNavigator.replace('rootNavigation');
+  // }
 
   async _loadAssetsAsync() {
     try {
@@ -72,17 +72,17 @@ class App extends React.Component {
     }
   }
 
-  login() {
-    this.setState({
-      userIsLoggedIn: true,
-    })
-  }
+  // login() {
+  //   this.setState({
+  //     userIsLoggedIn: true,
+  //   })
+  // }
 
-  logout() {
-    this.setState({
-      userIsLoggedIn: false,
-    })
-  }
+  // logout() {
+  //   this.setState({
+  //     userIsLoggedIn: false,
+  //   })
+  // }
 
   render() {
     if (this.state.appIsReady) {
