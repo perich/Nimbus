@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   View,
   Text,
   Image,
@@ -29,47 +30,6 @@ export default class AddPinScreen extends React.Component {
     },
   }
 
-  _pickImage = async () => {
-    let result = await Exponent.ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4,3]
-    });
-
-    if (!result.cancelled) {
-      this.setState({image: result.uri});
-    }
-  }
-
-  _takePhoto = async () => {
-    let result = await Exponent.ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [4,3]
-    });
-
-    if (!result.cancelled) {
-      this.setState({image: result.uri});
-    }
-  }
-
-  postPin() {
-    fetch(link, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        image: this.state.image,
-        description: this.state.description,
-      })
-    })
-    .then((response) => response)
-    .catch((error) => {
-      console.warn(error);
-    }).done();
-
-    this.props.navigator.pop();
-  }
 
   render() {
     let { image } = this.state;
@@ -77,6 +37,7 @@ export default class AddPinScreen extends React.Component {
     return (
       <ScrollView>
         <View style={styles.container}>
+
           <TouchableOpacity style={styles.pickImageContainer} onPress={this._pickImage}>
             <View>
               <Text style={styles.pickImageText}>Pick an image from camera roll</Text>
@@ -93,19 +54,130 @@ export default class AddPinScreen extends React.Component {
           {image &&
             <Image source={{uri: image}} style={{width: 200, height: 200}} /> }
           </View>
+
         </View>
 
-        <TextInput style={styles.descriptionBox} multiline={false} numberOfLines={2} onChangeText={(text) => this.setState({text})} placeholder='Enter a description...' value={this.state.description} />
-        
-        <TouchableOpacity style={styles.pickImageContainer} onPress={this.postPin.bind(this)}>
+        <TextInput 
+          style={styles.descriptionBox} 
+          multiline={false} 
+          numberOfLines={2} 
+          onChangeText={(description) => this.setState({description})} 
+          placeholder='Enter a description...' 
+          value={this.state.description} 
+        />
+      
+        <TouchableOpacity style={styles.pickImageContainer} onPress={this._handlePinPost.bind(this)}>
           <View>
             <Text style={styles.pickImageText}>Submit</Text>
           </View>
         </TouchableOpacity>
+
       </ScrollView>
     );
   }
 
+  _handlePinPost = async () => {
+    let { image, description } = this.state;
+    let pinData = {
+      location: null,
+      mediaUrl: image,
+      likes: 0,
+      description,
+      user_id: null,
+      createdAt: new Date(),
+    };
+
+    try {
+      let response = await this._postPin(pinData);
+      this.props.navigator.push('home');
+    } catch(e) {
+      console.log('_handlePinPost: An error occurred');
+      throw e;
+      alert('Pin post failed, sorry :(');
+    }
+  }
+
+  _postPin = async (pinData) => {
+    const postUrl = `http://localhost:1337/postpin`;
+    let options = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify(pinData),
+    };
+
+    return fetch(postUrl, options);
+  }
+
+  _pickImage = async () => {
+    let pickerResult = await Exponent.ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4,3]
+    });
+
+    this._handleImagePicked(pickerResult);
+  }
+
+  _handleImagePicked = async (pickerResult) => {
+    let uploadResponse, uploadResult;
+
+    try {
+      if (!pickerResult.cancelled) {
+        uploadResponse = await this.uploadImageAsync(pickerResult.uri);
+        uploadResult = await uploadResponse.json();
+
+        this.setState({image: uploadResult.location});
+      }
+    } catch(e) {
+      console.log({uploadResponse});
+      console.log({uploadResult});
+      console.log({e});
+      throw e;
+      alert('Upload failed, sorry :(');
+    }
+  }
+
+  uploadImageAsync = async (uri) => {
+    let apiUrl = `http://localhost:1337/upload`;
+
+    let uriParts = uri.split('.');
+    let fileType = uriParts[uriParts.length - 1];
+
+    let formData = new FormData();
+    formData.append('file', {
+      uri,
+      name: `photo.${fileType}`,
+      type: `image/${fileType}`,
+    });
+
+    let options = {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+
+    return fetch(apiUrl, options);
+  }
+
+  _takePhoto = async () => {
+    let result = await Exponent.ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4,3]
+    });
+
+    if (!result.cancelled) {
+      this.setState({image: result.uri});
+    }
+  }
+
+  _goBack() {
+    this.props.navigator.pop();
+  }
 }
 
 const styles = StyleSheet.create({
