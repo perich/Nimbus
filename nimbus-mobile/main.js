@@ -31,11 +31,14 @@ class AppContainer extends React.Component {
   }
 }
 
-// @withNavigation
+@withNavigation
 class App extends React.Component {
-  state = {
-    appIsReady: false,
-    // userIsLoggedIn: true,
+  constructor(props) {
+    super(props);
+    this.state = {
+      appIsReady: false,
+      userIsLoggedIn: true,
+    };
   }
 
   componentWillMount() {
@@ -72,24 +75,24 @@ class App extends React.Component {
     }
   }
 
-  // login() {
-  //   this.setState({
-  //     userIsLoggedIn: true,
-  //   })
-  // }
+  login() {
+    this.setState({
+      userIsLoggedIn: true,
+    })
+  }
 
-  // logout() {
-  //   this.setState({
-  //     userIsLoggedIn: false,
-  //   })
-  // }
+  logout() {
+    this.setState({
+      userIsLoggedIn: false,
+    })
+  }
 
   render() {
     if (this.state.appIsReady) {
       return (
         <View style={styles.container}>
           <NavigationProvider router={Router}>
-            <StackNavigation id="root" initialRoute={Router.getRoute('login')} />
+            <StackNavigation id="root" initialRoute={Router.getRoute('rootNavigation')} />
           </NavigationProvider>
 
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}

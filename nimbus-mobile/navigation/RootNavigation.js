@@ -17,11 +17,23 @@ import {
   Ionicons,
 } from '@exponent/vector-icons';
 
+import Router from './Router';
 import Alerts from '../constants/Alerts';
 import Colors from '../constants/Colors';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 
 export default class RootNavigation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: null,
+      authToken: null,
+      name: null,
+      currentUser:'noUser'
+    };
+    this.loginUser = this.loginUser.bind(this);
+  }
+
   componentDidMount() {
     // this._notificationSubscription = this._registerForPushNotifications();
   }
@@ -30,36 +42,49 @@ export default class RootNavigation extends React.Component {
     this._notificationSubscription && this._notificationSubscription.remove();
   }
 
+  loginUser(user) {
+    this.setState({currentUser: user});
+  }
+
   render() {
-    return (
-      <TabNavigation
-        tabBarHeight={56}
-        initialTab="home">
-        <TabNavigationItem
-          id="home"
-          renderIcon={isSelected => this._renderIcon('md-home', isSelected)}>
-          <StackNavigation initialRoute="home" />
-        </TabNavigationItem>
+    if (this.state.currentUser === 'noUser') {
+      return (
+        <StackNavigation initialRoute={Router.getRoute('login', {
+          currentUser: this.state.currentUser,
+          loginUser: this.loginUser
+        })} />)
+    } else {
+      return (
+        <TabNavigation
+          tabBarHeight={56}
+          initialTab="home">
 
-        <TabNavigationItem
-          id="profile"
-          renderIcon={isSelected => this._renderIcon('md-person', isSelected)}>
-          <StackNavigation initialRoute="profile" />
-        </TabNavigationItem>
+          <TabNavigationItem
+            id="home"
+            renderIcon={isSelected => this._renderIcon('md-home', isSelected)}>
+            <StackNavigation initialRoute={Router.getRoute('home', {currentUser: this.state.currentUser})} />
+          </TabNavigationItem>
 
-        <TabNavigationItem
-          id="friends"
-          renderIcon={isSelected => this._renderIcon('md-people', isSelected)}>
-          <StackNavigation initialRoute="friends" />
-        </TabNavigationItem>
+          <TabNavigationItem
+            id="profile"
+            renderIcon={isSelected => this._renderIcon('md-person', isSelected)}>
+            <StackNavigation initialRoute={Router.getRoute('profile', {currentUser: this.state.currentUser})}/>
+          </TabNavigationItem>
 
-        <TabNavigationItem
-          id="settings"
-          renderIcon={isSelected => this._renderIcon('md-cog', isSelected)}>
-          <StackNavigation initialRoute="settings" />
-        </TabNavigationItem>
-      </TabNavigation>
-    );
+          <TabNavigationItem
+            id="friends"
+            renderIcon={isSelected => this._renderIcon('md-people', isSelected)}>
+            <StackNavigation initialRoute={Router.getRoute('friends', {currentUser: this.state.currentUser})}/>
+          </TabNavigationItem>
+
+          <TabNavigationItem
+            id="settings"
+            renderIcon={isSelected => this._renderIcon('md-cog', isSelected)}>
+            <StackNavigation initialRoute={Router.getRoute('settings', {currentUser: this.state.currentUser})}/>
+          </TabNavigationItem>
+        </TabNavigation>
+      );
+    }
   }
 
   _renderIcon(name, isSelected) {
