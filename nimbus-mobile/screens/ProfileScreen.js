@@ -21,8 +21,11 @@ export default class ProfileScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      userId: 1424212884257136,
-      profileURL: '../assets/images/profilePlaceholder.png',
+      userId: props.currentUser.userId,
+      firstName: props.currentUser.firstName,
+      lastName: props.currentUser.lastName,
+      email: 'Facebook User',
+      profileURL: props.currentUser.profileUrl,
     }
   }
 
@@ -34,31 +37,6 @@ export default class ProfileScreen extends React.Component {
           <Text style={styles.editText}>Edit</Text>
         </TouchableOpacity>
     },
-  }
-
-  componentWillMount() {
-    var that = this;
-    console.log('Fetching user...');
-    fetch('http://107.170.233.162:1337/api/users/' + this.state.userId, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('Data is: ', data);
-      that.setState({
-        firstName: data[0].firstName,
-        lastName: data[0].lastName,
-        profileURL: data[0].photo,
-        email: data[0].email,
-      });
-    })
-    .catch((error) => {
-      console.warn(error);
-    }).done();
   }
 
   editProfile() {
