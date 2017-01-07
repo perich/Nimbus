@@ -18,7 +18,7 @@ export default class SettingsScreen extends React.Component {
   }
 
   logout() {
-    window.alert('There is no spoon');
+    this.props.navigation.getNavigator('root').replace('login');
   }
  
   render() {
@@ -30,7 +30,7 @@ export default class SettingsScreen extends React.Component {
 
         <View style={styles.card}>
           <TouchableNativeFeedback
-            onPress={this.logout}
+            onPress={this.logout.bind(this)}
             fallback={TouchableHighlight}
             underlayColor="#eee">
             <View style={[styles.cardBody, {flexDirection: 'row'}]}>
