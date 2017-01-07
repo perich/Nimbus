@@ -18,11 +18,11 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      userId: 10209954893502102,
-      firstName: null,
-      lastName: null,
-      profilePic: null,
-      email: null,
+      userId: props.currentUser.userId,
+      firstName: props.currentUser.firstName,
+      lastName: props.currentUser.lastName,
+      profilePic: props.currentUser.profileUrl,
+      email: 'Facebook User',
       userLocation: {
         latitude: null,
         longitude: null,
@@ -65,10 +65,10 @@ export default class HomeScreen extends React.Component {
           description: data.records[i]._fields[0].properties.description,
           createdAt: data.records[i]._fields[0].properties.createdAt,
           // Replaced with sessions
-          firstName: 'Peter',
-          lastName: 'Parker',
-          profileURL: 'http://rkuykendall.com/assets/where-to-start-reading-spiderman/thumb-usm1.jpg',
-          email: 'spider.man@avengers.com',
+          firstName: that.state.firstName,
+          lastName: that.state.lastName,
+          profileURL: that.state.profilePic,
+          email: that.state.email,
           // Replaced with sessions
           pinColor:  '#4286f4',
         });
@@ -97,7 +97,7 @@ export default class HomeScreen extends React.Component {
   }
 
   goToAddPin() {
-    this.props.navigator.push('addPin');
+    this.props.navigator.push('addPin', this.props.currentUser);
   }
 
   displayPin(marker) {
