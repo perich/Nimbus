@@ -31,7 +31,7 @@ export default class PinScreen extends React.Component {
     return (
       <ScrollView style={styles.container} contentContainerStyle={{flex: 1}}>
         <View style={styles.mapContainer}>
-          <Components.MapView style={{flex: 1}} initialRegion={{latitude: this.props.route.params.location.latitude, longitude: this.props.route.params.location.longitude, latitudeDelta: 0.0012, longitudeDelta: 0.0001,}}>
+          <Components.MapView style={{flex: 1}} cacheEnabled={true} initialRegion={{latitude: this.props.route.params.location.latitude, longitude: this.props.route.params.location.longitude, latitudeDelta: 0.0012, longitudeDelta: 0.0001,}}>
             <Components.MapView.Marker coordinate={this.props.route.params.location}/>
           </Components.MapView>
         </View>
