@@ -5,6 +5,8 @@ import {
   Platform,
   StatusBar,
   StyleSheet,
+  TouchableHighlight,
+  Text,
   View,
 } from 'react-native';
 import {
@@ -28,6 +30,23 @@ function mapDispatchToProps(dispatch) {
 }
 
 class AppContainer extends React.Component {
+
+  // onPress() {
+  //   this.props.setCurrentUser();
+  // }
+
+  // render() {
+  //   return (
+  //     <View style={{marginTop: 50}}>
+  //       <Text>Count:  {this.props.counter}</Text>
+  //       <TouchableHighlight onPress={this.onPress.bind(this)}>
+  //         <Text>
+  //           Button 
+  //         </Text>    
+  //       </TouchableHighlight>
+  //     </View>
+  //   );
+  // }
   render() {
     return (
       <NavigationProvider router={Router}>
@@ -36,7 +55,7 @@ class AppContainer extends React.Component {
     );
   }
 }
-export default connect(() => { return {} }, mapDispatchToProps)(AppContainer);
+export default connect((state) => { return {} }, mapDispatchToProps)(AppContainer);
 
 @withNavigation
 class App extends React.Component {

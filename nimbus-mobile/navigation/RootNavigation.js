@@ -22,18 +22,14 @@ import Alerts from '../constants/Alerts';
 import Colors from '../constants/Colors';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 
-export default class RootNavigation extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: null,
-      authToken: null,
-      name: null,
-      currentUser:'noUser'
-    };
-    this.loginUser = this.loginUser.bind(this);
-    this.logoutUser = this.logoutUser.bind(this);
-  }
+import { connect } from 'react-redux';
+import { ActionCreators } from '../redux/actions/index.js';
+import { bindActionCreators } from 'redux';
+
+class RootNavigation extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  // }
 
   componentDidMount() {
     // this._notificationSubscription = this._registerForPushNotifications();
@@ -43,21 +39,10 @@ export default class RootNavigation extends React.Component {
     this._notificationSubscription && this._notificationSubscription.remove();
   }
 
-  loginUser(user) {
-    this.setState({currentUser: user});
-  }
-
-  logoutUser() {
-    this.setState({currentUser: 'noUser'});
-  }
-
   render() {
-    if (this.state.currentUser === 'noUser') {
+    if (this.props.currentUser.userId === 'noUser') {
       return (
-        <StackNavigation initialRoute={Router.getRoute('login', {
-          currentUser: this.state.currentUser,
-          loginUser: this.loginUser
-        })} />)
+        <StackNavigation initialRoute={Router.getRoute('login')} />)
     } else {
       return (
         <TabNavigation
@@ -67,25 +52,25 @@ export default class RootNavigation extends React.Component {
           <TabNavigationItem
             id="home"
             renderIcon={isSelected => this._renderIcon('md-home', isSelected)}>
-            <StackNavigation initialRoute={Router.getRoute('home', {currentUser: this.state.currentUser})} />
+            <StackNavigation initialRoute={Router.getRoute('home')} />
           </TabNavigationItem>
 
           <TabNavigationItem
             id="profile"
             renderIcon={isSelected => this._renderIcon('md-person', isSelected)}>
-            <StackNavigation initialRoute={Router.getRoute('profile', {currentUser: this.state.currentUser})}/>
+            <StackNavigation initialRoute={Router.getRoute('profile')}/>
           </TabNavigationItem>
 
           <TabNavigationItem
             id="friends"
             renderIcon={isSelected => this._renderIcon('md-people', isSelected)}>
-            <StackNavigation initialRoute={Router.getRoute('friends', {currentUser: this.state.currentUser})}/>
+            <StackNavigation initialRoute={Router.getRoute('friends')}/>
           </TabNavigationItem>
 
           <TabNavigationItem
             id="settings"
             renderIcon={isSelected => this._renderIcon('md-cog', isSelected)}>
-            <StackNavigation initialRoute={Router.getRoute('settings', {currentUser: this.state.currentUser, logoutUser: this.logoutUser})}/>
+            <StackNavigation initialRoute={Router.getRoute('settings')}/>
           </TabNavigationItem>
         </TabNavigation>
       );
@@ -119,6 +104,20 @@ export default class RootNavigation extends React.Component {
       Alerts.notice
     );
   }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(RootNavigation);
+
+function mapStateToProps(state) {
+  return {
+    id: state.userState.id,
+    authToken: state.userState.authToken,
+    name: state.userState.name,
+    currentUser: state.userState.currentUser,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
 }
 
 const styles = StyleSheet.create({
