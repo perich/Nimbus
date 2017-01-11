@@ -60,7 +60,6 @@ class AddPinScreen extends React.Component {
     },
   }
 
-
   render() {
     let { image } = this.state;
 

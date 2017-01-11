@@ -13,11 +13,9 @@ import {
 } from 'react-native';
 import { MonoText } from '../components/StyledText';
 import Router from '../navigation/Router';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../redux/actions/index.js';
-
 
 class HomeScreen extends React.Component {
   static route = {
@@ -31,14 +29,7 @@ class HomeScreen extends React.Component {
     navigator.geolocation.getCurrentPosition(function(location) {
       that.props.setLocation(location, true);      
       that.props.getPins(that.props.currentUser);
-      // that.setState({
-      //   userLocation: {
-      //     latitude: location.coords.latitude,
-      //     longitude: location.coords.longitude,
-      //   },
-      //   mapIsReady: true,
-      // });
-    })
+    });
   }
 
   goToAddPin() {
@@ -83,27 +74,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 function mapStateToProps(state) {
   return {
     currentUser: state.userState.currentUser,
-
-    // userId: state.userState.currentUser.userId , 
-    // firstName: state.userState.currentUser.firstName,
-    // lastName: state.userState.currentUser.lastName,
-    // profilePic: state.userState.currentUser.profileUrl,
-    email: state.homeState.email,
-    userLocation: state.homeState.userLocation,
-    mapIsReady: state.homeState.mapIsReady,
-    markers: state.homeState.markers,
-
-    // userId: props.currentUser.userId,
-    // firstName: props.currentUser.firstName,
-    // lastName: props.currentUser.lastName,
-    // profilePic: props.currentUser.profileUrl,
-    // email: 'Facebook User',
-    // userLocation: {
-    //   latitude: null,
-    //   longitude: null,
-    // },
-    // mapIsReady: false,
-    // markers: []
+    email: state.userState.email,
+    userLocation: state.userState.userLocation,
+    mapIsReady: state.userState.mapIsReady,
+    markers: state.userState.markers,
   };
 }
 

@@ -2,6 +2,95 @@ import * as types from './ActionTypes.js';
 import { Facebook } from 'exponent';
 import { Platform } from 'react-native';
 
+export function getFriends() {
+  return (dispatch, getState) => {
+    console.log('Fetching all users...');
+    fetch('http://107.170.233.162:1337/api/users', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      var friends = [];
+      for (var i = 0; i < data.length; i++) {
+        friends.push({
+          id: i,
+          firstName: data[i].firstName,
+          lastName: data[i].lastName,
+          profileURL: data[i].photo,
+          email: data[i].email === 'No email' ? 'Facebook User' : data[i].email,
+        });
+      }
+      dispatch(setFriends({ friends }));
+    })
+    .catch((error) => {
+      console.warn(error);
+    }).done();
+  };
+}
+
+export function getPins(currentUser) {
+  return (dispatch, getState) => {
+    fetch('http://107.170.233.162:1337/api/users/' + currentUser.userId + '/pins', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        var markers = [];
+        for (var i = 0; i < data.records.length; i++) {
+          markers.push({
+            id: i,
+            location: {
+              latitude: JSON.parse(data.records[i]._fields[0].properties.location).latitude,
+              longitude: JSON.parse(data.records[i]._fields[0].properties.location).longitude,
+            },
+            mediaURL: data.records[i]._fields[0].properties.mediaUrl,
+            likes: 69420,
+            description: data.records[i]._fields[0].properties.description,
+            createdAt: data.records[i]._fields[0].properties.createdAt,
+            // Replaced with sessions
+            // firstName: that.props.firstName,
+            // lastName: that.props.lastName,
+            // profileURL: that.props.profilePic,
+            // email: that.props.email,
+            // Replaced with sessions
+            pinColor:  '#4286f4',
+          });
+        }
+        dispatch(handlePins({ markers }))
+      })
+      .catch((error) => {
+        console.log("*** ERROR ***");
+        console.log(err);
+        throw err;
+      });
+  };
+}
+
+export function handleFacebookSignin({ currentUser }) {
+  return {
+    type: types.HANDLE_FACEBOOK_SIGNIN,
+    currentUser,
+  };
+};
+
+
+export function handlePins({ markers }) {
+  return {
+    type: types.HANDLE_PINS,
+    markers,
+  };
+}
+
 export function logoutUser() {
   return {
     type: types.LOGOUT_USER,
@@ -75,9 +164,17 @@ export function signInWithFacebook() {
   }
 };
 
-export function handleFacebookSignin({ currentUser }) {
+export function setLocation(location, mapIsReady) {
   return {
-    type: types.HANDLE_FACEBOOK_SIGNIN,
-    currentUser,
+    type: types.SET_LOCATION,
+    location,
+    mapIsReady,
   };
-};
+}
+
+export function setFriends({ friends }) {
+  return {
+    type: types.SET_FRIENDS,
+    friends,
+  };
+}
