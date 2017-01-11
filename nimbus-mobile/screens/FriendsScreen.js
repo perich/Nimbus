@@ -29,7 +29,6 @@ class FriendsScreen extends React.Component {
   }
 
   goToFriend(friend) {
-    console.log('CURRENT FRIEND****************', friend);
     this.props.navigator.push('friendProfile', friend);
   }
 
