@@ -28,7 +28,6 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
     var that = this;
-    console.log('*********************');
     navigator.geolocation.getCurrentPosition(function(location) {
       that.props.setLocation(location, true);      
       that.props.getPins(that.props.currentUser);

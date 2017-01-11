@@ -25,7 +25,6 @@ export function getPins(currentUser) {
       }
     })
       .then((response) => {
-        console.log('RESPONSE********', response);
         return response.json();
       })
       .then((data) => {
