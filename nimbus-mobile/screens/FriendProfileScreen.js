@@ -19,14 +19,6 @@ import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../redux/actions/index.js';
 
 class FriendProfileScreen extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     markers: [],
-  //     viewIsReady: false,
-  //   }
-  // }
-
   static route = {
     navigationBar: {
       title(params) {
@@ -34,63 +26,6 @@ class FriendProfileScreen extends React.Component {
       }
     },
   }
-
-  componentDidMount() {
-    console.log(this.props.route.params);
-    if (this.props.route.params.id > 1000) {
-      console.log('GETTING FRIEND PINS');
-      this.props.getFriendPins(this.props.route.params);
-    } else {
-      this.props.toggleViewReady();
-      // this.setState({
-      //   viewIsReady: true,
-      // })
-    }
-  }
-
-  // getFriendPins() {
-  //   var that = this;
-  //   console.log('Fetching friends pins...');
-  //   fetch('http://107.170.233.162:1337/api/users/' + this.props.route.params.id + '/pins', {
-  //     method: 'GET',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //     }
-  //   })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     console.log('Data is: ', data.records[0]._fields[0].properties.location);
-  //     var markers = [];
-  //     for (var i = 0; i < data.records.length; i++) {
-  //       markers.push({
-  //         id: i,
-  //         location: {
-  //           latitude: JSON.parse(data.records[i]._fields[0].properties.location).latitude,
-  //           longitude: JSON.parse(data.records[i]._fields[0].properties.location).longitude,
-  //         },
-  //         mediaURL: data.records[i]._fields[0].properties.mediaUrl,
-  //         likes: 69420,
-  //         description: data.records[i]._fields[0].properties.description,
-  //         createdAt: data.records[i]._fields[0].properties.createdAt,
-  //         // Replaced with sessions
-  //         firstName: that.props.route.params.firstName,
-  //         lastName: that.props.route.params.lastName,
-  //         profileURL: that.props.route.params.profileURL,
-  //         email: that.props.route.params.email,
-  //         // Replaced with sessions
-  //         pinColor:  '#4286f4',
-  //       });
-  //     }
-  //     that.setState({
-  //       markers: markers,
-  //       viewIsReady: true,
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     console.warn(error);
-  //   }).done();
-  // }
 
   displayPin(marker) {
     this.props.navigator.push('pinView', marker);
@@ -101,15 +36,15 @@ class FriendProfileScreen extends React.Component {
       return (
         <ScrollView>
           <View style={styles.container}>
-            <Image style={styles.pictureContainer} source={{uri: this.props.route.params.profileURL}}>
+            <Image style={styles.pictureContainer} source={{uri: this.props.profileURL}}>
               <Components.BlurView tint="default" intensity={90} style={StyleSheet.absoluteFill}>
                 <View style={styles.pictureDetails}>
-                  <Image style={styles.picture} source={{uri: this.props.route.params.profileURL}}/>
+                  <Image style={styles.picture} source={{uri: this.props.profileURL}}/>
                 </View>
               </Components.BlurView>
             </Image>
-            <Text style={styles.name}>{this.props.route.params.firstName} {this.props.route.params.lastName}</Text>
-            <Text style={styles.email}>{this.props.route.params.email}</Text>
+            <Text style={styles.name}>{this.props.firstName} {this.props.lastName}</Text>
+            <Text style={styles.email}>{this.props.email}</Text>
             {this.props.markers.map(marker => (
               <View style={styles.markerContainer} key={marker.id}>
                 <TimeAgo time={JSON.parse(marker.createdAt)}/>
@@ -133,6 +68,11 @@ class FriendProfileScreen extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    id: state.friendState.id,
+    profileURL: state.friendState.profileURL,
+    firstName: state.friendState.firstName,
+    lastName: state.friendState.lastName,
+    email: state.friendState.email,
     markers: state.friendState.markers,
     viewIsReady: state.friendState.viewIsReady,
   };

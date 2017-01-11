@@ -17,7 +17,7 @@ export function getFriends() {
       var friends = [];
       for (var i = 0; i < data.length; i++) {
         friends.push({
-          id: i,
+          id: data[i].id,
           firstName: data[i].firstName,
           lastName: data[i].lastName,
           profileURL: data[i].photo,
