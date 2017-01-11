@@ -68,6 +68,7 @@ export function signInWithFacebook() {
           .catch((error) => {
             console.log("*** ERROR ***");
             console.log(err);
+            throw err;
           });
         }
       });
