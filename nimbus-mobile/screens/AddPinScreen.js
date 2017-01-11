@@ -126,8 +126,6 @@ class AddPinScreen extends React.Component {
         },
         mediaUrl: that.state.image,
         description: that.state.description,
-        category: that.state.category,
-        isPublic: that.state.isPublic,
       };
 
       try {
@@ -141,6 +139,7 @@ class AddPinScreen extends React.Component {
   }
 
   _postPin = async (pinData) => {
+    console.log('POSTING PIN********************');
     var postUrl = 'http://107.170.233.162:1337/api/users/' + this.props.userId + '/pins';
     let options = {
       method: 'POST',

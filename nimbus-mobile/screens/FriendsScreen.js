@@ -29,11 +29,8 @@ class FriendsScreen extends React.Component {
   }
 
   goToFriend(friend) {
-
-    // this.props.getFriendPins(friend);
-
-    this.props.navigator.push('friendProfile', friend);
-    // this.props.navigator.push('friendProfile', friend);
+    this.props.setFriend(friend);
+    this.props.navigator.push('friendProfile');
   }
 
   render() {
@@ -61,7 +58,6 @@ class FriendsScreen extends React.Component {
       </ScrollView>
     );
   }
-
 }
 
 function mapStateToProps(state) {
