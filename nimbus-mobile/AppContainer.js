@@ -5,8 +5,6 @@ import {
   Platform,
   StatusBar,
   StyleSheet,
-  TouchableHighlight,
-  Text,
   View,
 } from 'react-native';
 import {
@@ -25,28 +23,7 @@ import { connect } from 'react-redux';
 import { ActionCreators } from './redux/actions/index.js';
 import { bindActionCreators } from 'redux';
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(ActionCreators, dispatch);
-}
-
 class AppContainer extends React.Component {
-
-  // onPress() {
-  //   this.props.setCurrentUser();
-  // }
-
-  // render() {
-  //   return (
-  //     <View style={{marginTop: 50}}>
-  //       <Text>Count:  {this.props.counter}</Text>
-  //       <TouchableHighlight onPress={this.onPress.bind(this)}>
-  //         <Text>
-  //           Button 
-  //         </Text>    
-  //       </TouchableHighlight>
-  //     </View>
-  //   );
-  // }
   render() {
     return (
       <NavigationProvider router={Router}>
@@ -55,7 +32,16 @@ class AppContainer extends React.Component {
     );
   }
 }
-export default connect((state) => { return {} }, mapDispatchToProps)(AppContainer);
+
+function mapStateToProps(state) {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
 
 @withNavigation
 class App extends React.Component {

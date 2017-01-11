@@ -4,7 +4,6 @@ import { Components } from 'exponent';
 import {
   Image,
   Linking,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
