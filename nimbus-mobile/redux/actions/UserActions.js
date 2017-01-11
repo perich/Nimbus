@@ -70,8 +70,8 @@ export function getPins(currentUser) {
       })
       .catch((error) => {
         console.log("*** ERROR ***");
-        console.log(err);
-        throw err;
+        console.log(error);
+        throw error;
       });
   };
 }
