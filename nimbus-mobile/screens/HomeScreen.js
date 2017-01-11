@@ -28,7 +28,14 @@ export default class HomeScreen extends React.Component {
         longitude: null,
       },
       mapIsReady: false,
-      markers: []
+      markers: [],
+      colors: {
+        Food: '#ff9d00',
+        Exciting: '#ffff00',
+        Dangerous: '#ff0000',
+        Chill: '#00cbff',
+        Other: '#ff00ff',
+      }
     }
   }
 
@@ -70,7 +77,7 @@ export default class HomeScreen extends React.Component {
           profileURL: that.state.profilePic,
           email: that.state.email,
           // Replaced with sessions
-          pinColor:  '#4286f4',
+          pinColor:  that.state.colors[data.records[i]._fields[0].properties.category],
         });
       }
       that.setState({

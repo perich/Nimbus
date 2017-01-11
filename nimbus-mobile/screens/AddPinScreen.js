@@ -9,6 +9,8 @@ import {
   StyleSheet,
   TouchableHighlight,
   TouchableOpacity,
+  PickerIOS,
+  PickerItemIOS,
 } from 'react-native';
 import Exponent from 'exponent';
 import {
@@ -20,7 +22,31 @@ export default class AddPinScreen extends React.Component {
     super(props);
     this.state = {
       image: null,
-      description: null
+      description: null,
+      category: null,
+      isPublic: false,
+      categories: [
+        {
+          key: 0,
+          name: 'Food',
+        },
+        {
+          key: 1,
+          name: 'Exciting',
+        },
+        {
+          key: 2,
+          name: 'Dangerous',
+        },
+        {
+          key: 3,
+          name: 'Chill',
+        },
+        {
+          key: 4,
+          name: 'Other',
+        },
+      ]
     }
   }
 
@@ -37,24 +63,20 @@ export default class AddPinScreen extends React.Component {
     return (
       <ScrollView>
         <View style={styles.container}>
-
           <TouchableOpacity style={styles.pickImageContainer} onPress={this._pickImage}>
             <View>
               <Text style={styles.pickImageText}>Pick an image from camera roll</Text>
             </View>
           </TouchableOpacity>
-
           <TouchableOpacity style={styles.pickImageContainer} onPress={this._takePhoto}>
             <View>
               <Text style={styles.pickImageText}>Take a Photo</Text>
             </View>
           </TouchableOpacity>
-
           <View style={styles.photoContainer}>
           {image &&
             <Image source={{uri: image}} style={{width: 200, height: 200}} /> }
           </View>
-
         </View>
 
         <TextInput 
@@ -65,6 +87,20 @@ export default class AddPinScreen extends React.Component {
           placeholder='Enter a description...' 
           value={this.state.description} 
         />
+
+        <Text>Pick a category:</Text>
+        <PickerIOS
+          style={styles.selectMenu}
+          selectedValue={this.state.category}
+          onValueChange={(category) => this.setState({category, modelIndex: 0})}>
+          {this.state.categories.map((category) => (
+            <PickerItemIOS
+              key={category.key}
+              value={category.name}
+              label={category.name}
+            />
+          ))}
+        </PickerIOS>
       
         <TouchableOpacity style={styles.pickImageContainer} onPress={this._handlePinPost.bind(this)}>
           <View>
@@ -80,7 +116,6 @@ export default class AddPinScreen extends React.Component {
     var that = this;
     var pinData = {};
     navigator.geolocation.getCurrentPosition(async function(location) {
-      console.log(location);
       pinData = {
         location: {
           latitude: location.coords.latitude,
@@ -88,15 +123,14 @@ export default class AddPinScreen extends React.Component {
         },
         mediaUrl: that.state.image,
         description: that.state.description,
+        category: that.state.category,
+        isPublic: that.state.isPublic,
       };
 
       try {
-        console.log('Pin Data is: ', pinData);
-        console.log('User ID is: ', that.props.route.params);
         let response = await that._postPin(pinData);
         that.props.navigator.pop();
       } catch(e) {
-        console.log('_handlePinPost: An error occurred: ', e);
         throw e;
         alert('Pin post failed, sorry :(');
       }
@@ -115,6 +149,7 @@ export default class AddPinScreen extends React.Component {
     };
 
     return fetch(postUrl, options);
+    console.log(pinData);
   }
 
   _handleImagePicked = async (pickerResult) => {
@@ -128,9 +163,6 @@ export default class AddPinScreen extends React.Component {
         this.setState({image: uploadResult.location});
       }
     } catch(e) {
-      console.log({uploadResponse});
-      console.log({uploadResult});
-      console.log({e});
       throw e;
       alert('Upload failed, sorry :(');
     }
@@ -162,15 +194,6 @@ export default class AddPinScreen extends React.Component {
   }
 
   _takePhoto = async () => {
-    // let result = await Exponent.ImagePicker.launchCameraAsync({
-    //   allowsEditing: true,
-    //   aspect: [4,3]
-    // });
-
-    // if (!result.cancelled) {
-    //   this.setState({image: result.uri});
-    //   this._handleImagePicked(result);
-    // }
     let pickerResult = await Exponent.ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4,3]
@@ -220,6 +243,9 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 5,
     paddingTop: 15,
+  },
+  selectMenu: {
+    height: 200,
   },
   addPhotoContainer: {
     flex: 5,
