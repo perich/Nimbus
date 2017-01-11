@@ -27,7 +27,6 @@ export const userState = createReducer(initialUserState, {
   },
 
   [types.HANDLE_FACEBOOK_SIGNIN]: (state, action) => {
-    console.log('INITIALSTATE', state);
     return Object.assign({}, state, {
       currentUser: action.currentUser,
     });
