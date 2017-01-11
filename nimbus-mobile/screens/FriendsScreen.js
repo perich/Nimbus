@@ -29,7 +29,11 @@ class FriendsScreen extends React.Component {
   }
 
   goToFriend(friend) {
+
+    // this.props.getFriendPins(friend);
+
     this.props.navigator.push('friendProfile', friend);
+    // this.props.navigator.push('friendProfile', friend);
   }
 
   render() {
@@ -38,7 +42,11 @@ class FriendsScreen extends React.Component {
         <View style={styles.container}>
           {this.props.friends.map(friend => (
             <View style={styles.card} key={friend.id}>
-              <TouchableNativeFeedback onPress={this.goToFriend.bind(this, friend)} fallback={TouchableHighlight} underlayColor="#eee">
+              <TouchableNativeFeedback 
+                onPress={this.goToFriend.bind(this, friend)} 
+                fallback={TouchableHighlight} 
+                underlayColor="#eee"
+              >
                 <View style={[styles.cardBody, {flexDirection: 'row'}]}>
                   <MaterialIcons
                     name="account-circle"

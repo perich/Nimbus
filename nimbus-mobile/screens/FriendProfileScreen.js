@@ -14,15 +14,18 @@ import {
   ExponentLinksView,
 } from '@exponent/samples';
 import TimeAgo from 'react-native-timeago';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../redux/actions/index.js';
 
-export default class FriendProfileScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      markers: [],
-      viewIsReady: false,
-    }
-  }
+class FriendProfileScreen extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     markers: [],
+  //     viewIsReady: false,
+  //   }
+  // }
 
   static route = {
     navigationBar: {
@@ -35,64 +38,66 @@ export default class FriendProfileScreen extends React.Component {
   componentDidMount() {
     console.log(this.props.route.params);
     if (this.props.route.params.id > 1000) {
-      this.getFriendPins();
+      console.log('GETTING FRIEND PINS');
+      this.props.getFriendPins(this.props.route.params);
     } else {
-      this.setState({
-        viewIsReady: true,
-      })
+      this.props.toggleViewReady();
+      // this.setState({
+      //   viewIsReady: true,
+      // })
     }
   }
 
-  getFriendPins() {
-    var that = this;
-    console.log('Fetching friends pins...');
-    fetch('http://107.170.233.162:1337/api/users/' + this.props.route.params.id + '/pins', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('Data is: ', data.records[0]._fields[0].properties.location);
-      var markers = [];
-      for (var i = 0; i < data.records.length; i++) {
-        markers.push({
-          id: i,
-          location: {
-            latitude: JSON.parse(data.records[i]._fields[0].properties.location).latitude,
-            longitude: JSON.parse(data.records[i]._fields[0].properties.location).longitude,
-          },
-          mediaURL: data.records[i]._fields[0].properties.mediaUrl,
-          likes: 69420,
-          description: data.records[i]._fields[0].properties.description,
-          createdAt: data.records[i]._fields[0].properties.createdAt,
-          // Replaced with sessions
-          firstName: that.props.route.params.firstName,
-          lastName: that.props.route.params.lastName,
-          profileURL: that.props.route.params.profileURL,
-          email: that.props.route.params.email,
-          // Replaced with sessions
-          pinColor:  '#4286f4',
-        });
-      }
-      that.setState({
-        markers: markers,
-        viewIsReady: true,
-      });
-    })
-    .catch((error) => {
-      console.warn(error);
-    }).done();
-  }
+  // getFriendPins() {
+  //   var that = this;
+  //   console.log('Fetching friends pins...');
+  //   fetch('http://107.170.233.162:1337/api/users/' + this.props.route.params.id + '/pins', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //     }
+  //   })
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     console.log('Data is: ', data.records[0]._fields[0].properties.location);
+  //     var markers = [];
+  //     for (var i = 0; i < data.records.length; i++) {
+  //       markers.push({
+  //         id: i,
+  //         location: {
+  //           latitude: JSON.parse(data.records[i]._fields[0].properties.location).latitude,
+  //           longitude: JSON.parse(data.records[i]._fields[0].properties.location).longitude,
+  //         },
+  //         mediaURL: data.records[i]._fields[0].properties.mediaUrl,
+  //         likes: 69420,
+  //         description: data.records[i]._fields[0].properties.description,
+  //         createdAt: data.records[i]._fields[0].properties.createdAt,
+  //         // Replaced with sessions
+  //         firstName: that.props.route.params.firstName,
+  //         lastName: that.props.route.params.lastName,
+  //         profileURL: that.props.route.params.profileURL,
+  //         email: that.props.route.params.email,
+  //         // Replaced with sessions
+  //         pinColor:  '#4286f4',
+  //       });
+  //     }
+  //     that.setState({
+  //       markers: markers,
+  //       viewIsReady: true,
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     console.warn(error);
+  //   }).done();
+  // }
 
   displayPin(marker) {
     this.props.navigator.push('pinView', marker);
   }
 
   render() {
-    if (this.state.viewIsReady) {
+    if (this.props.viewIsReady) {
       return (
         <ScrollView>
           <View style={styles.container}>
@@ -105,7 +110,7 @@ export default class FriendProfileScreen extends React.Component {
             </Image>
             <Text style={styles.name}>{this.props.route.params.firstName} {this.props.route.params.lastName}</Text>
             <Text style={styles.email}>{this.props.route.params.email}</Text>
-            {this.state.markers.map(marker => (
+            {this.props.markers.map(marker => (
               <View style={styles.markerContainer} key={marker.id}>
                 <TimeAgo time={JSON.parse(marker.createdAt)}/>
                 <View style={styles.mapContainer}>
@@ -125,6 +130,19 @@ export default class FriendProfileScreen extends React.Component {
     }
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    markers: state.friendState.markers,
+    viewIsReady: state.friendState.viewIsReady,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FriendProfileScreen);
 
 const styles = StyleSheet.create({
   container: {

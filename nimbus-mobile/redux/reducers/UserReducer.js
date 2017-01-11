@@ -41,8 +41,6 @@ export const userState = createReducer(initialUserState, {
   },
 
   [types.SET_FRIENDS] (state, action) {
-    console.log('PREV FRIENDS*******************', state.friends);
-    console.log('NEXT FRIENDS*******************', action.friends);
     return Object.assign({}, state, {
       friends: action.friends,
     });
