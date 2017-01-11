@@ -10,3 +10,4 @@ export const HANDLE_FACEBOOK_SIGNIN = 'HANDLE_FACEBOOK_SIGNIN';
 // HomeState
 export const SET_LOCATION = 'SET_LOCATION';
 export const GET_PINS = 'GET_PINS';
+export const HANDLE_PINS = 'HANDLE_PINS';
