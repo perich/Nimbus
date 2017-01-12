@@ -13,18 +13,30 @@ import {
   ExponentLinksView,
 } from '@exponent/samples';
 import TimeAgo from 'react-native-timeago';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../redux/actions/index.js';
 
-export default class PinScreen extends React.Component {
+class PinScreen extends React.Component {
   static route = {
     navigationBar: {
       title(params) {
-        return `${params.firstName} ${params.lastName}'s Post`;
+          return `${params.firstName} ${params.lastName}'s Post`;
       }
     },
   }
 
   goToFriendsProfile() {
-    this.props.navigator.push('friendProfile', this.props.route.params);
+    let { userId, firstName, lastName, profileURL, email } = this.props.route.params;
+    let friend = {
+      id: userId,
+      firstName,
+      lastName,
+      profileURL,
+      email,
+    };
+    this.props.setFriend(friend);
+    this.props.navigator.push('friendProfile', friend);
   }
 
   render() {
@@ -62,8 +74,17 @@ export default class PinScreen extends React.Component {
       </ScrollView>
     );
   }
-
 }
+
+function mapStateToProps(state) {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PinScreen);
 
 const styles = StyleSheet.create({
   container: {

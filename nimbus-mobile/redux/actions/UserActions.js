@@ -4,7 +4,6 @@ import { Platform } from 'react-native';
 
 export function getFriends() {
   return (dispatch, getState) => {
-    console.log('Fetching all users...');
     fetch('http://107.170.233.162:1337/api/users', {
       method: 'GET',
       headers: {
@@ -58,10 +57,11 @@ export function getPins(currentUser) {
             description: data.records[i]._fields[0].properties.description,
             createdAt: data.records[i]._fields[0].properties.createdAt,
             // Replaced with sessions
-            // firstName: that.props.firstName,
-            // lastName: that.props.lastName,
-            // profileURL: that.props.profilePic,
-            // email: that.props.email,
+            firstName: currentUser.firstName,
+            lastName: currentUser.lastName,
+            profileURL: currentUser.profileUrl,
+            email: currentUser.email || 'Facebook User',
+            userId: currentUser.userId,
             // Replaced with sessions
             pinColor:  '#4286f4',
           });

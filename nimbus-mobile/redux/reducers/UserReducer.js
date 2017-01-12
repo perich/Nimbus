@@ -36,7 +36,12 @@ export const userState = createReducer(initialUserState, {
 
   [types.LOGOUT_USER] (state, action) {
     return Object.assign({}, state, {
-      currentUser: 'noUser',
+      currentUser: {
+        userId: 'noUser',
+        firstName: 'noUser',
+        lastName: 'noUser',
+        email: 'noUser',
+      },
     });
   },
 

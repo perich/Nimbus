@@ -30,7 +30,7 @@ class FriendsScreen extends React.Component {
 
   goToFriend(friend) {
     this.props.setFriend(friend);
-    this.props.navigator.push('friendProfile');
+    this.props.navigator.push('friendProfile', friend);
   }
 
   render() {

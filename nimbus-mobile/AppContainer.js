@@ -87,17 +87,17 @@ class App extends React.Component {
     }
   }
 
-  login() {
-    this.setState({
-      userIsLoggedIn: true,
-    })
-  }
+  // login() {
+  //   this.setState({
+  //     userIsLoggedIn: true,
+  //   })
+  // }
 
-  logout() {
-    this.setState({
-      userIsLoggedIn: false,
-    })
-  }
+  // logout() {
+  //   this.setState({
+  //     userIsLoggedIn: false,
+  //   })
+  // }
 
   render() {
     if (this.state.appIsReady) {

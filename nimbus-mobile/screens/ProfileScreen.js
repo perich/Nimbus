@@ -60,7 +60,7 @@ function mapStateToProps(state) {
     userId: state.userState.currentUser.userId,
     firstName: state.userState.currentUser.firstName,
     lastName: state.userState.currentUser.lastName,
-    email: state.userState.currentUser.email,
+    email: state.userState.email,
     profileURL: state.userState.currentUser.profileUrl,
   };
 }
