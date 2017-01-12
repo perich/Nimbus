@@ -22,6 +22,10 @@
     "react-native": "git+https://github.com/exponentjs/react-native#sdk-12.0.0",
     "react-native-keyboard-aware-scroll-view": "^0.2.6",
     "react-native-timeago": "^0.3.0",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.7.4",
+    "redux-thunk": "^2.1.0",
     "supertest": "^2.0.1"
   },
   "devDependencies": {
