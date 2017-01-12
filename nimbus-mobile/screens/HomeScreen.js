@@ -39,6 +39,10 @@ class HomeScreen extends React.Component {
     this.props.navigator.push('pinView', marker);
   }
 
+  getPins() {
+    this.props.getPins(this.props.currentUser);
+  }
+
   render() {
     if (this.props.mapIsReady) {    
       return (
@@ -46,7 +50,7 @@ class HomeScreen extends React.Component {
           <TouchableHighlight style={styles.addButton} underlayColor={'transparent'} onPress={this.goToAddPin.bind(this)}>
             <Text style={styles.addText}>+</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.refreshButton} underlayColor={'transparent'} onPress={this.props.getPins(this.props.currentUser)}>
+          <TouchableHighlight style={styles.refreshButton} underlayColor={'transparent'} onPress={this.getPins.bind(this)}>
             <Text style={styles.addText}>R</Text>
           </TouchableHighlight>
           <Components.MapView style={{flex: 1}} showsUserLocation={true} initialRegion={{latitude: this.props.userLocation.latitude, longitude: this.props.userLocation.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421,}}>
