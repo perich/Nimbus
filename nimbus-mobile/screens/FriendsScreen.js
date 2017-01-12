@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   TouchableHighlight,
+  TouchableOpacity,
   ScrollView,
   StyleSheet,
 } from 'react-native';
@@ -12,7 +13,7 @@ import {
 } from '@exponent/samples';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 import { MaterialIcons } from '@exponent/vector-icons';
-
+import AddFriendButton from '../components/AddFriendButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../redux/actions/index.js';
@@ -21,11 +22,45 @@ class FriendsScreen extends React.Component {
   static route = {
     navigationBar: {
       title: 'Friends',
-    },
+      renderRight: function() {
+        return (
+          <AddFriendButton />
+        )
+      } 
+    }
   }
 
   componentWillMount() {
+
     this.props.getFriends();
+
+    // var that = this;
+    // fetch('http://107.170.233.162:1337/api/users', {
+    //   method: 'GET',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //   }
+    // })
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   var friends = [];
+    //   for (var i = 0; i < data.length; i++) {
+    //     friends.push({
+    //       id: data[i].id,
+    //       firstName: data[i].firstName,
+    //       lastName: data[i].lastName,
+    //       profileURL: data[i].photo,
+    //       email: data[i].email === 'No email' ? 'Facebook User' : data[i].email,
+    //     });
+    //   }
+    //   that.setState({
+    //     friends: friends,
+    //   });
+    // })
+    // .catch((error) => {
+    //   console.warn(error);
+    // }).done();
   }
 
   goToFriend(friend) {
@@ -94,6 +129,13 @@ const styles = StyleSheet.create({
   cardLabelText: {
     fontSize: 15,
     color: '#313131',
+  },
+  addFriendText: {
+    marginTop: 10,
+    marginRight: 10,
+    textAlign: 'center',
+    color: 'blue',
+    fontSize: 20,
   },
   signOutText: {
     fontSize: 15,
