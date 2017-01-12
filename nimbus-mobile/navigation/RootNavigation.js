@@ -27,10 +27,7 @@ import { ActionCreators } from '../redux/actions/index.js';
 import { bindActionCreators } from 'redux';
 
 class RootNavigation extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
+  
   componentDidMount() {
     // this._notificationSubscription = this._registerForPushNotifications();
   }

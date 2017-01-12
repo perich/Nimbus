@@ -9,4 +9,3 @@ export const SIGN_IN_WITH_FACEBOOK = 'SIGN_IN_WITH_FACEBOOK';
 
 // Friend Actions
 export const SET_FRIEND_MARKERS = 'SET_FRIEND_MARKERS';
-export const TOGGLE_VIEW_READY = 'TOGGLE_VIEW_READY';

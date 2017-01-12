@@ -139,7 +139,6 @@ class AddPinScreen extends React.Component {
   }
 
   _postPin = async (pinData) => {
-    console.log('POSTING PIN********************');
     var postUrl = 'http://107.170.233.162:1337/api/users/' + this.props.userId + '/pins';
     let options = {
       method: 'POST',

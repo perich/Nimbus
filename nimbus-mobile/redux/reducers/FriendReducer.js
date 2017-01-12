@@ -6,7 +6,7 @@ let initialFriendState = {
   profileUrl: null,
   firstName: null,
   lastName: null,
-  email: null,
+  email: 'Facebook User',
   markers: [],
   viewIsReady: false,
 };
@@ -18,16 +18,10 @@ export const friendState = createReducer(initialFriendState, {
       profileURL: action.friend.profileURL,
       firstName: action.friend.firstName,
       lastName: action.friend.lastName,
-      email: action.friend.email || null,
+      email: action.friend.email || 'Facebook User',
       markers: action.markers,
       viewIsReady: true,
     });
   },
-
-  [types.TOGGLE_VIEW_READY] (state, action) {
-    return Object.assign({}, state, {
-      viewIsReady: !state.viewIsReady,
-    });
-  },
-  
+    
 });

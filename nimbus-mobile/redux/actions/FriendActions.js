@@ -1,7 +1,6 @@
 import * as types from './ActionTypes.js';
 
 export function setFriend(friend) {
-  console.log('FRIEND IS THIS ONE *****************', friend);
   return (dispatch, getState) => {
     let apiUrl = 'http://107.170.233.162:1337/api/users/' + friend.id + '/pins';
     fetch(apiUrl, {
@@ -27,6 +26,13 @@ export function setFriend(friend) {
           description: data.records[i]._fields[0].properties.description,
           createdAt: data.records[i]._fields[0].properties.createdAt,
           pinColor:  '#4286f4',
+          // Replaced with sessions
+          firstName: friend.firstName,
+          lastName: friend.lastName,
+          profileURL: friend.profileURL,
+          email: friend.email,
+          userId: friend.id,
+          // Replaced with sessions
         });
       }
       dispatch(setFriendMarkers(markers, friend));
@@ -42,11 +48,5 @@ export function setFriendMarkers(markers, friend) {
     type: types.SET_FRIEND_MARKERS,
     friend,
     markers,
-  };
-}
-
-export function toggleViewReady() {
-  return {
-    type: types.TOGGLE_VIEW_READY,
   };
 }

@@ -10,7 +10,11 @@ import {
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 import { MaterialIcons } from '@exponent/vector-icons';
 
-export default class SettingsScreen extends React.Component {
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../redux/actions/index.js';
+
+class SettingsScreen extends React.Component {
   static route = {
     navigationBar: {
       title: 'Settings'
@@ -48,6 +52,16 @@ export default class SettingsScreen extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);
+
 
 const styles = StyleSheet.create({
   container: {
