@@ -2,30 +2,24 @@ import React from 'react';
 import {
   Dimensions,
   Image,
-  Platform,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Facebook } from 'exponent';
+
+import { connect } from 'react-redux';
+import { ActionCreators } from '../redux/actions/index.js';
+import { bindActionCreators } from 'redux';
+
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 import Router from '../navigation/Router';
 
 const { width, height } = Dimensions.get('window');
 const background = require('../assets/images/background.jpg');
 
-export default class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: null,
-      authToken: null,
-      name: null,
-    };
-  }
-
+class Login extends React.Component {
   goToSignUp() {
     this.props.navigator.push('signup');
   }
@@ -81,7 +75,7 @@ export default class Login extends React.Component {
               </Text>
             </View>
 
-            <TouchableNativeFeedback onPress={this._signInWithFacebook.bind(this)}>
+            <TouchableNativeFeedback onPress={this.props.signInWithFacebook}>
               <View style={styles.facebookButton}>
                 <Text style={styles.facebookButtonText}>
                   Sign in with Facebook
@@ -103,63 +97,16 @@ export default class Login extends React.Component {
       </View>
     );
   }
-
-  async _signInWithFacebook() {
-    const result = await Facebook.logInWithReadPermissionsAsync(
-      // Steven's FB Key, put in environment variable
-      '1348413101897052', {
-      permissions: ['public_profile', 'user_photos'],
-      behavior: Platform.OS === 'ios' ? 'web' : 'system',
-    });
-
-    if (result.type === 'success') {
-      let response = await fetch(`https://graph.facebook.com/me?access_token=${result.token}&fields=id,name`);
-      let info = await response.json();
-      // gets larger user photo
-      let userPhoto = await fetch(`https://graph.facebook.com/${info.id}/picture?type=large`);
-
-      console.log('result*******************', result);
-      console.log('info*********************', info);
-  
-      let fullName = info.name.split(' ');
-      let firstName = fullName[0];
-      let lastName = fullName[1];
-
-      this.props.loginUser({
-        userId: info.id,
-        firstName: firstName,
-        lastName: lastName,
-        profileUrl: userPhoto.url, 
-      });
-
-      this.props.navigator.push(Router.getRoute('rootNavigation'));
-
-      fetch('http://107.170.233.162:1337/api/users/', {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          "firstName": firstName,
-          "lastName": lastName,
-          "fbID": info.id,
-          "photoUrl": userPhoto.url
-        })
-      })
-        .then(function (result) {
-          if (result.status === 201) {
-            // do something with the data
-            // return result.json();
-          }
-        })
-        .catch(function (err) {
-          console.log("*** ERROR ***");
-          console.log(err);
-        });
-    }
-  }
 }
+
+function mapStateToProps(state) {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
   container: {

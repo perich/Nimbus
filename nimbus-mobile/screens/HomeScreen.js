@@ -4,7 +4,6 @@ import { Components } from 'exponent';
 import {
   Image,
   Linking,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,106 +12,39 @@ import {
 } from 'react-native';
 import { MonoText } from '../components/StyledText';
 import Router from '../navigation/Router';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../redux/actions/index.js';
 
-export default class HomeScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      userId: props.currentUser.userId,
-      firstName: props.currentUser.firstName,
-      lastName: props.currentUser.lastName,
-      profilePic: props.currentUser.profileUrl,
-      email: 'Facebook User',
-      userLocation: {
-        latitude: null,
-        longitude: null,
-      },
-      mapIsReady: false,
-      markers: [],
-      colors: {
-        Food: '#ff9d00',
-        Exciting: '#ffff00',
-        Dangerous: '#ff0000',
-        Chill: '#00cbff',
-        Other: '#ff00ff',
-      }
-    }
-  }
-
+class HomeScreen extends React.Component {
   static route = {
     navigationBar: {
       visible: false,
     },
   }
 
-  getPins() {
-    console.log(this.props.currentUser);
-    var that = this;
-    console.log('Fetching pins...');
-    fetch('http://107.170.233.162:1337/api/users/' + this.state.userId + '/pins', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('Data is: ', data.records[0]._fields[0].properties.location);
-      var markers = [];
-      for (var i = 0; i < data.records.length; i++) {
-        markers.push({
-          id: i,
-          location: {
-            latitude: JSON.parse(data.records[i]._fields[0].properties.location).latitude,
-            longitude: JSON.parse(data.records[i]._fields[0].properties.location).longitude,
-          },
-          mediaURL: data.records[i]._fields[0].properties.mediaUrl,
-          likes: 69420,
-          description: data.records[i]._fields[0].properties.description,
-          createdAt: data.records[i]._fields[0].properties.createdAt,
-          // Replaced with sessions
-          firstName: that.state.firstName,
-          lastName: that.state.lastName,
-          profileURL: that.state.profilePic,
-          email: that.state.email,
-          // Replaced with sessions
-          pinColor:  that.state.colors[data.records[i]._fields[0].properties.category],
-        });
-      }
-      that.setState({
-        markers: markers,
-      });
-    })
-    .catch((error) => {
-      console.warn(error);
-    }).done();
-  }
-
   componentDidMount() {
     var that = this;
-    that.getPins();
     navigator.geolocation.getCurrentPosition(function(location) {
-      that.setState({
-        userLocation: {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        },
-        mapIsReady: true,
-      });
-    })
+      that.props.setLocation(location, true);      
+      that.props.getPins(that.props.currentUser);
+    });
   }
 
   goToAddPin() {
-    this.props.navigator.push('addPin', this.props.currentUser);
+    this.props.navigator.push('addPin');
   }
 
   displayPin(marker) {
     this.props.navigator.push('pinView', marker);
   }
 
+  getPins() {
+    this.props.getPins(this.props.currentUser);
+  }
+
   render() {
-    if (this.state.mapIsReady) {    
+    if (this.props.mapIsReady) {    
       return (
         <View style={styles.container}>
           <TouchableHighlight style={styles.addButton} underlayColor={'transparent'} onPress={this.goToAddPin.bind(this)}>
@@ -121,8 +53,8 @@ export default class HomeScreen extends React.Component {
           <TouchableHighlight style={styles.refreshButton} underlayColor={'transparent'} onPress={this.getPins.bind(this)}>
             <Text style={styles.addText}>R</Text>
           </TouchableHighlight>
-          <Components.MapView style={{flex: 1}} showsUserLocation={true} initialRegion={{latitude: this.state.userLocation.latitude, longitude: this.state.userLocation.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421,}}>
-            {this.state.markers.map(marker => (
+          <Components.MapView style={{flex: 1}} showsUserLocation={true} initialRegion={{latitude: this.props.userLocation.latitude, longitude: this.props.userLocation.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421,}}>
+            {this.props.markers.map(marker => (
                 <Components.MapView.Marker
                   key={marker.id}
                   coordinate={marker.location}
@@ -139,6 +71,21 @@ export default class HomeScreen extends React.Component {
       );
     }
   }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+
+function mapStateToProps(state) {
+  return {
+    currentUser: state.userState.currentUser,
+    email: state.userState.email,
+    userLocation: state.userState.userLocation,
+    mapIsReady: state.userState.mapIsReady,
+    markers: state.userState.markers,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
 }
 
 const styles = StyleSheet.create({

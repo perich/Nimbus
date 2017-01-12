@@ -15,20 +15,13 @@ import {
   ExponentLinksView,
 } from '@exponent/samples';
 
+import { connect } from 'react-redux';
+import { ActionCreators } from '../redux/actions/index.js';
+import { bindActionCreators } from 'redux';
+
 const { width, height } = Dimensions.get('window');
 
-export default class ProfileScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      userId: props.currentUser.userId,
-      firstName: props.currentUser.firstName,
-      lastName: props.currentUser.lastName,
-      email: 'Facebook User',
-      profileURL: props.currentUser.profileUrl,
-    }
-  }
-
+class ProfileScreen extends React.Component {
   static route = {
     navigationBar: {
       title: 'Profile',
@@ -47,21 +40,35 @@ export default class ProfileScreen extends React.Component {
     return (
       <ScrollView>
         <View style={styles.container}>
-          <Image style={styles.pictureContainer} source={{uri: this.state.profileURL}}>
+          <Image style={styles.pictureContainer} source={{uri: this.props.profileURL}}>
             <Components.BlurView tint="default" intensity={90} style={StyleSheet.absoluteFill}>
               <View style={styles.pictureDetails}>
-                <Image style={styles.picture} source={{uri: this.state.profileURL}}/>
+                <Image style={styles.picture} source={{uri: this.props.profileURL}}/>
               </View>
             </Components.BlurView>
           </Image>
-          <Text style={styles.name}>{this.state.firstName} {this.state.lastName}</Text>
-          <Text style={styles.email}>{this.state.email}</Text>
+          <Text style={styles.name}>{this.props.firstName} {this.props.lastName}</Text>
+          <Text style={styles.email}>{this.props.email}</Text>
         </View>
       </ScrollView>
     );
   }
-
 }
+
+function mapStateToProps(state) {
+  return {
+    userId: state.userState.currentUser.userId,
+    firstName: state.userState.currentUser.firstName,
+    lastName: state.userState.currentUser.lastName,
+    email: state.userState.email,
+    profileURL: state.userState.currentUser.profileUrl,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
 
 const styles = StyleSheet.create({
   editButton: {

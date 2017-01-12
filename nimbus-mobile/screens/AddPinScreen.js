@@ -17,7 +17,11 @@ import {
   ExponentLinksView,
 } from '@exponent/samples';
 
-export default class AddPinScreen extends React.Component {
+import { connect } from 'react-redux';
+import { ActionCreators } from '../redux/actions/index.js';
+import { bindActionCreators } from 'redux';
+
+class AddPinScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,7 +59,6 @@ export default class AddPinScreen extends React.Component {
       title: 'Add a Pin Post',
     },
   }
-
 
   render() {
     let { image } = this.state;
@@ -123,8 +126,6 @@ export default class AddPinScreen extends React.Component {
         },
         mediaUrl: that.state.image,
         description: that.state.description,
-        category: that.state.category,
-        isPublic: that.state.isPublic,
       };
 
       try {
@@ -138,7 +139,7 @@ export default class AddPinScreen extends React.Component {
   }
 
   _postPin = async (pinData) => {
-    var postUrl = 'http://107.170.233.162:1337/api/users/' + this.props.route.params.userId + '/pins';
+    var postUrl = 'http://107.170.233.162:1337/api/users/' + this.props.userId + '/pins';
     let options = {
       method: 'POST',
       headers: {
@@ -214,6 +215,18 @@ export default class AddPinScreen extends React.Component {
   _goBack() {
     this.props.navigator.pop();
   }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPinScreen);
+
+function mapStateToProps(state) {
+  return {
+    userId: state.userState.currentUser.userId,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
 }
 
 const styles = StyleSheet.create({

@@ -13,14 +13,11 @@ import {
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 import { MaterialIcons } from '@exponent/vector-icons';
 
-export default class FriendsScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      friends: []
-    }
-  }
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../redux/actions/index.js';
 
+class FriendsScreen extends React.Component {
   static route = {
     navigationBar: {
       title: 'Friends',
@@ -28,38 +25,11 @@ export default class FriendsScreen extends React.Component {
   }
 
   componentWillMount() {
-    var that = this;
-    console.log('Fetching all users...');
-    fetch('http://107.170.233.162:1337/api/users', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('Data is: ', data);
-      var friends = [];
-      for (var i = 0; i < data.length; i++) {
-        friends.push({
-          id: data[i].id,
-          firstName: data[i].firstName,
-          lastName: data[i].lastName,
-          profileURL: data[i].photo,
-          email: data[i].email === 'No email' ? 'Facebook User' : data[i].email,
-        });
-      }
-      that.setState({
-        friends: friends,
-      });
-    })
-    .catch((error) => {
-      console.warn(error);
-    }).done();
+    this.props.getFriends();
   }
 
   goToFriend(friend) {
+    this.props.setFriend(friend);
     this.props.navigator.push('friendProfile', friend);
   }
 
@@ -67,9 +37,13 @@ export default class FriendsScreen extends React.Component {
     return (
       <ScrollView>
         <View style={styles.container}>
-          {this.state.friends.map(friend => (
+          {this.props.friends.map(friend => (
             <View style={styles.card} key={friend.id}>
-              <TouchableNativeFeedback onPress={this.goToFriend.bind(this, friend)} fallback={TouchableHighlight} underlayColor="#eee">
+              <TouchableNativeFeedback 
+                onPress={this.goToFriend.bind(this, friend)} 
+                fallback={TouchableHighlight} 
+                underlayColor="#eee"
+              >
                 <View style={[styles.cardBody, {flexDirection: 'row'}]}>
                   <MaterialIcons
                     name="account-circle"
@@ -84,8 +58,19 @@ export default class FriendsScreen extends React.Component {
       </ScrollView>
     );
   }
-
 }
+
+function mapStateToProps(state) {
+  return {
+    friends: state.userState.friends,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FriendsScreen);
 
 const styles = StyleSheet.create({
   container: {
