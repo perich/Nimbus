@@ -9,13 +9,16 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 
+import API_URL from '../environment.js';
 const { width, height } = Dimensions.get('window');
 
 export default class SignupScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: null,
+      firstName: null,
+      lastName: null,
+      email: null,
       password: null,
     };
   }
@@ -25,13 +28,15 @@ export default class SignupScreen extends React.Component {
   }
 
   signup() {
-    fetch('http://107.170.233.162:1337/users', {
+    // fetch('http://107.170.233.162:1337/users', {
+    // fetch('http://localhost:1337/api/signup', {
+    fetch(`${API_URL}/signup`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      body: this.state,
+      body: JSON.stringify(this.state),
     })
     .then((response) => {
       return response.json();
@@ -55,19 +60,73 @@ export default class SignupScreen extends React.Component {
       </View>
 
       <View style={styles.body}>
+
         <View style={styles.inputWrapper}>
           <TextInput 
+            name={'firstname'}
             style={styles.input} 
-            placeholder={'USERNAME'}
-            onChangeText={(username) => this.setState({username})}
+            autoCapitalize={'none'}
+            autoCorrect={false}
+            maxLength={32}
+            placeholderTextColor={'#3b5998'}
+            selectionColor={'blue'}
+            placeholder="FIRSTNAME"
+            returnKeyType={'next'}
+            blurOnSubmit={false}
+            withRef={true}
+            onChangeText={(firstName) => this.setState({ firstName })}
           />
         </View>
 
         <View style={styles.inputWrapper}>
           <TextInput 
+            name={'lastname'}
             style={styles.input} 
-            placeholder={'PASSWORD'}
-            onChangeText={(password) => this.setState({password})}
+            autoCapitalize={'none'}
+            autoCorrect={false}
+            maxLength={32}
+            placeholderTextColor={'#3b5998'}
+            selectionColor={'blue'}
+            placeholder="LASTNAME"
+            returnKeyType={'next'}
+            blurOnSubmit={false}
+            withRef={true}
+            onChangeText={(lastName) => this.setState({ lastName })}
+          />
+        </View>
+
+        <View style={styles.inputWrapper}>
+          <TextInput 
+            name={'email'}
+            style={styles.input} 
+            autoCapitalize={'none'}
+            autoCorrect={false}
+            maxLength={32}
+            placeholderTextColor={'#3b5998'}
+            selectionColor={'blue'}
+            placeholder="EMAIL"
+            keyboardType={'email-address'}
+            returnKeyType={'next'}
+            blurOnSubmit={false}
+            withRef={true}
+            onChangeText={(email) => this.setState({ email })}
+          />
+        </View>
+
+        <View style={styles.inputWrapper}>
+          <TextInput 
+            name={'password'}
+            style={styles.input} 
+            autoCapitalize={'none'}
+            autoCorrect={false}
+            maxLength={32}
+            placeholderTextColor={'#3b5998'}
+            selectionColor={'blue'}
+            placeholder="PASSWORD"
+            returnKeyType={'done'}
+            withRef={true}
+            secureTextEntry={false}
+            onChangeText={(password) => this.setState({ password })}
           />
         </View>
 

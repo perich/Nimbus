@@ -16,6 +16,7 @@ import { MaterialIcons } from '@exponent/vector-icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../redux/actions/index.js';
+import API_URL from '../environment.js';
 
 
 class AddFriendScreen extends React.Component {
@@ -76,7 +77,7 @@ class AddFriendScreen extends React.Component {
     let firstName = fullName[0];
     let lastName = fullName[1];
 
-    fetch(`http://107.170.233.162:1337/api/users?firstName=${firstName}&lastName=${lastName}`,
+    fetch(`${API_URL}/api/users?firstName=${firstName}&lastName=${lastName}`,
     {
       method: 'GET',
       headers: {

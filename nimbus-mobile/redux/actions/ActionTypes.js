@@ -10,3 +10,7 @@ export const SIGN_IN_WITH_FACEBOOK = 'SIGN_IN_WITH_FACEBOOK';
 
 // Friend Actions
 export const SET_FRIEND_MARKERS = 'SET_FRIEND_MARKERS';
+
+// Auth Actions
+export const SET_USERNAME = 'SET_USERNAME';
+export const SET_PASSWORD = 'SET_PASSWORD';

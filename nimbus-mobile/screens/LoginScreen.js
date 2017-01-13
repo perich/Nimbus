@@ -41,15 +41,36 @@ class Login extends React.Component {
 
             <View style={styles.textInputWrapper}>  
               <TextInput 
+                name={'username'}
                 style={styles.textInput} 
-                placeholder="USERNAME"
+                autoCapitalize={'none'}
+                autoCorrect={false}
+                maxLength={32}
+                placeholderTextColor={'rgba(255,255,255,0.4)'}
+                selectionColor={'blue'}
+                placeholder="EMAIL"
+                keyboardType={'email-address'}
+                returnKeyType={'next'}
+                blurOnSubmit={false}
+                withRef={true}
+                onChangeText={(value) => this.props.setUsername(value)}
               />
             </View>
 
             <View style={styles.textInputWrapper}>
               <TextInput 
+                name={'password'}
                 style={styles.textInput} 
+                autoCapitalize={'none'}
+                autoCorrect={false}
+                maxLength={32}
+                placeholderTextColor={'rgba(255,255,255,0.4)'}
+                selectionColor={'blue'}
                 placeholder="PASSWORD"
+                returnKeyType={'done'}
+                withRef={true}
+                secureTextEntry={false}
+                onChangetext={(value) => this.props.setPassword(value)}
               />
             </View>
 
@@ -61,7 +82,9 @@ class Login extends React.Component {
               </View>
             </TouchableOpacity>
 
-            <TouchableNativeFeedback onPress={function(){this.props.loginUser('GRAHAM:D')}.bind(this)}>
+            <TouchableNativeFeedback 
+              onPress={this.props.login}
+            >
               <View style={styles.loginButton}>
                 <Text style={styles.loginButtonText}>
                   LOGIN
@@ -100,7 +123,9 @@ class Login extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {};
+  return {
+
+  };
 }
 
 function mapDispatchToProps(dispatch) {
