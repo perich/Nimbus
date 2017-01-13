@@ -16,7 +16,6 @@ import Exponent from 'exponent';
 import {
   ExponentLinksView,
 } from '@exponent/samples';
-
 import { connect } from 'react-redux';
 import { ActionCreators } from '../redux/actions/index.js';
 import { bindActionCreators } from 'redux';
@@ -48,8 +47,12 @@ class AddPinScreen extends React.Component {
         },
         {
           key: 4,
-          name: 'Other',
+          name: 'Gross',
         },
+        {
+          key: 5,
+          name: 'Other'
+        }
       ]
     }
   }
@@ -126,7 +129,7 @@ class AddPinScreen extends React.Component {
         },
         mediaUrl: that.state.image,
         description: that.state.description,
-        category: 'Other'
+        category: that.state.category
       };
 
       try {
