@@ -13,8 +13,12 @@ import {
 import Components from 'exponent';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 import { MaterialIcons } from '@exponent/vector-icons';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../redux/actions/index.js';
 
-export default class SettingsScreen extends React.Component {
+
+class AddFriendScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -24,8 +28,10 @@ export default class SettingsScreen extends React.Component {
       searchResultLastName: '',
       searchResultPhoto: '',
     };
+
     this.searchFriends = this.searchFriends.bind(this);
     this.showAddFriendButton = this.showAddFriendButton.bind(this);
+
   }
 
   static route = {
@@ -37,6 +43,25 @@ export default class SettingsScreen extends React.Component {
 
   showAddFriendButton() {
     this.setState({});
+  }
+
+  addFriend(friendId) {
+    fetch(`http://107.170.233.162:1337/api/users/${friendId}/friendships`,
+    {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({id: this.props.userId})
+    })
+    .then((response) => response.json())
+    .then((jsonResponse) => {
+      console.log('server response', jsonResponse)
+    }).catch((error) => {
+      console.log('***ERRROR***');
+      console.warn(error);
+    })
   }
 
   searchFriends() {
@@ -59,7 +84,7 @@ export default class SettingsScreen extends React.Component {
     })
     .catch((error) => {
       console.warn(error);
-    }).done();
+    })
   }
 
   render() {
@@ -75,22 +100,33 @@ export default class SettingsScreen extends React.Component {
         <Button title='Search...' onPress={this.searchFriends} />
         {
           this.state.searchResults.map(searchResult => (
-          <View style={styles.subContainer}>
-            <Image style={styles.photo} source={{uri: searchResult.photo}} />
-            <Text style={styles.name}> {searchResult.firstName + searchResult.lastName} </Text> 
-            <View style={styles.addButtonContainer}>
-              <TouchableNativeFeedback style={styles.addButton}>
-                <Text>+</Text>
-              </TouchableNativeFeedback>
+            <View key={searchResult.id} style={styles.subContainer}>
+              <Image style={styles.photo} source={{uri: searchResult.photo}} />
+              <Text style={styles.name}> {searchResult.firstName + searchResult.lastName} </Text> 
+              <View style={styles.addButtonContainer}>
+                <TouchableNativeFeedback onPress={this.addFriend.bind(this, searchResult.id)} style={styles.addButton}>
+                  <Text>+</Text>
+                </TouchableNativeFeedback>
+              </View>
             </View>
-          </View>
-        ))
+          ))
         }
       </View>
     );
   }
 }
 
+function _mapStateToProps(state) {
+  return {
+    userId: state.userState.currentUser.userId
+  };
+}
+
+function _mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect(_mapStateToProps, _mapDispatchToProps)(AddFriendScreen)
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
@@ -120,12 +156,13 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'red',
     opacity: 0.6,
     borderWidth: 2,
     borderColor: 'grey',
   },
   searchButton: {
     flex:1,
+    backgroundColor: 'blue'
   },
 });
