@@ -30,7 +30,7 @@ export default class SignupScreen extends React.Component {
   signup() {
     // fetch('http://107.170.233.162:1337/users', {
     // fetch('http://localhost:1337/api/signup', {
-    fetch(`${API_URL}/signup`, {
+    fetch(`${API_URL}/api/signup`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -41,12 +41,18 @@ export default class SignupScreen extends React.Component {
     .then((response) => {
       return response.json();
     })
-    .then((responseJson) => {
+    .then((data) => {
       // if response is successful, redirect the user to the login page
       // otherwise, alert the user of error
+      if (data.token) {
+        alert('Account was created, log in!');
+        this.props.navigator.pop();
+      } else {
+        alert(data.error);
+      }
     })
     .catch((error) => {
-      console.error('An error occurred when posting to /users');
+      console.error('SignupScreen: An error occurred when posting to /api/users');
       throw error;
     });
   }
