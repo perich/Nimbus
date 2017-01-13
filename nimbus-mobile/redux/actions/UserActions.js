@@ -32,6 +32,15 @@ export function getFriends() {
 }
 
 export function getPins(currentUser) {
+  var mapToColor = {
+    'Food': '#ffc700',
+    'Exciting': '#ffff00',
+    'Dangerous': '#ff0000',
+    'Chill': '#0000ff',
+    'Gross': '#0acc27',
+    'Other': '#ff00ff',
+  };
+
   return (dispatch, getState) => {
     fetch('http://107.170.233.162:1337/api/users/' + currentUser.userId + '/pins', {
       method: 'GET',
@@ -63,7 +72,7 @@ export function getPins(currentUser) {
             email: currentUser.email || 'Facebook User',
             userId: currentUser.userId,
             // Replaced with sessions
-            pinColor:  '#4286f4',
+            pinColor: mapToColor[data.records[i]._fields[0].properties.category],
           });
         }
         dispatch(handlePins({ markers }))
