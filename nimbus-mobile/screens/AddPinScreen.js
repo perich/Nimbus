@@ -19,6 +19,7 @@ import {
 import { connect } from 'react-redux';
 import { ActionCreators } from '../redux/actions/index.js';
 import { bindActionCreators } from 'redux';
+import API_URL from '../environment.js';
 
 class AddPinScreen extends React.Component {
   constructor(props) {
@@ -143,7 +144,7 @@ class AddPinScreen extends React.Component {
   }
 
   _postPin = async (pinData) => {
-    var postUrl = 'http://107.170.233.162:1337/api/users/' + this.props.userId + '/pins';
+    var postUrl = `${API_URL}/api/users/${this.props.userId}/pins`;
     let options = {
       method: 'POST',
       headers: {
@@ -174,7 +175,7 @@ class AddPinScreen extends React.Component {
   }
 
   uploadImageAsync = async (uri) => {
-    let apiUrl = `http://107.170.233.162:1337/upload`;
+    let apiUrl = `${API_URL}/upload`;
 
     let uriParts = uri.split('.');
     let fileType = uriParts[uriParts.length - 1];

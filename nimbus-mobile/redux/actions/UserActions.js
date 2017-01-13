@@ -1,10 +1,11 @@
 import * as types from './ActionTypes.js';
 import { Facebook } from 'exponent';
 import { Platform } from 'react-native';
+import API_URL from '../../environment.js';
 
 export function getFriends(userId) {
   return (dispatch, getState) => {
-    fetch(`http://107.170.233.162:1337/api/users/${userId}/friendships/`, {
+    fetch(`${API_URL}/api/users/${userId}/friendships/`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -42,7 +43,7 @@ export function getPins(currentUser) {
   };
 
   return (dispatch, getState) => {
-    fetch('http://107.170.233.162:1337/api/users/' + currentUser.userId + '/pins', {
+    fetch(`${API_URL}/api/users` + currentUser.userId + '/pins', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -79,7 +80,7 @@ export function getPins(currentUser) {
         dispatch(handlePins({ markers }))
       })
       .catch((error) => {
-        console.log("*** ERROR ***");
+        console.log("UserActions.js: getPins(): *** ERROR ***");
         console.log(error);
         throw error;
       });
@@ -145,7 +146,9 @@ export function signInWithFacebook() {
 
                 dispatch(handleFacebookSignin({currentUser: loginUser}));
 
-                fetch('http://107.170.233.162:1337/api/users/', {
+                // fetch('http://107.170.233.162:1337/api/users/', {
+                // fetch('http://localhost:1337/api/users', {
+                fetch(`${API_URL}/api/users`, {
                   headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -165,13 +168,13 @@ export function signInWithFacebook() {
                   }
                 })
                 .catch(function (err) {
-                  console.log("*** ERROR ***");
+                  console.log(`UserActions.js: signInWithFacebook(): POST ${API_URL}/api/users *** ERROR ***`);
                   console.log(err);
                 });   
             });
           })
           .catch((error) => {
-            console.log("*** ERROR ***");
+            console.log("UserActions.js: signInWithFacebook(): GET https://graph.facebook.com/${info.id}/picture?type=large *** ERROR ***");
             console.log(err);
             throw err;
           });

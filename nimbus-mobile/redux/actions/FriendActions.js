@@ -1,8 +1,9 @@
 import * as types from './ActionTypes.js';
+import API_URL from '../../environment.js';
 
 export function setFriend(friend) {
   return (dispatch, getState) => {
-    let apiUrl = 'http://107.170.233.162:1337/api/users/' + friend.id + '/pins';
+    let apiUrl = `${API_URL}/api/users/` + friend.id + '/pins';
     fetch(apiUrl, {
       method: 'GET',
       headers: {
