@@ -57,6 +57,7 @@ class ProfileScreen extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    currentUser: state.userState.currentUser,
     userId: state.userState.currentUser.userId,
     firstName: state.userState.currentUser.firstName,
     lastName: state.userState.currentUser.lastName,

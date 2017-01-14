@@ -9,7 +9,7 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 
-import API_URL from '../environment.js';
+import { API_URL } from '../environment.js';
 const { width, height } = Dimensions.get('window');
 
 export default class SignupScreen extends React.Component {
@@ -28,8 +28,6 @@ export default class SignupScreen extends React.Component {
   }
 
   signup() {
-    // fetch('http://107.170.233.162:1337/users', {
-    // fetch('http://localhost:1337/api/signup', {
     fetch(`${API_URL}/api/signup`, {
       method: 'POST',
       headers: {
