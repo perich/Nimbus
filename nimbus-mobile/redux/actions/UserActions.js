@@ -117,16 +117,9 @@ export function setToken(token) {
   };
 }
 
-export function logoutUser() {
-  return {
-    type: types.LOGOUT_USER,
-  };
-}
-
 export function signInWithFacebook() {
   return (dispatch, getState) => {
     Facebook.logInWithReadPermissionsAsync(
-      // Steven's FB Key, put in environment variable
       FB_KEY, {
       permissions: ['public_profile', 'user_photos'],
       behavior: Platform.OS === 'ios' ? 'web' : 'system',
