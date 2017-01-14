@@ -1,10 +1,10 @@
 import * as types from './ActionTypes.js';
-import API_URL from '../../environment.js';
+import { API_URL } from '../../environment.js';
 
 export function login(user) {
   return (dispatch, getState) => {
     let { email, password } = getState().authState;
-    fetch(`${API_URL}/api/login`, {
+    fetch(`${API_URL}/api/users`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

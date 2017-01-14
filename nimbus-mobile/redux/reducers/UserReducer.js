@@ -8,6 +8,7 @@ let initialUserState = {
     userId: 'noUser',
     firstName: 'noUser',
     lastName: 'noUser',
+    profileUrl: 'noUser',
     email: 'noUser',
     token: '',
     authToken: 'noUser',
