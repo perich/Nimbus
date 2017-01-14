@@ -55,9 +55,14 @@ class AddFriendScreen extends React.Component {
       },
       body: JSON.stringify({id: this.props.userId})
     })
-    .then((response) => response.json())
-    .then((jsonResponse) => {
-      console.log('server response', jsonResponse)
+    .then((response) => {
+      console.log('server response', response);
+      console.log('status', response.status);
+      if (response.status === 201) {
+        window.alert('Friend added!'); 
+      } else {
+        window.alert('You already added this user!')
+      }
     }).catch((error) => {
       console.log('***ERRROR***');
       console.warn(error);

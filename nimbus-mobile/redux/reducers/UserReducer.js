@@ -10,6 +10,7 @@ let initialUserState = {
     firstName: 'noUser',
     lastName: 'noUser',
     email: 'noUser',
+    token: ''
   },
   email: 'Facebook User',
   userLocation: {
@@ -30,7 +31,7 @@ export const userState = createReducer(initialUserState, {
 
   [types.HANDLE_PINS] (state, action) {
     return Object.assign({}, state, {
-        markers: action.markers,
+      markers: action.markers,
     });
   },
 
@@ -58,6 +59,14 @@ export const userState = createReducer(initialUserState, {
         longitude: action.location.coords.longitude,
       },
       mapIsReady: action.mapIsReady,
+    });
+  },
+
+  [types.SET_TOKEN] (state, action) {
+    var newCurrentUser = Object.assign({}, state.currentUser, { token: action.token});
+
+    return Object.assign({}, state, {
+      currentUser: newCurrentUser,
     });
   },
 
