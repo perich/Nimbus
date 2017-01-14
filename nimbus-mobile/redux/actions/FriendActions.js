@@ -12,28 +12,31 @@ export function setFriend(friend) {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log('Data is: ', data.records[0]._fields[0].properties.location);
+      // console.log('Data is: ', data.records[0]._fields[0].properties.location);
       var markers = [];
-      for (var i = 0; i < data.records.length; i++) {
-        markers.push({
-          id: i,
-          location: {
-            latitude: JSON.parse(data.records[i]._fields[0].properties.location).latitude,
-            longitude: JSON.parse(data.records[i]._fields[0].properties.location).longitude,
-          },
-          mediaURL: data.records[i]._fields[0].properties.mediaUrl,
-          likes: 69420,
-          description: data.records[i]._fields[0].properties.description,
-          createdAt: data.records[i]._fields[0].properties.createdAt,
-          pinColor:  '#4286f4',
-          // Replaced with sessions
-          firstName: friend.firstName,
-          lastName: friend.lastName,
-          profileURL: friend.profileURL,
-          email: friend.email,
-          userId: friend.id,
-          // Replaced with sessions
-        });
+      console.log('data records', data.records);
+      if (data.records) {
+        for (var i = 0; i < data.records.length; i++) {
+          markers.push({
+            id: i,
+            location: {
+              latitude: JSON.parse(data.records[i]._fields[0].properties.location).latitude,
+              longitude: JSON.parse(data.records[i]._fields[0].properties.location).longitude,
+            },
+            mediaURL: data.records[i]._fields[0].properties.mediaUrl,
+            likes: 69420,
+            description: data.records[i]._fields[0].properties.description,
+            createdAt: data.records[i]._fields[0].properties.createdAt,
+            pinColor:  '#4286f4',
+            // Replaced with sessions
+            firstName: friend.firstName,
+            lastName: friend.lastName,
+            profileURL: friend.profileURL,
+            email: friend.email,
+            userId: friend.id,
+            // Replaced with sessions
+          });
+        }
       }
       dispatch(setFriendMarkers(markers, friend));
     })

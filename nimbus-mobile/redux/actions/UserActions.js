@@ -54,27 +54,27 @@ export function getPins(currentUser) {
       })
       .then((data) => {
         var markers = [];
-        for (var i = 0; i < data.records.length; i++) {
-          markers.push({
-            id: i,
-            location: {
-              latitude: JSON.parse(data.records[i]._fields[0].properties.location).latitude,
-              longitude: JSON.parse(data.records[i]._fields[0].properties.location).longitude,
-            },
-            mediaURL: data.records[i]._fields[0].properties.mediaUrl,
-            likes: 69420,
-            description: data.records[i]._fields[0].properties.description,
-            createdAt: data.records[i]._fields[0].properties.createdAt,
-            // Replaced with sessions
-            firstName: currentUser.firstName,
-            lastName: currentUser.lastName,
-            profileURL: currentUser.profileUrl,
-            email: currentUser.email || 'Facebook User',
-            userId: currentUser.userId,
-            // Replaced with sessions
-            pinColor: mapToColor[data.records[i]._fields[0].properties.category],
-          });
-        }
+          for (var i = 0; i < data.records.length; i++) {
+            markers.push({
+              id: i,
+              location: {
+                latitude: JSON.parse(data.records[i]._fields[0].properties.location).latitude,
+                longitude: JSON.parse(data.records[i]._fields[0].properties.location).longitude,
+              },
+              mediaURL: data.records[i]._fields[0].properties.mediaUrl,
+              likes: 69420,
+              description: data.records[i]._fields[0].properties.description,
+              createdAt: data.records[i]._fields[0].properties.createdAt,
+              // Replaced with sessions
+              firstName: currentUser.firstName,
+              lastName: currentUser.lastName,
+              profileURL: currentUser.profileUrl,
+              email: currentUser.email || 'Facebook User',
+              userId: currentUser.userId,
+              // Replaced with sessions
+              pinColor: mapToColor[data.records[i]._fields[0].properties.category],
+            });
+          }
         dispatch(handlePins({ markers }))
       })
       .catch((error) => {
