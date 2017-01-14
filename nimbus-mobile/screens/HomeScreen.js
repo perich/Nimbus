@@ -3,7 +3,8 @@ import Exponent from 'exponent';
 import { 
   Components,
   Permissions,
-  Notifications 
+  Notifications,
+  Location
 } from 'exponent';
 import {
   Image,
@@ -28,11 +29,30 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
+    var cb = function(obj) {
+      var lat = obj.coords.latitude;
+      var long = obj.coords.longitude;
+      var time = obj.timestamp;
+      console.log('latitude: ', lat, 'longitude: ', lat)
+      // console.log('TIME: ', time)
+    }
+
+    // wait at least 4 minutes in between updates 
+    // and only invoke the callback if the user has moved more than 10 meters
+    var options = {
+      enableHighAccuracy: true,
+      timeInterval: 240000,
+      distanceInterval: 10
+    }
+
+    Location.watchPositionAsync(options, cb)
+
     var that = this;
     navigator.geolocation.getCurrentPosition(function(location) {
       that.props.setLocation(location, true);      
       that.props.getPins(that.props.currentUser);
     });
+
     var getPushToken = async function() {
       if (!that.props.currentUser.pushToken) {
         let { status } = await Permissions.askAsync(Permissions.REMOTE_NOTIFICATIONS);
