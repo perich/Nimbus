@@ -20,7 +20,6 @@ export function login(user) {
       if (data.error) {
         alert(data.error);
       } else {
-        alert(JSON.stringify(data.user));
         dispatch(setCurrentUser({ currentUser: data.user }));
       }
     })
