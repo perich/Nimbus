@@ -4,9 +4,6 @@ import API_URL from '../../environment.js';
 export function login(user) {
   return (dispatch, getState) => {
     let { email, password } = getState().authState;
-
-    console.log('PASSWORD', password);
-
     fetch(`${API_URL}/api/login`, {
       method: 'POST',
       headers: {
@@ -23,7 +20,7 @@ export function login(user) {
       if (data.error) {
         alert(data.error);
       } else {
-        console.log('DATA>USER', data.user);
+        alert(JSON.stringify(data.user));
         dispatch(setCurrentUser({ currentUser: data.user }));
       }
     })
