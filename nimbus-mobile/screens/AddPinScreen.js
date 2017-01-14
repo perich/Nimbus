@@ -28,15 +28,16 @@ class AddPinScreen extends React.Component {
     this.state = {
       image: null,
       description: null,
+      privacy: null,
       category: null,
       privacies: [
         {
           key: 0,
-          name: 'Private'
+          name: 'private'
         },
         {
           key: 1,
-          name: 'Public'
+          name: 'public'
         }
       ],
       categories: [
@@ -154,7 +155,7 @@ class AddPinScreen extends React.Component {
         },
         mediaUrl: that.state.image,
         description: that.state.description,
-        privacy: that.state.privacy,\
+        privacy: that.state.privacy,
         category: that.state.category
     };
 
