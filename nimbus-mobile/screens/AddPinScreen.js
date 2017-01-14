@@ -21,13 +21,14 @@ import { ActionCreators } from '../redux/actions/index.js';
 import { bindActionCreators } from 'redux';
 import { API_URL } from '../environment.js';
 
+
 class AddPinScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       image: null,
       description: null,
-      category: null,
+      category: 'Other',
       isPublic: false,
       categories: [
         {
@@ -101,7 +102,7 @@ class AddPinScreen extends React.Component {
           selectedValue={this.state.category}
           onValueChange={(category) => this.setState({category, modelIndex: 0})}>
           {this.state.categories.map((category) => (
-            <PickerItemIOS
+            <PickerIOS.Item
               key={category.key}
               value={category.name}
               label={category.name}
@@ -121,26 +122,37 @@ class AddPinScreen extends React.Component {
 
   _handlePinPost = async () => {
     var that = this;
-    var pinData = {};
-    navigator.geolocation.getCurrentPosition(async function(location) {
-      pinData = {
-        location: {
+    var options = { enableHighAccuracy: true }
+    var location = await Exponent.Location.getCurrentPositionAsync(options)
+    var pinData = {
+      location: {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
         },
         mediaUrl: that.state.image,
         description: that.state.description,
         category: that.state.category
-      };
+    };
 
-      try {
-        let response = await that._postPin(pinData);
-        that.props.navigator.pop();
-      } catch(e) {
-        throw e;
-        alert('Pin post failed, sorry :(');
-      }
-    })
+    try {
+      let response = await that._postPin(pinData);
+      that.props.navigator.pop();
+    } catch(e) {
+      throw e;
+      alert('Pin post failed, sorry :(');
+    }
+
+    // navigator.geolocation.getCurrentPosition(async function(location) {
+    //   pinData = {
+    //     location: {
+    //       latitude: location.coords.latitude,
+    //       longitude: location.coords.longitude,
+    //     },
+    //     mediaUrl: that.state.image,
+    //     description: that.state.description,
+    //     category: that.state.category
+    //   };
+    // })
   }
 
   _postPin = async (pinData) => {
