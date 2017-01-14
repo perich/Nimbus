@@ -87,9 +87,9 @@ export function getPins(currentUser) {
   };
 }
 
-export function handleFacebookSignin({ currentUser }) {
+export function setCurrentUser({ currentUser }) {
   return {
-    type: types.HANDLE_FACEBOOK_SIGNIN,
+    type: types.SET_CURRENT_USER,
     currentUser,
   };
 };
@@ -144,7 +144,7 @@ export function signInWithFacebook() {
                   profileUrl: userPhoto.url, 
                 };
 
-                dispatch(handleFacebookSignin({currentUser: loginUser}));
+                dispatch(setCurrentUser({currentUser: loginUser}));
 
                 // fetch('http://107.170.233.162:1337/api/users/', {
                 // fetch('http://localhost:1337/api/users', {
