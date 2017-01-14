@@ -32,15 +32,11 @@ class AddPinScreen extends React.Component {
       privacies: [
         {
           key: 0,
-          name: 'Only Me'
+          name: 'Private'
         },
         {
           key: 1,
-          name: 'Friends'
-        },
-        {
-          key: 2,
-          name: 'Everyone'
+          name: 'Public'
         }
       ],
       categories: [

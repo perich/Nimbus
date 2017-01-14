@@ -45,11 +45,8 @@ export function getPins(currentUser) {
   };
 
   return (dispatch, getState) => {
-<<<<<<< HEAD
     const AUTH_TOKEN = getState().userState.currentUser.authToken;
-    fetch(`${API_URL}/api/users/` + currentUser.userId + '/pins', {
-=======
-    fetch('http://107.170.233.162:1337/api/users/' + currentUser.userId + '/pins/private', {
+    fetch(`${API_URL}/api/users/` + currentUser.userId + '/pins/private', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -95,8 +92,8 @@ export function getPins(currentUser) {
 // NEED TO MODULARIZE LATER
 export function getPinsPublic(currentUser) {
   return (dispatch, getState) => {
-    fetch('http://107.170.233.162:1337/api/users/' + currentUser.userId + '/pins/public', {
->>>>>>> Adds buttons and functions for Public/Private filtering on Home Screen
+    const AUTH_TOKEN = getState().userState.currentUser.authToken;
+    fetch(`${API_URL}/api/users/` + currentUser.userId + '/pins/public', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

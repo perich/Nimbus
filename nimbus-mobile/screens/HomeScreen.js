@@ -93,6 +93,10 @@ class HomeScreen extends React.Component {
     this.props.getPins(this.props.currentUser);
   }
 
+  getPinsPublic() {
+    this.props.getPinsPublic(this.props.currentUser);
+  }
+
   render() {
     if (this.props.mapIsReady) {    
       return (
@@ -100,11 +104,11 @@ class HomeScreen extends React.Component {
           <TouchableHighlight style={styles.addButton} underlayColor={'transparent'} onPress={this.goToAddPin.bind(this)}>
             <Text style={styles.addText}>+</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.refreshButton} underlayColor={'transparent'} onPress={this.getPinsPublic.bind(this)}>
+          <TouchableHighlight style={styles.publicButton} underlayColor={'transparent'} onPress={this.getPinsPublic.bind(this)}>
             <Text style={styles.addText}>A</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.refreshButton} underlayColor={'transparent'} onPress={this.getPins.bind(this)}>
-            <Text style={styles.addText}>P</Text>
+          <TouchableHighlight style={styles.friendsButton} underlayColor={'transparent'} onPress={this.getPins.bind(this)}>
+            <Text style={styles.addText}>F</Text>
           </TouchableHighlight>
           <Components.MapView style={{flex: 1}} showsUserLocation={true} initialRegion={{latitude: this.props.userLocation.latitude, longitude: this.props.userLocation.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421,}}>
             {this.props.markers.map(marker => (
@@ -160,7 +164,7 @@ const styles = StyleSheet.create({
     right: 15,
     zIndex: 999
   },
-  refreshButton: {
+  publicButton: {
     justifyContent: 'center',
     position: 'absolute',
     backgroundColor: 'white',
@@ -172,6 +176,20 @@ const styles = StyleSheet.create({
     width: 50,
     bottom: 15,
     right: 70,
+    zIndex: 999,
+  },  
+  friendsButton: {
+    justifyContent: 'center',
+    position: 'absolute',
+    backgroundColor: 'white',
+    opacity: 0.6,
+    borderWidth: 2,
+    borderColor: 'grey',
+    borderRadius: 50,
+    height: 50,
+    width: 50,
+    bottom: 15,
+    right: 140,
     zIndex: 999,
   },
   addText: {
