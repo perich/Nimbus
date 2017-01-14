@@ -2,3 +2,4 @@ node_modules/**/*
 .exponent/**/*
 
 .env
+environment.js
