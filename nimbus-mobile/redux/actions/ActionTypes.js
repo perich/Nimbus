@@ -5,6 +5,7 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const GET_PINS = 'GET_PINS';
 export const SET_FRIENDS = 'SET_FRIENDS';
 export const SET_LOCATION = 'SET_LOCATION';
+export const SET_TOKEN = 'SET_TOKEN';
 export const SIGN_IN_WITH_FACEBOOK = 'SIGN_IN_WITH_FACEBOOK';
 
 // Friend Actions
