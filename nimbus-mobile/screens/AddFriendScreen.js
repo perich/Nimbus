@@ -46,7 +46,7 @@ class AddFriendScreen extends React.Component {
   }
 
   addFriend(friendId) {
-    fetch(`http://107.170.233.162:1337/api/users/${friendId}/friendships`,
+    fetch(`${API_URL}/api/users/${friendId}/friendships`,
     {
       method: 'POST',
       headers: {
