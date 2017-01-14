@@ -16,8 +16,7 @@ import { MaterialIcons } from '@exponent/vector-icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../redux/actions/index.js';
-import API_URL from '../environment.js';
-
+import { API_URL } from '../environment.js';
 
 class AddFriendScreen extends React.Component {
   constructor(props) {

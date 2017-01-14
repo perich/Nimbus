@@ -1,3 +1,5 @@
 const PORT = 1337;
-export default API_URL = `http://127.0.0.1:${PORT}`;
-// export default API_URL = `http://http://107.170.233.162:${PORT}`
+export const API_URL = `http://127.0.0.1:${PORT}`;
+// export const API_URL = `http://http://107.170.233.162:${PORT}`
+
+export const FB_KEY = '1348413101897052';

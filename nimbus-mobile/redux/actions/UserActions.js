@@ -1,7 +1,8 @@
 import * as types from './ActionTypes.js';
 import { Facebook } from 'exponent';
 import { Platform } from 'react-native';
-import API_URL from '../../environment.js';
+import { API_URL } from '../../environment.js';
+import { FB_KEY } from '../../environment.js';
 
 export function getFriends(userId) {
   return (dispatch, getState) => {
@@ -10,6 +11,7 @@ export function getFriends(userId) {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getState().userState.currentUser.authToken}`
       }
     })
     .then((response) => response.json())
@@ -120,7 +122,7 @@ export function signInWithFacebook() {
   return (dispatch, getState) => {
     Facebook.logInWithReadPermissionsAsync(
       // Steven's FB Key, put in environment variable
-      '1348413101897052', {
+      FB_KEY, {
       permissions: ['public_profile', 'user_photos'],
       behavior: Platform.OS === 'ios' ? 'web' : 'system',
     })
@@ -146,7 +148,6 @@ export function signInWithFacebook() {
                   profileUrl: userPhoto.url,
                 };
 
-
                 fetch(`${API_URL}/api/users`, {
                   headers: {
                     'Accept': 'application/json',
@@ -160,16 +161,9 @@ export function signInWithFacebook() {
                     "photoUrl": userPhoto.url
                   })
                 })
-                .then(function (result) {
-
-                  console.log('WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
-                  console.log('PRE LOGIN USER', loginUser);
-                  Object.assign(loginUser, {
-                    authToken: result.authToken,
-                  });
-                  console.log('POST LOGIN USER', loginUser);
-
-                  dispatch(setCurrentUser({currentUser: loginUser}));
+                .then(result => result.json())
+                .then(function (data) {
+                  dispatch(setCurrentUser({ currentUser: data.user }));
                 })
                 .catch(function (err) {
                   console.log(`UserActions.js: signInWithFacebook(): POST ${API_URL}/api/users *** ERROR ***`);
