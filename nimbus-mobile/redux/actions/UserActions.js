@@ -45,8 +45,58 @@ export function getPins(currentUser) {
   };
 
   return (dispatch, getState) => {
+<<<<<<< HEAD
     const AUTH_TOKEN = getState().userState.currentUser.authToken;
     fetch(`${API_URL}/api/users/` + currentUser.userId + '/pins', {
+=======
+    fetch('http://107.170.233.162:1337/api/users/' + currentUser.userId + '/pins/private', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        var markers = [];
+        for (var i = 0; i < data.records.length; i++) {
+          markers.push({
+            id: i,
+            location: {
+              latitude: JSON.parse(data.records[i]._fields[0].properties.location).latitude,
+              longitude: JSON.parse(data.records[i]._fields[0].properties.location).longitude,
+            },
+            mediaURL: data.records[i]._fields[0].properties.mediaUrl,
+            likes: 69420,
+            description: data.records[i]._fields[0].properties.description,
+            createdAt: data.records[i]._fields[0].properties.createdAt,
+            // Replaced with sessions
+            firstName: currentUser.firstName,
+            lastName: currentUser.lastName,
+            profileURL: currentUser.profileUrl,
+            email: currentUser.email || 'Facebook User',
+            userId: currentUser.userId,
+            // Replaced with sessions
+            pinColor:  '#4286f4',
+          });
+        }
+        dispatch(handlePins({ markers }))
+      })
+      .catch((error) => {
+        console.log("*** ERROR ***");
+        console.log(error);
+        throw error;
+      });
+  };
+}
+
+// NEED TO MODULARIZE LATER
+export function getPinsPublic(currentUser) {
+  return (dispatch, getState) => {
+    fetch('http://107.170.233.162:1337/api/users/' + currentUser.userId + '/pins/public', {
+>>>>>>> Adds buttons and functions for Public/Private filtering on Home Screen
       method: 'GET',
       headers: {
         'Accept': 'application/json',

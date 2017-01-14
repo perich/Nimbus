@@ -28,8 +28,21 @@ class AddPinScreen extends React.Component {
     this.state = {
       image: null,
       description: null,
-      category: 'Other',
-      isPublic: false,
+      category: null,
+      privacies: [
+        {
+          key: 0,
+          name: 'Only Me'
+        },
+        {
+          key: 1,
+          name: 'Friends'
+        },
+        {
+          key: 2,
+          name: 'Everyone'
+        }
+      ],
       categories: [
         {
           key: 0,
@@ -90,13 +103,13 @@ class AddPinScreen extends React.Component {
         <TextInput 
           style={styles.descriptionBox} 
           multiline={false} 
-          numberOfLines={2} 
+          numberOfLines={4} 
           onChangeText={(description) => this.setState({description})} 
-          placeholder='Enter a description...' 
+          placeholder='Write a caption...' 
           value={this.state.description} 
         />
 
-        <Text>Pick a category:</Text>
+        <Text>Category:</Text>
         <PickerIOS
           style={styles.selectMenu}
           selectedValue={this.state.category}
@@ -110,6 +123,20 @@ class AddPinScreen extends React.Component {
           ))}
         </PickerIOS>
       
+        <Text>Share with:</Text>
+        <PickerIOS
+          style={styles.selectMenu}
+          selectedValue={this.state.privacy}
+          onValueChange={(privacy) => this.setState({privacy, modelIndex:0})}>
+          {this.state.privacies.map((privacy) => (
+            <PickerItemIOS
+              key={privacy.key}
+              value={privacy.name}
+              label={privacy.name}
+            />
+          ))}
+        </PickerIOS>
+
         <TouchableOpacity style={styles.pickImageContainer} onPress={this._handlePinPost.bind(this)}>
           <View>
             <Text style={styles.pickImageText}>Submit</Text>
@@ -131,8 +158,8 @@ class AddPinScreen extends React.Component {
         },
         mediaUrl: that.state.image,
         description: that.state.description,
-        category: that.state.category,
-        privacy: 'public'
+        privacy: that.state.privacy,\
+        category: that.state.category
     };
 
     try {
