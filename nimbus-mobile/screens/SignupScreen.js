@@ -44,8 +44,8 @@ export default class SignupScreen extends React.Component {
     .then((data) => {
       // if response is successful, redirect the user to the login page
       // otherwise, alert the user of error
-      if (data.token) {
-        alert('Account was created, log in!');
+      if (data.success) {
+        alert(data.success);
         this.props.navigator.pop();
       } else {
         alert(data.error);
