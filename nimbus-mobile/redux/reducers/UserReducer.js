@@ -3,14 +3,15 @@ import * as types from '../actions/ActionTypes.js';
 
 let initialUserState = {
   id: null,
-  authToken: null,
   name: null,
   currentUser: {
     userId: 'noUser',
     firstName: 'noUser',
     lastName: 'noUser',
+    profileUrl: 'noUser',
     email: 'noUser',
-    token: ''
+    token: '',
+    authToken: 'noUser',
   },
   email: 'Facebook User',
   userLocation: {
@@ -23,9 +24,10 @@ let initialUserState = {
 };
 
 export const userState = createReducer(initialUserState, {
-  [types.HANDLE_FACEBOOK_SIGNIN]: (state, action) => {
+  [types.SET_CURRENT_USER]: (state, action) => {
+    let currentUser = Object.assign({}, state.currentUser, action.currentUser);
     return Object.assign({}, state, {
-      currentUser: action.currentUser,
+      currentUser: currentUser,
     });
   },
 
@@ -37,12 +39,25 @@ export const userState = createReducer(initialUserState, {
 
   [types.LOGOUT_USER] (state, action) {
     return Object.assign({}, state, {
+      id: null,
+      name: null,
       currentUser: {
         userId: 'noUser',
         firstName: 'noUser',
         lastName: 'noUser',
+        profileUrl: 'noUser',
         email: 'noUser',
+        token: 'noUser',
+        authToken: 'noUser',
       },
+      email: 'Facebook User',
+      userLocation: {
+        latitude: null,
+        longitude: null,
+      },
+      mapIsReady: false,
+      markers: [],
+      friends: [],
     });
   },
 
