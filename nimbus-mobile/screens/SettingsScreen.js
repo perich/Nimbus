@@ -22,7 +22,7 @@ class SettingsScreen extends React.Component {
   }
 
   logout() {
-    this.props.logoutUser();
+    var result = this.props.logoutUser();
   }
  
   render() {
@@ -54,7 +54,9 @@ class SettingsScreen extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    currentUser: state.userState.currentUser,
+  };
 }
 
 function mapDispatchToProps(dispatch) {

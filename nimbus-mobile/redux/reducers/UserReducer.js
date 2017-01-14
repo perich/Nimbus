@@ -37,6 +37,30 @@ export const userState = createReducer(initialUserState, {
     });
   },
 
+  [types.LOGOUT_USER] (state, action) {
+    return Object.assign({}, state, {
+      id: null,
+      name: null,
+      currentUser: {
+        userId: 'noUser',
+        firstName: 'noUser',
+        lastName: 'noUser',
+        profileUrl: 'noUser',
+        email: 'noUser',
+        token: 'noUser',
+        authToken: 'noUser',
+      },
+      email: 'Facebook User',
+      userLocation: {
+        latitude: null,
+        longitude: null,
+      },
+      mapIsReady: false,
+      markers: [],
+      friends: [],
+    });
+  },
+
   [types.SET_FRIENDS] (state, action) {
     return Object.assign({}, state, {
       friends: action.friends,
