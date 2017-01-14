@@ -69,7 +69,7 @@ class HomeScreen extends React.Component {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.props.currentUser.authToken}`
+            'Authorization': `Bearer ${that.props.currentUser.authToken}`
           },
           body: JSON.stringify({
             token: token,
