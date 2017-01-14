@@ -53,7 +53,7 @@ export function getPins(currentUser) {
         return response.json();
       })
       .then((data) => {
-        var markers = [];
+        var markers = [];          
         for (var i = 0; i < data.records.length; i++) {
           markers.push({
             id: i,
@@ -75,6 +75,7 @@ export function getPins(currentUser) {
             pinColor: mapToColor[data.records[i]._fields[0].properties.category],
           });
         }
+
         dispatch(handlePins({ markers }))
       })
       .catch((error) => {
@@ -92,7 +93,6 @@ export function handleFacebookSignin({ currentUser }) {
   };
 };
 
-
 export function handlePins({ markers }) {
   return {
     type: types.HANDLE_PINS,
@@ -103,6 +103,13 @@ export function handlePins({ markers }) {
 export function logoutUser() {
   return {
     type: types.LOGOUT_USER,
+  };
+}
+
+export function setToken(token) {
+  return {
+    type: types.SET_TOKEN,
+    token,
   };
 }
 
