@@ -30,37 +30,8 @@ class FriendsScreen extends React.Component {
     }
   }
 
-  componentWillMount() {
-
-    this.props.getFriends();
-
-    // var that = this;
-    // fetch('http://107.170.233.162:1337/api/users', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //   }
-    // })
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   var friends = [];
-    //   for (var i = 0; i < data.length; i++) {
-    //     friends.push({
-    //       id: data[i].id,
-    //       firstName: data[i].firstName,
-    //       lastName: data[i].lastName,
-    //       profileURL: data[i].photo,
-    //       email: data[i].email === 'No email' ? 'Facebook User' : data[i].email,
-    //     });
-    //   }
-    //   that.setState({
-    //     friends: friends,
-    //   });
-    // })
-    // .catch((error) => {
-    //   console.warn(error);
-    // }).done();
+  componentDidMount() {
+    this.props.getFriends(this.props.userId);
   }
 
   goToFriend(friend) {
@@ -97,6 +68,7 @@ class FriendsScreen extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    userId: state.userState.currentUser.userId,
     friends: state.userState.friends,
   };
 }
