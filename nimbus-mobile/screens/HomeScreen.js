@@ -1,6 +1,10 @@
 import React from 'react';
 import Exponent from 'exponent';
-import { Components } from 'exponent';
+import { 
+  Components,
+  Permissions,
+  Notifications 
+} from 'exponent';
 import {
   Image,
   Linking,
@@ -24,22 +28,23 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
-      var that = this;
-      navigator.geolocation.getCurrentPosition(function(location) {
-        that.props.setLocation(location, true);      
-        that.props.getPins(that.props.currentUser);
-      });
-
-      if (!this.props.currentUser.pushToken) {
+    var that = this;
+    navigator.geolocation.getCurrentPosition(function(location) {
+      that.props.setLocation(location, true);      
+      that.props.getPins(that.props.currentUser);
+    });
+    var getPushToken = async function() {
+      if (!that.props.currentUser.pushToken) {
         let { status } = await Permissions.askAsync(Permissions.REMOTE_NOTIFICATIONS);
         if (status !== 'granted') {
+          that.props.setToken('rejected');
           return;
         }
         // Get the token that uniquely identifies this device
         let token = await Notifications.getExponentPushTokenAsync();
 
         // POST the token to our backend so we can use it to send pushes from there
-        fetch('http://107.170.233.162:1337/api/users/' + this.props.currentUser.userId, {
+        fetch('http://107.170.233.162:1337/api/users/' + that.props.currentUser.userId, {
           method: 'PUT',
           headers: {
             'Accept': 'application/json',
@@ -49,10 +54,11 @@ class HomeScreen extends React.Component {
             token: token,
           }),
         }).then(function(response) {
-          this.props.setToken(token);
+          // that.props.setToken(token);
         });
-      }
-    }
+      } 
+    }();
+  }
 
   goToAddPin() {
     this.props.navigator.push('addPin');
