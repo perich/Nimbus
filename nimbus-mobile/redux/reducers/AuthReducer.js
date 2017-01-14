@@ -9,12 +9,8 @@ let initialAuthState = {
 export const authState = createReducer(initialAuthState, {
   [types.LOGOUT_USER] (state, action) {
     return Object.assign({}, state, {
-      currentUser: {
-        userId: 'noUser',
-        firstName: 'noUser',
-        lastName: 'noUser',
-        email: 'noUser',
-      },
+      email: '',
+      password: '',
     });
   },
 

@@ -118,6 +118,12 @@ export function setToken(token) {
   };
 }
 
+export function logoutUser() {
+  return {
+    type: types.LOGOUT_USER,
+  };
+}
+
 export function signInWithFacebook() {
   return (dispatch, getState) => {
     Facebook.logInWithReadPermissionsAsync(
