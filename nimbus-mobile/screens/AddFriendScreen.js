@@ -60,6 +60,7 @@ class AddFriendScreen extends React.Component {
       console.log('status', response.status);
       if (response.status === 201) {
         window.alert('Friend added!'); 
+        this.props.getFriends(this.props.userId);
       } else {
         window.alert('You already added this user!')
       }

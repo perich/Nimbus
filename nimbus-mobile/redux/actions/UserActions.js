@@ -2,9 +2,9 @@ import * as types from './ActionTypes.js';
 import { Facebook } from 'exponent';
 import { Platform } from 'react-native';
 
-export function getFriends() {
+export function getFriends(userId) {
   return (dispatch, getState) => {
-    fetch('http://107.170.233.162:1337/api/users', {
+    fetch(`http://107.170.233.162:1337/api/users/${userId}/friendships/`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
