@@ -31,12 +31,6 @@ export function login(user) {
   };
 }
 
-export function logoutUser() {
-  return {
-    type: types.LOGOUT_USER,
-  };
-}
-
 export function setCurrentUser({ currentUser }) {
   return {
     type: types.SET_CURRENT_USER,
