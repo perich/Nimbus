@@ -10,6 +10,7 @@ let initialUserState = {
     firstName: 'noUser',
     lastName: 'noUser',
     email: 'noUser',
+    pushToken: ''
   },
   email: 'Facebook User',
   userLocation: {
@@ -58,6 +59,14 @@ export const userState = createReducer(initialUserState, {
         longitude: action.location.coords.longitude,
       },
       mapIsReady: action.mapIsReady,
+    });
+  },
+
+  [types.SET_TOKEN] (state, action) {
+    return Object.assign({}, state, {
+      currentUser: {
+        token: action.token
+      }
     });
   },
 

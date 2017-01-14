@@ -92,7 +92,6 @@ export function handleFacebookSignin({ currentUser }) {
   };
 };
 
-
 export function handlePins({ markers }) {
   return {
     type: types.HANDLE_PINS,
@@ -103,6 +102,13 @@ export function handlePins({ markers }) {
 export function logoutUser() {
   return {
     type: types.LOGOUT_USER,
+  };
+}
+
+export function setToken(token) {
+  return {
+    type: types.SET_TOKEN,
+    token,
   };
 }
 
