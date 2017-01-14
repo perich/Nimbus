@@ -1,14 +1,17 @@
 import * as types from './ActionTypes.js';
 import { Facebook } from 'exponent';
 import { Platform } from 'react-native';
+import { API_URL } from '../../environment.js';
+import { FB_KEY } from '../../environment.js';
 
 export function getFriends(userId) {
   return (dispatch, getState) => {
-    fetch(`http://107.170.233.162:1337/api/users/${userId}/friendships/`, {
+    fetch(`${API_URL}/api/users/${userId}/friendships/`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getState().userState.currentUser.authToken}`
       }
     })
     .then((response) => response.json())
@@ -42,11 +45,13 @@ export function getPins(currentUser) {
   };
 
   return (dispatch, getState) => {
-    fetch('http://107.170.233.162:1337/api/users/' + currentUser.userId + '/pins', {
+    const AUTH_TOKEN = getState().userState.currentUser.authToken;
+    fetch(`${API_URL}/api/users/` + currentUser.userId + '/pins', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${AUTH_TOKEN}`,
       }
     })
       .then((response) => {
@@ -79,16 +84,16 @@ export function getPins(currentUser) {
         dispatch(handlePins({ markers }))
       })
       .catch((error) => {
-        console.log("*** ERROR ***");
+        console.log("UserActions.js: getPins(): *** ERROR ***");
         console.log(error);
         throw error;
       });
   };
 }
 
-export function handleFacebookSignin({ currentUser }) {
+export function setCurrentUser({ currentUser }) {
   return {
-    type: types.HANDLE_FACEBOOK_SIGNIN,
+    type: types.SET_CURRENT_USER,
     currentUser,
   };
 };
@@ -116,8 +121,7 @@ export function setToken(token) {
 export function signInWithFacebook() {
   return (dispatch, getState) => {
     Facebook.logInWithReadPermissionsAsync(
-      // Steven's FB Key, put in environment variable
-      '1348413101897052', {
+      FB_KEY, {
       permissions: ['public_profile', 'user_photos'],
       behavior: Platform.OS === 'ios' ? 'web' : 'system',
     })
@@ -140,15 +144,13 @@ export function signInWithFacebook() {
                   userId: info.id,
                   firstName: firstName,
                   lastName: lastName,
-                  profileUrl: userPhoto.url, 
+                  profileUrl: userPhoto.url,
                 };
 
-                dispatch(handleFacebookSignin({currentUser: loginUser}));
-
-                fetch('http://107.170.233.162:1337/api/users/', {
+                fetch(`${API_URL}/api/users`, {
                   headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                   },
                   method: 'POST',
                   body: JSON.stringify({
@@ -158,20 +160,18 @@ export function signInWithFacebook() {
                     "photoUrl": userPhoto.url
                   })
                 })
-                .then(function (result) {
-                  if (result.status === 201) {
-                    // do something with the data
-                    // return result.json();
-                  }
+                .then(result => result.json())
+                .then(function (data) {
+                  dispatch(setCurrentUser({ currentUser: data.user }));
                 })
                 .catch(function (err) {
-                  console.log("*** ERROR ***");
+                  console.log(`UserActions.js: signInWithFacebook(): POST ${API_URL}/api/users *** ERROR ***`);
                   console.log(err);
                 });   
             });
           })
           .catch((error) => {
-            console.log("*** ERROR ***");
+            console.log("UserActions.js: signInWithFacebook(): GET https://graph.facebook.com/${info.id}/picture?type=large *** ERROR ***");
             console.log(err);
             throw err;
           });

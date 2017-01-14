@@ -19,6 +19,7 @@ import {
 import { connect } from 'react-redux';
 import { ActionCreators } from '../redux/actions/index.js';
 import { bindActionCreators } from 'redux';
+import { API_URL } from '../environment.js';
 
 class AddPinScreen extends React.Component {
   constructor(props) {
@@ -143,12 +144,13 @@ class AddPinScreen extends React.Component {
   }
 
   _postPin = async (pinData) => {
-    var postUrl = 'http://107.170.233.162:1337/api/users/' + this.props.userId + '/pins';
+    var postUrl = `${API_URL}/api/users/${this.props.userId}/pins`;
     let options = {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authToken}`,
       },
       body:JSON.stringify(pinData),
     };
@@ -174,7 +176,7 @@ class AddPinScreen extends React.Component {
   }
 
   uploadImageAsync = async (uri) => {
-    let apiUrl = `http://107.170.233.162:1337/upload`;
+    let apiUrl = `${API_URL}/upload`;
 
     let uriParts = uri.split('.');
     let fileType = uriParts[uriParts.length - 1];
@@ -192,6 +194,7 @@ class AddPinScreen extends React.Component {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${this.props.authToken}`,
       },
     };
 
@@ -225,6 +228,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(AddPinScreen);
 
 function mapStateToProps(state) {
   return {
+    authToken: state.userState.currentUser.authToken,
     userId: state.userState.currentUser.userId,
   };
 }

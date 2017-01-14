@@ -1,18 +1,19 @@
 import * as types from './ActionTypes.js';
+import { API_URL } from '../../environment.js';
 
 export function setFriend(friend) {
   return (dispatch, getState) => {
-    let apiUrl = 'http://107.170.233.162:1337/api/users/' + friend.id + '/pins';
+    let apiUrl = `${API_URL}/api/users/` + friend.id + '/pins';
     fetch(apiUrl, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getState().userState.currentUser.authToken}`
       }
     })
     .then((response) => response.json())
     .then((data) => {
-      // console.log('Data is: ', data.records[0]._fields[0].properties.location);
       var markers = [];
       console.log('data records', data.records);
       if (data.records) {
@@ -41,6 +42,7 @@ export function setFriend(friend) {
       dispatch(setFriendMarkers(markers, friend));
     })
     .catch((error) => {
+      console.log('FriendActions.js: @setFriend: ***ERROR***')
       console.warn(error);
     }).done();
   };
