@@ -53,7 +53,7 @@ class Login extends React.Component {
                 returnKeyType={'next'}
                 blurOnSubmit={false}
                 withRef={true}
-                onChangeText={(value) => this.props.setUsername(value)}
+                onChangeText={(value) => this.props.setEmail(value)}
               />
             </View>
 
@@ -70,7 +70,7 @@ class Login extends React.Component {
                 returnKeyType={'done'}
                 withRef={true}
                 secureTextEntry={false}
-                onChangetext={(value) => this.props.setPassword(value)}
+                onChangeText={(value) => this.props.setPassword(value)}
               />
             </View>
 
