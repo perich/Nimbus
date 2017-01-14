@@ -43,11 +43,13 @@ export function getPins(currentUser) {
   };
 
   return (dispatch, getState) => {
-    fetch(`${API_URL}/api/users` + currentUser.userId + '/pins', {
+    const AUTH_TOKEN = getState().userState.currentUser.authToken;
+    fetch(`${API_URL}/api/users/` + currentUser.userId + '/pins', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${AUTH_TOKEN}`,
       }
     })
       .then((response) => {
@@ -141,17 +143,14 @@ export function signInWithFacebook() {
                   userId: info.id,
                   firstName: firstName,
                   lastName: lastName,
-                  profileUrl: userPhoto.url, 
+                  profileUrl: userPhoto.url,
                 };
 
-                dispatch(setCurrentUser({currentUser: loginUser}));
 
-                // fetch('http://107.170.233.162:1337/api/users/', {
-                // fetch('http://localhost:1337/api/users', {
                 fetch(`${API_URL}/api/users`, {
                   headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                   },
                   method: 'POST',
                   body: JSON.stringify({
@@ -162,10 +161,15 @@ export function signInWithFacebook() {
                   })
                 })
                 .then(function (result) {
-                  if (result.status === 201) {
-                    // do something with the data
-                    // return result.json();
-                  }
+
+                  console.log('WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+                  console.log('PRE LOGIN USER', loginUser);
+                  Object.assign(loginUser, {
+                    authToken: result.authToken,
+                  });
+                  console.log('POST LOGIN USER', loginUser);
+
+                  dispatch(setCurrentUser({currentUser: loginUser}));
                 })
                 .catch(function (err) {
                   console.log(`UserActions.js: signInWithFacebook(): POST ${API_URL}/api/users *** ERROR ***`);
