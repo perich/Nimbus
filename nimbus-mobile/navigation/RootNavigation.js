@@ -29,7 +29,7 @@ import { bindActionCreators } from 'redux';
 class RootNavigation extends React.Component {
   
   componentDidMount() {
-    // this._notificationSubscription = this._registerForPushNotifications();
+    this._notificationSubscription = this._registerForPushNotifications();
   }
 
   componentWillUnmount() {
