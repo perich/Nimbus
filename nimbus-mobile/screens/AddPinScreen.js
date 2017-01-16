@@ -131,7 +131,8 @@ class AddPinScreen extends React.Component {
         },
         mediaUrl: that.state.image,
         description: that.state.description,
-        category: that.state.category
+        category: that.state.category,
+        privacy: 'public'
     };
 
     try {
