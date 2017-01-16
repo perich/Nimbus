@@ -64,12 +64,13 @@ class HomeScreen extends React.Component {
         let token = await Notifications.getExponentPushTokenAsync();
 
         // POST the token to our backend so we can use it to send pushes from there
+
         fetch('http://107.170.233.162:1337/api/users/' + that.props.currentUser.userId, {
           method: 'PUT',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.props.currentUser.authToken}`
+            'Authorization': `Bearer ${that.props.currentUser.authToken}`
           },
           body: JSON.stringify({
             token: token,
@@ -93,6 +94,10 @@ class HomeScreen extends React.Component {
     this.props.getPins(this.props.currentUser);
   }
 
+  getPinsPublic() {
+    this.props.getPinsPublic(this.props.currentUser);
+  }
+
   render() {
     if (this.props.mapIsReady) {    
       return (
@@ -100,8 +105,11 @@ class HomeScreen extends React.Component {
           <TouchableHighlight style={styles.addButton} underlayColor={'transparent'} onPress={this.goToAddPin.bind(this)}>
             <Text style={styles.addText}>+</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.refreshButton} underlayColor={'transparent'} onPress={this.getPins.bind(this)}>
-            <Text style={styles.addText}>R</Text>
+          <TouchableHighlight style={styles.publicButton} underlayColor={'transparent'} onPress={this.getPinsPublic.bind(this)}>
+            <Text style={styles.addText}>A</Text>
+          </TouchableHighlight>
+          <TouchableHighlight style={styles.friendsButton} underlayColor={'transparent'} onPress={this.getPins.bind(this)}>
+            <Text style={styles.addText}>F</Text>
           </TouchableHighlight>
           <Components.MapView style={{flex: 1}} showsUserLocation={true} initialRegion={{latitude: this.props.userLocation.latitude, longitude: this.props.userLocation.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421,}}>
             {this.props.markers.map(marker => (
@@ -157,7 +165,7 @@ const styles = StyleSheet.create({
     right: 15,
     zIndex: 999
   },
-  refreshButton: {
+  publicButton: {
     justifyContent: 'center',
     position: 'absolute',
     backgroundColor: 'white',
@@ -170,11 +178,26 @@ const styles = StyleSheet.create({
     bottom: 15,
     right: 70,
     zIndex: 999,
+  },  
+  friendsButton: {
+    justifyContent: 'center',
+    position: 'absolute',
+    backgroundColor: 'white',
+    opacity: 0.6,
+    borderWidth: 2,
+    borderColor: 'grey',
+    borderRadius: 50,
+    height: 50,
+    width: 50,
+    bottom: 15,
+    right: 140,
+    zIndex: 999,
   },
   addText: {
     textAlign: 'center',
     color: 'grey',
     backgroundColor: 'transparent',
-    fontSize: 30
+    fontSize: 30,
+    bottom: 2
   }
 });
