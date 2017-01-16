@@ -51,7 +51,8 @@ class AddFriendScreen extends React.Component {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authToken}`
       },
       body: JSON.stringify({id: this.props.userId})
     })
@@ -82,6 +83,7 @@ class AddFriendScreen extends React.Component {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authToken}`
       }
     })
     .then((response) => response.json())
@@ -124,7 +126,8 @@ class AddFriendScreen extends React.Component {
 
 function _mapStateToProps(state) {
   return {
-    userId: state.userState.currentUser.userId
+    userId: state.userState.currentUser.userId,
+    authToken: state.userState.currentUser.authToken
   };
 }
 
