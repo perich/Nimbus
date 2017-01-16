@@ -64,7 +64,7 @@ class HomeScreen extends React.Component {
         let token = await Notifications.getExponentPushTokenAsync();
 
         // POST the token to our backend so we can use it to send pushes from there
-        fetch('http://107.170.233.162:1337/api/users/' + that.props.currentUser.userId, {
+        fetch('http://107.170.233.162:1337/api/users/' + th at.props.currentUser.userId, {
           method: 'PUT',
           headers: {
             'Accept': 'application/json',
