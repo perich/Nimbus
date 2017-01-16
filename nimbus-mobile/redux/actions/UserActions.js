@@ -143,6 +143,7 @@ export function getPinsPublic(currentUser) {
   };
 }
 
+
 export function setCurrentUser({ currentUser }) {
   return {
     type: types.SET_CURRENT_USER,

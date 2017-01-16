@@ -28,8 +28,8 @@ class AddPinScreen extends React.Component {
     this.state = {
       image: null,
       description: null,
-      privacy: null,
-      category: null,
+      privacy: 'private',
+      category: 'Other',
       privacies: [
         {
           key: 0,
@@ -40,6 +40,7 @@ class AddPinScreen extends React.Component {
           name: 'public'
         }
       ],
+
       categories: [
         {
           key: 0,
@@ -157,6 +158,7 @@ class AddPinScreen extends React.Component {
         description: that.state.description,
         privacy: that.state.privacy,
         category: that.state.category
+
     };
 
     try {
@@ -166,18 +168,6 @@ class AddPinScreen extends React.Component {
       throw e;
       alert('Pin post failed, sorry :(');
     }
-
-    // navigator.geolocation.getCurrentPosition(async function(location) {
-    //   pinData = {
-    //     location: {
-    //       latitude: location.coords.latitude,
-    //       longitude: location.coords.longitude,
-    //     },
-    //     mediaUrl: that.state.image,
-    //     description: that.state.description,
-    //     category: that.state.category
-    //   };
-    // })
   }
 
   _postPin = async (pinData) => {
