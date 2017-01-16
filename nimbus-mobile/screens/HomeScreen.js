@@ -42,7 +42,7 @@ class HomeScreen extends React.Component {
     var options = {
       enableHighAccuracy: true,
       timeInterval: 240000,
-      distanceInterval: 10
+      distanceInterval: 1000
     }
 
     Location.watchPositionAsync(options, cb)
@@ -69,6 +69,7 @@ class HomeScreen extends React.Component {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.props.currentUser.authToken}`
           },
           body: JSON.stringify({
             token: token,
