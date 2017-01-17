@@ -117,13 +117,14 @@ export default class AuthScreen extends Component {
             <SignupForm
               ref={(ref) => this.formRef = ref}
               onLoginLinkPress={() => this._setVisibleForm('LOGIN')}
-              login={(form) => this.setVisibleForm('LOGIN')}
+              onHomePress={() => this._setVisibleForm(null)}
             />
           )}
           {(visibleForm === 'LOGIN') && (
             <LoginForm
               ref={(ref) => this.formRef = ref}
               onSignupLinkPress={() => this._setVisibleForm('SIGNUP')}
+              onHomePress={() => this._setVisibleForm(null)}
             />
           )}
         </KeyboardAvoidingView>
@@ -151,6 +152,6 @@ const styles = StyleSheet.create({
     marginVertical: 30
   },
   bottom: {
-    backgroundColor: '#1976D2'
+    backgroundColor: '#0084ff'
   }
 })
