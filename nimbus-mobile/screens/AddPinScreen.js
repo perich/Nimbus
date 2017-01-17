@@ -127,7 +127,7 @@ class AddPinScreen extends React.Component {
           selectedValue={this.state.privacy}
           onValueChange={(privacy) => this.setState({privacy, modelIndex:0})}>
           {this.state.privacies.map((privacy) => (
-            <PickerItemIOS
+            <PickerIOS.Item
               key={privacy.key}
               value={privacy.name}
               label={privacy.name}
