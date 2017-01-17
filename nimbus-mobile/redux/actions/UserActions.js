@@ -1,9 +1,9 @@
-
 import * as types from './ActionTypes.js';
 import { Facebook } from 'exponent';
 import { Platform } from 'react-native';
 import { API_URL } from '../../environment.js';
 import { FB_KEY } from '../../environment.js';
+import * as helpers from '../../utilities/helpers.js';
 
 export function getFriends(userId) {
   return (dispatch, getState) => {
@@ -66,15 +66,15 @@ export function getPins(currentUser) {
             longitude: JSON.parse(data[i]._fields[0].properties.location).longitude,
           },
           mediaURL: data[i]._fields[0].properties.mediaUrl,
-          likes: 69420,
+          likes: 0,
           description: data[i]._fields[0].properties.description,
           createdAt: data[i]._fields[0].properties.createdAt,
           // Replaced with sessions
-          firstName: currentUser.firstName,
-          lastName: currentUser.lastName,
-          profileURL: currentUser.profileUrl,
-          email: currentUser.email || 'Facebook User',
-          userId: currentUser.userId,
+          firstName: helpers.capitalizeFirstChar(data[i]._fields[1].properties.firstName),
+          lastName: helpers.capitalizeFirstChar(data[i]._fields[1].properties.lastName),
+          profileURL: data[i]._fields[1].properties.photo,
+          email: data[i]._fields[1].properties.email || 'Facebook User',
+          userId: data[i]._fields[1].properties.id,
           // Replaced with sessions
           pinColor: mapToColor[data[i]._fields[0].properties.category],
         });
@@ -120,15 +120,15 @@ export function getPinsPublic(currentUser) {
             longitude: JSON.parse(data[i]._fields[0].properties.location).longitude,
           },
           mediaURL: data[i]._fields[0].properties.mediaUrl,
-          likes: 69420,
+          likes: 0,
           description: data[i]._fields[0].properties.description,
           createdAt: data[i]._fields[0].properties.createdAt,
           // Replaced with sessions
-          firstName: currentUser.firstName,
-          lastName: currentUser.lastName,
-          profileURL: currentUser.profileUrl,
-          email: currentUser.email || 'Facebook User',
-          userId: currentUser.userId,
+          firstName: helpers.capitalizeFirstChar(data[i]._fields[1].properties.firstName),
+          lastName: helpers.capitalizeFirstChar(data[i]._fields[1].properties.lastName),
+          profileURL: data[i]._fields[1].properties.photo,
+          email: data[i]._fields[1].properties.email || 'Facebook User',
+          userId: data[i]._fields[1].properties.id,
           // Replaced with sessions
           pinColor: mapToColor[data[i]._fields[0].properties.category],
         });
