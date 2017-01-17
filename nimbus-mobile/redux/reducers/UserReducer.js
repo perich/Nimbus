@@ -8,7 +8,7 @@ let initialUserState = {
     userId: 'noUser',
     firstName: 'noUser',
     lastName: 'noUser',
-    profileUrl: 'noUser',
+    profileUrl: 'https://s3-us-west-1.amazonaws.com/sharemap/noUser.png',
     email: 'noUser',
     token: '',
     authToken: 'noUser',

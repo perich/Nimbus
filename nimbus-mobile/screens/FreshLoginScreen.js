@@ -81,9 +81,9 @@ export default class AuthScreen extends Component {
     return (
       <View style={styles.container}>
         <Image
-          animation={'bounceIn'}
-          duration={1200}
-          delay={200}
+          animation={'fadeIn'}
+          duration={800}
+          delay={600}
           ref={(ref) => this.logoImgRef = ref}
           style={styles.logoImg}
           source={imgLogo}
