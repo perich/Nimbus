@@ -1,7 +1,7 @@
 import * as types from './ActionTypes.js';
 import { API_URL } from '../../environment.js';
 
-export function login(user) {
+export function login() {
   return (dispatch, getState) => {
     let { email, password } = getState().authState;
     fetch(`${API_URL}/api/users`, {
@@ -20,6 +20,7 @@ export function login(user) {
       if (data.error) {
         alert(data.error);
       } else {
+        console.log('HELLLOOOO')
         dispatch(setCurrentUser({ currentUser: data.user }));
       }
     })
@@ -29,6 +30,12 @@ export function login(user) {
     });
   };
 }
+
+export function onLoginAnimationCompleted() {
+  return {
+    type: types.ON_LOGIN_ANIMATION_COMPLETED,
+  };
+};
 
 export function setCurrentUser({ currentUser }) {
   return {
