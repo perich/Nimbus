@@ -138,11 +138,13 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     color: '#3E464D',
+    fontFamily: 'Avenir',
   },
   signupLink: {
     color: 'rgba(255,255,255,0.6)',
     alignSelf: 'center',
     paddingVertical: 15,
     paddingHorizontal: 3,
+    fontFamily: 'Avenir',
   }
 })

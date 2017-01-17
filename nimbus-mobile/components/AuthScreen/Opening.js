@@ -17,9 +17,7 @@ class Opening extends Component {
   render () {
     return (
       <View style={styles.container}>
-
-
-        <View animation={'zoomIn'} delay={800} duration={400}>
+        <View animation={'zoomIn'} delay={1000} duration={400}>
           <CustomButton
             text={'Sign In With Facebook'}
             onPress={this.props.signInWithFacebook}
@@ -27,9 +25,6 @@ class Opening extends Component {
             textStyle={styles.signInButtonText}
           />
         </View>
-
-
-
         <View animation={'zoomIn'} delay={800} duration={400}>
           <CustomButton
             text={'Sign In'}
@@ -38,9 +33,9 @@ class Opening extends Component {
             textStyle={styles.signInButtonText}
           />
         </View>
-        <View style={styles.separatorContainer} animation={'zoomIn'} delay={700} duration={400}>
+        <View style={styles.separatorContainer} animation={'zoomIn'} delay={700} duration={1600}>
           <View style={styles.separatorLine} />
-          <Text style={styles.separatorOr}>{'Or'}</Text>
+          <Text style={styles.separatorOr}>{'or'}</Text>
           <View style={styles.separatorLine} />
         </View>
         <View animation={'zoomIn'} delay={600} duration={400}>
@@ -73,10 +68,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   createAccountButton: {
-    backgroundColor: '#9B9FA4'
+    backgroundColor: '#9B9FA4',
   },
   createAccountButtonText: {
-    color: 'white'
+    color: 'white',
+    fontFamily: 'Avenir',
   },
   separatorContainer: {
     alignItems: 'center',
@@ -91,13 +87,15 @@ const styles = StyleSheet.create({
   },
   separatorOr: {
     color: '#9B9FA4',
-    marginHorizontal: 8
+    marginHorizontal: 8,
+    fontFamily: 'Avenir',
   },
   signInButton: {
     marginTop: 10,
     backgroundColor: '#0084ff'
   },
   signInButtonText: {
-    color: 'white'
+    color: 'white',
+    fontFamily: 'Avenir',
   }
 })
