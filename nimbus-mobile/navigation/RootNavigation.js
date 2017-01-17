@@ -40,7 +40,8 @@ class RootNavigation extends React.Component {
   }
 
   render() {
-    if (this.props.currentUser.userId === 'noUser') {
+    // if (this.props.currentUser.userId === 'noUser') {
+    if (!this.props.isAppReady) {
       return (
         <StackNavigation initialRoute={Router.getRoute('login')} />)
     } else {
@@ -107,6 +108,7 @@ function mapStateToProps(state) {
     authToken: state.userState.authToken,
     name: state.userState.name,
     currentUser: state.userState.currentUser,
+    isAppReady: state.authState.isAppReady,
   };
 }
 

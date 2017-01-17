@@ -123,9 +123,7 @@ class Login extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {
-
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {
