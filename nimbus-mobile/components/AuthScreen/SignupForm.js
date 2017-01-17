@@ -67,7 +67,7 @@ class SignupForm extends Component {
 
   render () {
     const { email, password, fullName } = this.state
-    const { isLoading, onLoginLinkPress, onSignupPress } = this.props
+    const { isLoading, onLoginLinkPress, onSignupPress, onHomePress } = this.props
     const isValid = email !== '' && password !== '' && fullName !== ''
     return (
       <View style={styles.container}>
@@ -135,17 +135,38 @@ class SignupForm extends Component {
             />
           </View>
 
-          <Text
-            ref={(ref) => this.linkRef = ref}
-            style={styles.loginLink}
-            onPress={onLoginLinkPress}
-            animation={'fadeIn'}
-            duration={600}
-            delay={400}
-          >
-            {'Already have an account?'}
-          </Text>
-
+          <View style={styles.formNav}>
+            <Text
+              ref={(ref) => this.linkRef = ref}
+              style={styles.loginLink}
+              onPress={onHomePress}
+              animation={'fadeIn'}
+              duration={600}
+              delay={400}
+            >
+            {'Back'}
+            </Text>
+            <Text
+              ref={(ref) => this.linkRef = ref}
+              style={styles.loginLink}
+              onPress={onLoginLinkPress}
+              animation={'fadeIn'}
+              duration={600}
+              delay={400}
+            >
+            {' - or - '}
+            </Text>
+            <Text
+              ref={(ref) => this.linkRef = ref}
+              style={styles.loginLink}
+              onPress={onLoginLinkPress}
+              animation={'fadeIn'}
+              duration={600}
+              delay={400}
+            >
+              {'Already have an account?'}
+            </Text>
+          </View>
         </View>
       </View>
     )
@@ -173,18 +194,21 @@ const styles = StyleSheet.create({
   },
   footer: {
     height: 100,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   createAccountButton: {
     backgroundColor: 'white'
   },
   createAccountButtonText: {
     color: '#3E464D',
-    fontWeight: 'bold'
+  },
+  formNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   loginLink: {
     color: 'rgba(255,255,255,0.6)',
     alignSelf: 'center',
-    padding: 20
+    paddingVertical: 15,
   }
 })

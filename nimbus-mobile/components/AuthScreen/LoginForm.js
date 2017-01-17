@@ -24,7 +24,7 @@ class LoginForm extends Component {
 
   render () {
     const { email, password } = this.props
-    const { isLoading, onSignupLinkPress, onLoginPress } = this.props
+    const { isLoading, onSignupLinkPress, onLoginPress, onHomePress } = this.props
     const isValid = email !== '' && password !== ''
     return (
       <View style={styles.container}>
@@ -58,7 +58,6 @@ class LoginForm extends Component {
 
         </View>
         <View style={styles.footer}>
-
           <View ref={(ref) => this.buttonRef = ref} animation={'bounceIn'} duration={600} delay={400}>
             <CustomButton
               onPress={() => this.props.login()}
@@ -69,18 +68,36 @@ class LoginForm extends Component {
               text={'Log In'}
             />
           </View>
-
-          <Text
-            ref={(ref) => this.linkRef = ref}
-            style={styles.signupLink}
-            onPress={onSignupLinkPress}
-            animation={'fadeIn'}
-            duration={600}
-            delay={400}
-          >
-            {'Not registered yet?'}
-          </Text>
-          
+          <View style={styles.formNav}>
+            <Text
+              ref={(ref) => this.linkRef = ref}
+              style={styles.signupLink}
+              onPress={onHomePress}
+              animation={'fadeIn'}
+              duration={600}
+              delay={400}
+            >
+              {'Back'}
+            </Text>
+            <Text
+              style={styles.signupLink}
+              animation={'fadeIn'}
+              duration={600}
+              delay={400}
+            >
+              {' - or - '}
+            </Text>
+            <Text
+              ref={(ref) => this.linkRef = ref}
+              style={styles.signupLink}
+              onPress={onSignupLinkPress}
+              animation={'fadeIn'}
+              duration={600}
+              delay={400}
+            >
+              {'Sign up!'}
+            </Text>
+          </View>
         </View>
       </View>
     )
@@ -112,16 +129,20 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: 'center'
   },
+  formNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   loginButton: {
     backgroundColor: 'white'
   },
   loginButtonText: {
     color: '#3E464D',
-    fontWeight: 'bold'
   },
   signupLink: {
     color: 'rgba(255,255,255,0.6)',
     alignSelf: 'center',
-    padding: 20
+    paddingVertical: 15,
+    paddingHorizontal: 3,
   }
 })
