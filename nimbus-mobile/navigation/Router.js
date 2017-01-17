@@ -16,8 +16,11 @@ import AddFriendButton from '../components/AddFriendButton';
 import PinScreen from '../screens/PinScreen';
 import RootNavigation from './RootNavigation';
 
+import FreshLoginScreen from '../screens/FreshLoginScreen';
+
 export default createRouter(() => ({
-  login: () => LoginScreen,
+  // login: () => LoginScreen,
+  login: () => FreshLoginScreen,
   signup: () => SignupScreen,
   home: () => HomeScreen,
   friends: () => FriendsScreen,
