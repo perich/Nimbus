@@ -105,13 +105,13 @@ class HomeScreen extends React.Component {
           <TouchableHighlight style={styles.addButton} underlayColor={'transparent'} onPress={this.goToAddPin.bind(this)}>
             <Text style={styles.addText}>+</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.publicButton} underlayColor={'transparent'} onPress={this.getPinsPublic.bind(this)}>
-            <Text style={styles.addText}>A</Text>
-          </TouchableHighlight>
           <TouchableHighlight style={styles.friendsButton} underlayColor={'transparent'} onPress={this.getPins.bind(this)}>
-            <Text style={styles.addText}>F</Text>
+            <Text style={styles.addText}>Friends</Text>
           </TouchableHighlight>
           <Components.MapView style={{flex: 1}} showsUserLocation={true} initialRegion={{latitude: this.props.userLocation.latitude, longitude: this.props.userLocation.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421,}}>
+          <TouchableHighlight style={styles.publicButton} underlayColor={'transparent'} onPress={this.getPinsPublic.bind(this)}>
+            <Text style={styles.addText}>Public</Text>
+          </TouchableHighlight>
             {this.props.markers.map(marker => (
                 <Components.MapView.Marker
                   key={marker.id}
@@ -172,11 +172,10 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     borderWidth: 2,
     borderColor: 'grey',
-    borderRadius: 50,
-    height: 50,
-    width: 50,
+    height: 35,
+    width: 5%,
     bottom: 15,
-    right: 70,
+    left: 45%,
     zIndex: 999,
   },  
   friendsButton: {
@@ -186,18 +185,17 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     borderWidth: 2,
     borderColor: 'grey',
-    borderRadius: 50,
-    height: 50,
-    width: 50,
+    height: 35,
+    width: 5%,
     bottom: 15,
-    right: 140,
+    left: 40%,
     zIndex: 999,
   },
   addText: {
     textAlign: 'center',
     color: 'grey',
     backgroundColor: 'transparent',
-    fontSize: 30,
+    fontSize: 16,
     bottom: 2
   }
 });
