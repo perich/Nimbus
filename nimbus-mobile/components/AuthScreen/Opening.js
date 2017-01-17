@@ -17,7 +17,7 @@ class Opening extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <View animation={'zoomIn'} delay={1000} duration={400}>
+        <View animation={'fadeInUp'} delay={600} duration={800}>
           <CustomButton
             text={'Sign In With Facebook'}
             onPress={this.props.signInWithFacebook}
@@ -25,7 +25,7 @@ class Opening extends Component {
             textStyle={styles.signInButtonText}
           />
         </View>
-        <View animation={'zoomIn'} delay={800} duration={400}>
+        <View animation={'fadeInUp'} delay={600} duration={800}>
           <CustomButton
             text={'Sign In'}
             onPress={this.props.onSignInPress}
@@ -33,12 +33,12 @@ class Opening extends Component {
             textStyle={styles.signInButtonText}
           />
         </View>
-        <View style={styles.separatorContainer} animation={'zoomIn'} delay={700} duration={1600}>
+        <View style={styles.separatorContainer} animation={'zoomIn'} delay={1200} duration={800}>
           <View style={styles.separatorLine} />
           <Text style={styles.separatorOr}>{'or'}</Text>
           <View style={styles.separatorLine} />
         </View>
-        <View animation={'zoomIn'} delay={600} duration={400}>
+        <View animation={'fadeInUp'} delay={1000} duration={800}>
           <CustomButton
             text={'Create Account'}
             onPress={this.props.onCreateAccountPress}

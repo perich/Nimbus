@@ -106,40 +106,53 @@ class PinScreen extends React.Component {
   }
 
   render() {
+    console.log('PROFILE URL', this.props.profileUrl);
     return (
       <ScrollView style={styles.container} contentContainerStyle={{flex: 1}}>
+
         <View style={styles.mapContainer}>
           <Components.MapView style={{flex: 1}} cacheEnabled={true} initialRegion={{latitude: this.props.route.params.location.latitude, longitude: this.props.route.params.location.longitude, latitudeDelta: 0.0012, longitudeDelta: 0.0001,}}>
             <Components.MapView.Marker coordinate={this.props.route.params.location}/>
           </Components.MapView>
         </View>
+
         <View style={styles.profileContainer}>
+
           <View style={styles.profilePictureContainer}>
             <TouchableHighlight underlayColor={'transparent'} onPress={this.goToFriendsProfile.bind(this)}>
-              <Image style={styles.profilePicture} source={{uri: this.props.route.params.profileURL}}></Image>
+              <Image style={styles.profilePicture} source={{ uri: this.props.profileUrl }}></Image>
             </TouchableHighlight>
           </View>
+
           <View style={styles.profileDetailsContainer}>
+
             <View style={styles.profileNameContainer}>
               <Text>{this.props.route.params.firstName} {this.props.route.params.lastName}</Text>
             </View>
+
             <View style={styles.profileTimeContainer}>
               <TimeAgo time={JSON.parse(this.props.route.params.createdAt)}/>
             </View>
+
           </View>
+
         </View>
+
         <View style={styles.mediaContainer}>
           <Image style={styles.media} source={{uri: this.props.route.params.mediaURL}}></Image>
         </View>
+
         <View style={styles.likesContainer}>
           <TouchableOpacity onPress={this.like.bind(this)}>
             <Image style={styles.likeButton} source={like}></Image>
           </TouchableOpacity>
           <Text>{this.props.route.params.likes} likes</Text>
         </View>
+
         <View style={styles.descriptionContainer}>
           <Text>{this.props.route.params.description}</Text>
         </View>
+
       </ScrollView>
     );
   }
@@ -149,6 +162,7 @@ function mapStateToProps(state) {
   return {
     currentUserId: state.userState.currentUser.userId,
     authToken:state.userState.currentUser.authToken
+    profileUrl: state.userState.currentUser.profileUrl,
   };
 }
 
@@ -161,6 +175,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(PinScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // backgroundColor: 'black',
   },
   mapContainer: {
     flex: 3,

@@ -118,7 +118,7 @@ class SignupForm extends Component {
         </View>
         <View style={styles.footer}>
 
-          <View ref={(ref) => this.buttonRef = ref} animation={'bounceIn'} duration={600} delay={400}>
+          <View ref={(ref) => this.buttonRef = ref} animation={'flipInY'} duration={600} delay={400}>
             <CustomButton
               onPress={this.signup.bind(this)}
               isEnabled={isValid}
