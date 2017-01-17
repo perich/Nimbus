@@ -3,7 +3,6 @@ import {
   NavigationProvider,
 } from '@exponent/ex-navigation';
 
-import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 import HomeScreen from '../screens/HomeScreen';
 import FriendsScreen from '../screens/FriendsScreen';
@@ -19,7 +18,6 @@ import RootNavigation from './RootNavigation';
 import FreshLoginScreen from '../screens/FreshLoginScreen';
 
 export default createRouter(() => ({
-  // login: () => LoginScreen,
   login: () => FreshLoginScreen,
   signup: () => SignupScreen,
   home: () => HomeScreen,

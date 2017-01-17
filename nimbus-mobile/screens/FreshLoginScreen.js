@@ -42,20 +42,6 @@ if (Platform.OS === 'android') UIManager.setLayoutAnimationEnabledExperimental(t
  *   2. fadeOut the logo, 3. tells the container that the login animation has completed and that the app is ready to show the next screen (HomeScreen).
  */
 export default class AuthScreen extends Component {
-  static propTypes = {
-    // isLoggedIn: PropTypes.bool.isRequired,
-    // isLoading: PropTypes.bool.isRequired,
-    // signup: PropTypes.func.isRequired,
-    // login: PropTypes.func.isRequired,
-    // onLoginAnimationCompleted: PropTypes.func.isRequired // Called at the end of a succesfull login/signup animation
-  }
-
-  // _simulateLogin = (username, password) => {
-  //   this.setState({ isLoading: true })
-  //   setTimeout(() => this.setState({ isLoggedIn: true, isLoading: false }), 1000)
-  // }
-
-
   state = {
     visibleForm: null // Can be: null | SIGNUP | LOGIN
   }
@@ -140,7 +126,6 @@ const styles = StyleSheet.create({
     width: metrics.DEVICE_WIDTH,
     height: metrics.DEVICE_HEIGHT,
     paddingTop: 24,
-    // backgroundColor: '#1799e0',
     backgroundColor: '#00284d'
   },
   logoImg: {
