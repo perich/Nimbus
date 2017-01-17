@@ -20,7 +20,6 @@ export const authState = createReducer(initialAuthState, {
   },
 
   [types.SET_CURRENT_USER] (state, action) {
-    console.log('IS APP READY???', state.isAppReady)
     return Object.assign({}, state, {
       isLoggedIn: true,
       isLoading: false,
