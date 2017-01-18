@@ -112,15 +112,18 @@ class PinScreen extends React.Component {
 
     return (
 
-      <Swiper 
+      <Swiper
         style={styles.wrapper} 
         showPagination={true}
-        paginationStyle={{ padding: 100}}
+        paginationStyle={{ padding: 100 }}
         loop={false}
+        activeDotColor={'white'}
+        dotColor={'#1B8FFF'}
       >
 
 
         <View style={styles.slide1}>
+
           <View style={styles.profileContainer}>
             <View style={styles.profilePictureContainer}>
               <TouchableHighlight underlayColor={'transparent'} onPress={this.goToFriendsProfile.bind(this)}>
@@ -130,30 +133,25 @@ class PinScreen extends React.Component {
 
             <View style={styles.profileDetailsContainer}>
               <View style={styles.profileNameContainer}>
-                <Text>{this.props.currentUser.firstName} {this.props.currentUser.lastName}</Text>
+                <Text style={styles.profileText}>{this.props.currentUser.firstName} {this.props.currentUser.lastName}</Text>
               </View>
 
               <View style={styles.profileTimeContainer}>
-                <TimeAgo time={JSON.parse(this.props.route.params.createdAt)}/>
+                <TimeAgo style={styles.timeAgoText} time={JSON.parse(this.props.route.params.createdAt)}/>
               </View>
             </View>
           </View>
 
-
-
-
-
           <Image style={styles.media}  resizeMode={'stretch'} source={{uri: this.props.route.params.mediaURL}}></Image>
-
 
           <View style={styles.footer}>
 
             <View style={styles.likesContainer}>
-              <Text>{this.props.route.params.likes} Likes</Text>
+              <Text style={styles.footerText}>{this.props.route.params.likes} Likes</Text>
             </View>
-            
+
             <View style={styles.descriptionContainer}>
-              <Text>{this.props.route.params.description}</Text>
+              <Text style={styles.footerText}>{this.props.route.params.description}</Text>
             </View>
           </View>
 
@@ -167,22 +165,37 @@ class PinScreen extends React.Component {
           <Text>{this.props.route.params.likes} likes</Text>
         </View>
 
-
-
-
-
-
-
-
         <View style={styles.slide2}>
-          <Text style={styles.text}>Beautiful</Text>
+
+          <View style={styles.profileContainer}>
+            <View style={styles.profilePictureContainer}>
+              <TouchableHighlight underlayColor={'transparent'} onPress={this.goToFriendsProfile.bind(this)}>
+                <Image style={styles.profilePicture} source={profilePicture}></Image>
+              </TouchableHighlight>
+            </View>
+
+            <View style={styles.profileDetailsContainer}>
+              <View style={styles.profileNameContainer}>
+                <Text style={styles.profileText}>{this.props.currentUser.firstName} {this.props.currentUser.lastName}</Text>
+              </View>
+
+              <View style={styles.profileTimeContainer}>
+                <TimeAgo style={styles.timeAgoText} time={JSON.parse(this.props.route.params.createdAt)}/>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.mapContainer}>
+            <Components.MapView style={{flex: 1}} initialRegion={{latitude: this.props.route.params.location.latitude, longitude: this.props.route.params.location.longitude, latitudeDelta: 0.0012, longitudeDelta: 0.0001,}}>
+              <Components.MapView.Marker coordinate={this.props.route.params.location}/>
+            </Components.MapView>
+          </View>
+
+          <View style={styles.footer}>
+            
+          </View>
+
         </View>
-
-
-
-
-
-
       </Swiper>
     );
   }
@@ -194,7 +207,7 @@ function mapStateToProps(state) {
     authToken:state.userState.currentUser.authToken,
     currentUser: state.userState.currentUser,
     profileUrl: state.userState.currentUser.profileUrl,
-  };
+   };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -211,34 +224,28 @@ const styles = StyleSheet.create({
   },
   slide2: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  container: {
-    flex: 1,
   },
   footer: {
     flex: 4,
-    backgroundColor: 'yellow',
+    backgroundColor: '#00284d',
+  },
+  footerText: {
+    fontFamily: 'Avenir',
+    color: 'white'
   },
   mapContainer: {
-    flex: 3,
+    flex: 5,
   },
   profileContainer: {
     flex: 1.5,
     flexDirection: 'row',
+    // backgroundColor: '#1972FF',
+    backgroundColor: '#00284d',
   },
   profilePictureContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    backgroundColor: 'green',
   },
   profilePicture: {
     width: 60,
@@ -247,20 +254,29 @@ const styles = StyleSheet.create({
   },
   profileDetailsContainer: {
     flex: 3,
-    backgroundColor: 'red',
   },
   profileNameContainer: {
-    flex: 2,
-    justifyContent: 'center',
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingTop: 2,
+    paddingLeft: 5,
+  },
+  profileText: {
+    fontFamily: 'Avenir',
+    color: 'white',
+    fontSize: 20,
+  },
+  timeAgoText: {
+    fontFamily: 'AvenirNext-Italic',
+    color: 'white',
+    fontSize: 14,
   },
   profileTimeContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 3,
+    paddingLeft: 5,
   },
-  // mediaContainer: {
-  //   flex: 5,
-  //   backgroundColor: 'blue',
-  // },
   media: {
     flex: 5,
   },
