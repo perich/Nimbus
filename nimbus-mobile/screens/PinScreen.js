@@ -1,7 +1,6 @@
 import React from 'react';
 import { Components } from 'exponent';
 import {
-  // View,
   Button,
   Text,
   Image,
@@ -39,7 +38,13 @@ class PinScreen extends React.Component {
     navigationBar: {
       title(params) {
         return `${params.firstName} ${params.lastName}'s Post`;
-      }
+      },
+      tintColor: 'white',
+      titleStyle: {
+        color: 'white',
+        fontFamily: 'Avenir',
+      },
+      backgroundColor: '#00284d'
     },
   }
 
@@ -70,6 +75,7 @@ class PinScreen extends React.Component {
   }
 
   goToFriendsProfile() {
+    console.log('goToFriendsProfile', this.props.route.params)
     let { userId, firstName, lastName, profileURL, email } = this.props.route.params;
     let friend = {
       id: userId,
@@ -218,7 +224,8 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontFamily: 'AvenirNext-Italic',
-    color: '#00284d',
+    // color: '#00284d',
+    color: '#1972FF',
     paddingVertical: 17,
   },
   mapContainer: {
@@ -250,12 +257,14 @@ const styles = StyleSheet.create({
   },
   profileText: {
     fontFamily: 'Avenir',
-    color: '#00284d',
+    // color: '#00284d',
+    color: '#1972FF',
     fontSize: 20,
   },
   timeAgoText: {
     fontFamily: 'AvenirNext-Italic',
-    color: '#00284d',
+    // color: '#00284d',
+    color: '#1972FF',
     fontSize: 14,
   },
   profileTimeContainer: {
@@ -290,6 +299,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontFamily: 'Avenir',
     fontSize: 20,
-    color: '#00284d',
+    // color: '#00284d',
+    color: '#1972FF',
   },
 });
