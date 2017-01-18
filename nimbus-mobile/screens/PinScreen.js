@@ -14,11 +14,13 @@ import {
   ExponentLinksView,
 } from '@exponent/samples';
 import TimeAgo from 'react-native-timeago';
+import noUserImg from '../assets/images/noUser.png';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../redux/actions/index.js';
 import { API_URL } from '../environment.js';
 const like = require('../assets/images/like.png');
+import Swiper from 'react-native-swiper';
 
 class PinScreen extends React.Component {
   constructor(props) {
@@ -106,40 +108,56 @@ class PinScreen extends React.Component {
   }
 
   render() {
-    console.log('PROFILE URL', this.props.profileUrl);
+    let profilePicture = this.props.profileURL ? { uri: this.props.profileUrl } : noUserImg;
+
     return (
-      <ScrollView style={styles.container} contentContainerStyle={{flex: 1}}>
 
-        <View style={styles.mapContainer}>
-          <Components.MapView style={{flex: 1}} cacheEnabled={true} initialRegion={{latitude: this.props.route.params.location.latitude, longitude: this.props.route.params.location.longitude, latitudeDelta: 0.0012, longitudeDelta: 0.0001,}}>
-            <Components.MapView.Marker coordinate={this.props.route.params.location}/>
-          </Components.MapView>
-        </View>
+      <Swiper 
+        style={styles.wrapper} 
+        showPagination={true}
+        paginationStyle={{ padding: 100}}
+        loop={false}
+      >
 
-        <View style={styles.profileContainer}>
 
-          <View style={styles.profilePictureContainer}>
-            <TouchableHighlight underlayColor={'transparent'} onPress={this.goToFriendsProfile.bind(this)}>
-              <Image style={styles.profilePicture} source={{ uri: this.props.profileUrl }}></Image>
-            </TouchableHighlight>
-          </View>
-
-          <View style={styles.profileDetailsContainer}>
-
-            <View style={styles.profileNameContainer}>
-              <Text>{this.props.route.params.firstName} {this.props.route.params.lastName}</Text>
+        <View style={styles.slide1}>
+          <View style={styles.profileContainer}>
+            <View style={styles.profilePictureContainer}>
+              <TouchableHighlight underlayColor={'transparent'} onPress={this.goToFriendsProfile.bind(this)}>
+                <Image style={styles.profilePicture} source={profilePicture}></Image>
+              </TouchableHighlight>
             </View>
 
-            <View style={styles.profileTimeContainer}>
-              <TimeAgo time={JSON.parse(this.props.route.params.createdAt)}/>
-            </View>
+            <View style={styles.profileDetailsContainer}>
+              <View style={styles.profileNameContainer}>
+                <Text>{this.props.currentUser.firstName} {this.props.currentUser.lastName}</Text>
+              </View>
 
+              <View style={styles.profileTimeContainer}>
+                <TimeAgo time={JSON.parse(this.props.route.params.createdAt)}/>
+              </View>
+            </View>
           </View>
 
-        </View>
 
-        <View style={styles.mediaContainer}>
-          <Image style={styles.media} source={{uri: this.props.route.params.mediaURL}}></Image>
+
+
+
+          <Image style={styles.media}  resizeMode={'stretch'} source={{uri: this.props.route.params.mediaURL}}></Image>
+
+
+          <View style={styles.footer}>
+
+            <View style={styles.likesContainer}>
+              <Text>{this.props.route.params.likes} Likes</Text>
+            </View>
+            
+            <View style={styles.descriptionContainer}>
+              <Text>{this.props.route.params.description}</Text>
+            </View>
+          </View>
+
+
         </View>
 
         <View style={styles.likesContainer}>
@@ -149,11 +167,23 @@ class PinScreen extends React.Component {
           <Text>{this.props.route.params.likes} likes</Text>
         </View>
 
-        <View style={styles.descriptionContainer}>
-          <Text>{this.props.route.params.description}</Text>
+
+
+
+
+
+
+
+        <View style={styles.slide2}>
+          <Text style={styles.text}>Beautiful</Text>
         </View>
 
-      </ScrollView>
+
+
+
+
+
+      </Swiper>
     );
   }
 }
@@ -161,7 +191,8 @@ class PinScreen extends React.Component {
 function mapStateToProps(state) {
   return {
     currentUserId: state.userState.currentUser.userId,
-    authToken:state.userState.currentUser.authToken
+    authToken:state.userState.currentUser.authToken,
+    currentUser: state.userState.currentUser,
     profileUrl: state.userState.currentUser.profileUrl,
   };
 }
@@ -173,21 +204,41 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(PinScreen);
 
 const styles = StyleSheet.create({
+  wrapper: {
+  },
+  slide1: {
+    flex: 1,
+  },
+  slide2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#97CAE5',
+  },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
   container: {
     flex: 1,
-    // backgroundColor: 'black',
+  },
+  footer: {
+    flex: 4,
+    backgroundColor: 'yellow',
   },
   mapContainer: {
     flex: 3,
   },
   profileContainer: {
+    flex: 1.5,
     flexDirection: 'row',
-    flex: 2,
   },
   profilePictureContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    backgroundColor: 'green',
   },
   profilePicture: {
     width: 60,
@@ -196,6 +247,7 @@ const styles = StyleSheet.create({
   },
   profileDetailsContainer: {
     flex: 3,
+    backgroundColor: 'red',
   },
   profileNameContainer: {
     flex: 2,
@@ -205,12 +257,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  mediaContainer: {
-    flex: 5,
-  },
+  // mediaContainer: {
+  //   flex: 5,
+  //   backgroundColor: 'blue',
+  // },
   media: {
-    height: Dimensions.get('window').height * 0.3,
-    width: Dimensions.get('window').width,
+    flex: 5,
   },
   likesContainer: {
     flex: 1,
