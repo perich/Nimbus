@@ -61,12 +61,13 @@ export function getPins(currentUser) {
       for (var i = 0; i < data.length; i++) {
         markers.push({
           id: i,
+          pinID: data[i]._fields[0].properties.id,
           location: {
             latitude: JSON.parse(data[i]._fields[0].properties.location).latitude,
             longitude: JSON.parse(data[i]._fields[0].properties.location).longitude,
           },
           mediaURL: data[i]._fields[0].properties.mediaUrl,
-          likes: 0,
+          likes: data[i]._fields[0].properties.likes,
           description: data[i]._fields[0].properties.description,
           createdAt: data[i]._fields[0].properties.createdAt,
           // Replaced with sessions
@@ -79,6 +80,7 @@ export function getPins(currentUser) {
           pinColor: mapToColor[data[i]._fields[0].properties.category],
         });
       }
+
       dispatch(handlePins({ markers }))
     })
     .catch((error) => {
@@ -110,31 +112,35 @@ export function getPinsPublic(currentUser) {
       }
     })
     .then((response) => response.json())
-    .then((data) => {
-      var markers = [];          
-      for (var i = 0; i < data.length; i++) {
-        markers.push({
-          id: i,
-          location: {
-            latitude: JSON.parse(data[i]._fields[0].properties.location).latitude,
-            longitude: JSON.parse(data[i]._fields[0].properties.location).longitude,
-          },
-          mediaURL: data[i]._fields[0].properties.mediaUrl,
-          likes: 0,
-          description: data[i]._fields[0].properties.description,
-          createdAt: data[i]._fields[0].properties.createdAt,
-          // Replaced with sessions
-          firstName: helpers.capitalizeFirstChar(data[i]._fields[1].properties.firstName),
-          lastName: helpers.capitalizeFirstChar(data[i]._fields[1].properties.lastName),
-          profileURL: data[i]._fields[1].properties.photo,
-          email: data[i]._fields[1].properties.email || 'Facebook User',
-          userId: data[i]._fields[1].properties.id,
-          // Replaced with sessions
-          pinColor: mapToColor[data[i]._fields[0].properties.category],
-        });
-      }
-      dispatch(handlePins({ markers }));
-    })
+      .then((data) => {
+        var markers = [];          
+        for (var i = 0; i < data.length; i++) {
+          markers.push({
+            id: i,
+            pinID: data[i]._fields[0].properties.id,
+            location: {
+              latitude: JSON.parse(data[i]._fields[0].properties.location).latitude,
+              longitude: JSON.parse(data[i]._fields[0].properties.location).longitude,
+            },
+            mediaURL: data[i]._fields[0].properties.mediaUrl,
+            likes: data[i]._fields[0].properties.likes,
+            description: data[i]._fields[0].properties.description,
+            createdAt: data[i]._fields[0].properties.createdAt,
+            // Replaced with sessions
+            firstName: helpers.capitalizeFirstChar(data[i]._fields[1].properties.firstName),
+            lastName: helpers.capitalizeFirstChar(data[i]._fields[1].properties.lastName),
+            profileURL: data[i]._fields[1].properties.photo,
+            email: data[i]._fields[1].properties.email || 'Facebook User',
+            userId: data[i]._fields[1].properties.id,
+            // Replaced with sessions
+            pinColor: mapToColor[data[i]._fields[0].properties.category],
+          });
+        }
+        dispatch(handlePins({ markers }));
+      }).catch((error) => {
+        console.log('error');
+        console.log(error);
+      })
     .catch((error) => {
       console.log("UserActions.js: getPins(): *** ERROR ***");
       console.log(error);
