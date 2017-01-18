@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   TouchableHighlight,
+  TouchableOpacity,
   StyleSheet,
   Dimensions,
 } from 'react-native';
@@ -16,14 +17,49 @@ import TimeAgo from 'react-native-timeago';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../redux/actions/index.js';
+import { API_URL } from '../environment.js';
+const like = require('../assets/images/like.png');
 
 class PinScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      liked: false
+    }
+  }
+
   static route = {
     navigationBar: {
       title(params) {
-          return `${params.firstName} ${params.lastName}'s Post`;
+        return `${params.firstName} ${params.lastName}'s Post`;
       }
     },
+  }
+
+  componentWillMount() {
+    // check if current user likes current pin in DB
+    fetch(`${API_URL}/api/users/${this.props.route.params.userId}/pins/${this.props.route.params.pinID}/likes`,
+    {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authToken}`
+      }
+    }).then((response) => response.json())
+      .then((data) => {
+        console.log('pin likes', data);
+        data.forEach(id => {
+          if (id === this.props.currentUserId) {
+            this.setState({liked: true});
+          } 
+        })
+    }).catch((error) => {
+      console.log('***ERRROR***');
+      console.warn(error);
+    })
+      // if yes, this.setState({liked: true});
+      // else, this.setState({liked: false});
   }
 
   goToFriendsProfile() {
@@ -37,6 +73,36 @@ class PinScreen extends React.Component {
     };
     this.props.setFriend(friend);
     this.props.navigator.push('friendProfile', friend);
+  }
+
+
+  like() {
+    if (this.state.liked) {
+      this.props.route.params.likes--;
+      this.setState({liked: !this.state.liked});
+      
+    } else {
+      this.props.route.params.likes++
+      this.setState({liked: !this.state.liked});
+    }
+    
+    fetch(`${API_URL}/api/users/${this.props.route.params.userId}/pins/${this.props.route.params.pinID}/likes`,
+    {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authToken}`
+      },
+      body: JSON.stringify({id: this.props.currentUserId})
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('server response', data);
+    }).catch((error) => {
+      console.log('***ERRROR***');
+      console.warn(error);
+    })
   }
 
   render() {
@@ -66,7 +132,10 @@ class PinScreen extends React.Component {
           <Image style={styles.media} source={{uri: this.props.route.params.mediaURL}}></Image>
         </View>
         <View style={styles.likesContainer}>
-          <Text>{this.props.route.params.likes} Likes</Text>
+          <TouchableOpacity onPress={this.like.bind(this)}>
+            <Image style={styles.likeButton} source={like}></Image>
+          </TouchableOpacity>
+          <Text>{this.props.route.params.likes} likes</Text>
         </View>
         <View style={styles.descriptionContainer}>
           <Text>{this.props.route.params.description}</Text>
@@ -77,7 +146,10 @@ class PinScreen extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    currentUserId: state.userState.currentUser.userId,
+    authToken:state.userState.currentUser.authToken
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -127,7 +199,13 @@ const styles = StyleSheet.create({
   },
   likesContainer: {
     flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
+  },
+  likeButton: {
+    height: 13,
+    width: 13,
+    marginRight: 3,
   },
   descriptionContainer: {
     flex: 2,
