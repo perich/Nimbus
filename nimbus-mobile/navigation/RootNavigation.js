@@ -46,12 +46,14 @@ class RootNavigation extends React.Component {
     } else {
       return (
         <TabNavigation
+          tabBarColor={'#00284d'}
           tabBarHeight={56}
           initialTab="home">
 
           <TabNavigationItem
             id="home"
             renderIcon={isSelected => this._renderIcon('md-home', isSelected)}>
+            
             <StackNavigation initialRoute={Router.getRoute('home')} />
           </TabNavigationItem>
 
