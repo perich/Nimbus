@@ -17,6 +17,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../redux/actions/index.js';
 import { API_URL } from '../environment.js';
+import * as helpers from '../utilities/helpers.js';
+
+const add = '../assets/images/add,png';
 
 class AddFriendScreen extends React.Component {
   constructor(props) {
@@ -106,26 +109,20 @@ class AddFriendScreen extends React.Component {
 
     return (
       <View style={styles.mainContainer}>
-        <Text>Type a friend's first name and last name</Text>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({text: text})}
-          value={this.state.text}
-        />
+        <Text style={{textAlign: 'center', margin: 7}}>Type a friend's first name and last name</Text>
+        <TextInput style={styles. textInput} onChangeText={(text) => this.setState({text: text})} value={this.state.text} />
         <Button title='Search...' onPress={this.searchFriends} />
-        {
-          this.state.searchResults.map(searchResult => (
-            <View key={searchResult.id} style={styles.subContainer}>
-              <Image resizeMode={'cover'} style={styles.photo} source={{uri: searchResult.photo}} />
-              <Text style={styles.name}> {searchResult.firstName + searchResult.lastName} </Text> 
-              <View style={styles.addButtonContainer}>
-                <TouchableNativeFeedback onPress={this.addFriend.bind(this, searchResult.id)} style={styles.addButton}>
-                  <Text>+</Text>
-                </TouchableNativeFeedback>
-              </View>
+        {this.state.searchResults.map(searchResult => (
+          <View style={styles.card} key={searchResult.id}>
+            <View style={[styles.cardBody, {flexDirection: 'row'}]}>
+              <Image style={styles.friendPhoto} source={{uri: searchResult.photo}}/>
+              <Text style={styles.signOutText}>{helpers.capitalizeFirstChar(searchResult.firstName)} {helpers.capitalizeFirstChar(searchResult.lastName)}</Text>
+              <TouchableNativeFeedback onPress={this.addFriend.bind(this, searchResult.id)} style={styles.addButton}>
+                <Image style={styles.addButton} source={{uri: 'https://cdn3.iconfinder.com/data/icons/musthave/256/Add.png'}}/>
+              </TouchableNativeFeedback>
             </View>
-          ))
-        }
+          </View>
+        ))}
       </View>
     );
   }
@@ -148,15 +145,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FBFBFB',
   },  
-  subContainer: {
+  friendContainer: {
     flexDirection: 'row',
     backgroundColor: '#FBFBFB',
     height: 100
   },
-  photo: {
+  friendPhoto: {
     flex:0.4,
   },
-  name: {
+  friendName: {
     textAlign: 'center',
     flex:0.3
   },
@@ -166,19 +163,51 @@ const styles = StyleSheet.create({
     flex:0.3,
     height: 25
   },
+  textInput: {
+    height: 35,
+    borderColor: 'gray',
+    borderWidth: 1,
+    margin: 7,
+  },
   addButton: {
     height: 25,
     width: 25,
-    borderRadius: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'red',
-    opacity: 0.6,
-    borderWidth: 2,
-    borderColor: 'grey',
   },
   searchButton: {
     flex:1,
     backgroundColor: 'blue'
+  },
+  card: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: 'grey',
+    backgroundColor: '#fff',
+  },
+  cardBody: {
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+  },
+  cardLabel: {
+    marginTop: 20,
+    paddingLeft: 8,
+    paddingBottom: 5,
+  },
+  cardLabelText: {
+    fontSize: 15,
+    color: '#313131',
+  },
+  addFriendButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  friendPhoto: {
+    height: 25,
+    width: 25,
+    borderRadius: 12,
+  },
+  signOutText: {
+    fontSize: 15,
+    marginLeft: 8,
+    marginTop: 1,
   },
 });

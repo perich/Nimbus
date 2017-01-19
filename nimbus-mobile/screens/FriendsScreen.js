@@ -17,6 +17,7 @@ import AddFriendButton from '../components/AddFriendButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../redux/actions/index.js';
+import * as helpers from '../utilities/helpers.js';
 
 class FriendsScreen extends React.Component {
 
@@ -62,11 +63,8 @@ class FriendsScreen extends React.Component {
                 underlayColor="#eee"
               >
                 <View style={[styles.cardBody, {flexDirection: 'row'}]}>
-                  <MaterialIcons
-                    name="account-circle"
-                    size={25}
-                  />
-                  <Text style={styles.signOutText}>{friend.firstName} {friend.lastName}</Text>
+                  <Image style={styles.friendPhoto} source={{uri: friend.profileUrl}}/>
+                  <Text style={styles.signOutText}>{helpers.capitalizeFirstChar(friend.firstName)} {helpers.capitalizeFirstChar(friend.lastName)}</Text>
                 </View>
               </TouchableNativeFeedback>
             </View>
@@ -116,6 +114,11 @@ const styles = StyleSheet.create({
   addFriendButton: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  friendPhoto: {
+    height: 25,
+    width: 25,
+    borderRadius: 12,
   },
   addFriendButtonText: {
     color: 'white',

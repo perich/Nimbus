@@ -6,6 +6,7 @@ import {
   Text,
   ScrollView,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import {
   Components
@@ -17,12 +18,13 @@ import TimeAgo from 'react-native-timeago';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../redux/actions/index.js';
+import * as helpers from '../utilities/helpers.js';
 
 class FriendProfileScreen extends React.Component {
   static route = {
     navigationBar: {
       title(params) {
-        return `${params.firstName} ${params.lastName}'s Profile`;
+        return `${helpers.capitalizeFirstChar(params.firstName)} ${helpers.capitalizeFirstChar(params.lastName)}'s Profile`;
       }
     },
   }
@@ -34,28 +36,28 @@ class FriendProfileScreen extends React.Component {
   render() {
     if (this.props.viewIsReady) {
       return (
-        <ScrollView>
-          <View style={styles.container}>
-            <Image style={styles.pictureContainer} source={{uri: this.props.profileUrl}}>
-              <Components.BlurView tint="default" intensity={90} style={StyleSheet.absoluteFill}>
-                <View style={styles.pictureDetails}>
-                  <Image style={styles.picture} source={{uri: this.props.profileUrl}}/>
+        <ScrollView style={styles.container}>
+          <Image style={styles.pictureContainer} source={{uri: this.props.profileUrl}}>
+            <Components.BlurView tint="default" intensity={90} style={StyleSheet.absoluteFill}>
+              <View style={styles.pictureDetails}>
+                <Image style={styles.picture} source={{uri: this.props.profileUrl}}/>
+                <Text style={styles.name}>{helpers.capitalizeFirstChar(this.props.firstName)} {helpers.capitalizeFirstChar(this.props.lastName)}</Text>
+              </View>
+            </Components.BlurView>
+          </Image>
+          {this.props.markers.map(marker => (
+            <TouchableOpacity key={marker.id} style={styles.markerContainer} onPress={this.displayPin.bind(this, marker)}>
+              <Image source={{uri: marker.mediaURL}} style={styles.markerImage}></Image>
+              <View style={styles.markerDetails}>
+                <View style={styles.timeAgoContainer}>
+                  <TimeAgo time={JSON.parse(marker.createdAt)}/>
                 </View>
-              </Components.BlurView>
-            </Image>
-            <Text style={styles.name}>{this.props.firstName} {this.props.lastName}</Text>
-            <Text style={styles.email}>{this.props.email}</Text>
-            {this.props.markers.map(marker => (
-              <View style={styles.markerContainer} key={marker.id}>
-                <TimeAgo time={JSON.parse(marker.createdAt)}/>
-                <View style={styles.mapContainer}>
-                  <Components.MapView style={styles.mapCard} initialRegion={{latitude: marker.location.latitude, longitude: marker.location.longitude, latitudeDelta: 0.0012, longitudeDelta: 0.0001,}} cacheEnabled={true} loadingEnabled={true} onPress={this.displayPin.bind(this, marker)}>
-                    <Components.MapView.Marker coordinate={marker.location}/>
-                  </Components.MapView>
+                <View style={styles.descriptionContainer}>
+                  <Text style={styles.descriptionText}>{marker.description}</Text>
                 </View>
               </View>
-            ))}
-          </View>
+            </TouchableOpacity>
+          ))}
         </ScrollView>
       );
     } else {
@@ -87,6 +89,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(FriendProfileScreen)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#00284d',
   },
   markerContainer: {
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -127,6 +130,7 @@ const styles = StyleSheet.create({
     padding: 5,
     fontWeight: 'bold',
     fontSize: 24,
+    fontFamily: 'AvenirNext-Italic',
   },
   email: {
     textAlign: 'center',
@@ -134,5 +138,32 @@ const styles = StyleSheet.create({
   },
   recent: {
     margin: 5,
+  },
+  markerContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    height: 80,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  markerImage: {
+    flex: 1,
+  },
+  markerDetails: {
+    flex: 2,
+  },
+  timeAgoContainer: {
+    flex: 1,
+    paddingLeft: 5,
+    justifyContent: 'flex-end',
+  },
+  descriptionContainer: {
+    flex: 3,
+  },
+  descriptionText: {
+    paddingLeft: 5,
+    fontFamily: 'AvenirNext-Italic',
   }
 });
