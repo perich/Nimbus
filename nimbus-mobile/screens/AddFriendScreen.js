@@ -37,7 +37,14 @@ class AddFriendScreen extends React.Component {
   static route = {
     navigationBar: {
       title: 'Add Friend',
-      searchResults: ''
+      tintColor: 'white',
+      titleStyle: {
+        color: 'white',
+        fontFamily: 'Avenir',
+        fontSize: 20,
+      },
+      backgroundColor: '#00284d',
+      searchResults: '',
     },
   }
 
