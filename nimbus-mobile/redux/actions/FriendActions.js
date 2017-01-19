@@ -15,7 +15,6 @@ export function setFriend(friend) {
     .then((response) => response.json())
     .then((data) => {
       var markers = [];
-      console.log('data records', data.records);
       if (data.records) {
         for (var i = 0; i < data.records.length; i++) {
           markers.push({
