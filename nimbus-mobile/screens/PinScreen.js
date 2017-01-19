@@ -75,7 +75,6 @@ class PinScreen extends React.Component {
   }
 
   goToFriendsProfile() {
-    console.log('goToFriendsProfile', this.props.route.params)
     let { userId, firstName, lastName, profileUrl, email } = this.props.route.params;
     let friend = {
       id: userId,
@@ -122,8 +121,6 @@ class PinScreen extends React.Component {
   }
 
   render() {
-    // let profilePicture = this.props.profileURL ? { uri: this.props.profileUrl } : noUserImg;
-
     return (
 
       <Swiper
