@@ -1,7 +1,7 @@
 import React from 'react';
 import { Components } from 'exponent';
 import {
-  View,
+  Button,
   Text,
   Image,
   ScrollView,
@@ -14,11 +14,17 @@ import {
   ExponentLinksView,
 } from '@exponent/samples';
 import TimeAgo from 'react-native-timeago';
+import noUserImg from '../assets/images/noUser.png';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../redux/actions/index.js';
 import { API_URL } from '../environment.js';
 const like = require('../assets/images/like.png');
+import Swiper from 'react-native-swiper';
+import { Ionicons } from '@exponent/vector-icons';
+import { View } from 'react-native-animatable';
+
+let { width, height } = Dimensions.get('window');
 
 class PinScreen extends React.Component {
   constructor(props) {
@@ -32,7 +38,13 @@ class PinScreen extends React.Component {
     navigationBar: {
       title(params) {
         return `${params.firstName} ${params.lastName}'s Post`;
-      }
+      },
+      tintColor: 'white',
+      titleStyle: {
+        color: 'white',
+        fontFamily: 'Avenir',
+      },
+      backgroundColor: '#00284d'
     },
   }
 
@@ -63,18 +75,17 @@ class PinScreen extends React.Component {
   }
 
   goToFriendsProfile() {
-    let { userId, firstName, lastName, profileURL, email } = this.props.route.params;
+    let { userId, firstName, lastName, profileUrl, email } = this.props.route.params;
     let friend = {
       id: userId,
       firstName,
       lastName,
-      profileURL,
+      profileUrl,
       email,
     };
     this.props.setFriend(friend);
     this.props.navigator.push('friendProfile', friend);
   }
-
 
   like() {
     if (this.state.liked) {
@@ -105,42 +116,77 @@ class PinScreen extends React.Component {
     })
   }
 
+  getDirections() {
+    return null;
+  }
+
   render() {
     return (
-      <ScrollView style={styles.container} contentContainerStyle={{flex: 1}}>
-        <View style={styles.mapContainer}>
-          <Components.MapView style={{flex: 1}} cacheEnabled={true} initialRegion={{latitude: this.props.route.params.location.latitude, longitude: this.props.route.params.location.longitude, latitudeDelta: 0.0012, longitudeDelta: 0.0001,}}>
-            <Components.MapView.Marker coordinate={this.props.route.params.location}/>
-          </Components.MapView>
-        </View>
-        <View style={styles.profileContainer}>
-          <View style={styles.profilePictureContainer}>
-            <TouchableHighlight underlayColor={'transparent'} onPress={this.goToFriendsProfile.bind(this)}>
-              <Image style={styles.profilePicture} source={{uri: this.props.route.params.profileURL}}></Image>
-            </TouchableHighlight>
-          </View>
-          <View style={styles.profileDetailsContainer}>
-            <View style={styles.profileNameContainer}>
-              <Text>{this.props.route.params.firstName} {this.props.route.params.lastName}</Text>
+
+      <Swiper
+        style={styles.wrapper} 
+        showPagination={true}
+        paginationStyle={{ padding: 100 }}
+        loop={false}
+        activeDotColor={'#1B8FFF'}
+        dotColor={'#9B9FA4'}
+      >
+
+        <View style={styles.slide1}>
+          <View style={styles.profileContainer}>
+            <View style={styles.profilePictureContainer}>
+              <TouchableHighlight underlayColor={'transparent'} onPress={this.goToFriendsProfile.bind(this)}>
+                <Image style={styles.profilePicture} source={{uri: this.props.route.params.profileUrl}}></Image>
+              </TouchableHighlight>
             </View>
-            <View style={styles.profileTimeContainer}>
-              <TimeAgo time={JSON.parse(this.props.route.params.createdAt)}/>
+            <View style={styles.profileDetailsContainer}>
+              <View style={styles.profileNameContainer}>
+                <Text style={styles.profileText}>{this.props.currentUser.firstName} {this.props.currentUser.lastName}</Text>
+              </View>
+              <View style={styles.profileTimeContainer}>
+                <TimeAgo style={styles.timeAgoText} time={JSON.parse(this.props.route.params.createdAt)}/>
+              </View>
+            </View>
+          </View>
+          <Image style={styles.media}  resizeMode={'stretch'} source={{uri: this.props.route.params.mediaURL}}></Image>
+          <View style={styles.footer}>
+            <View style={styles.likesContainer}>
+              <View style={styles.heartIoniconContainer} animation="tada" delay={600} duration={800}>
+                <TouchableOpacity onPress={this.like.bind(this)}>
+                  <Ionicons name={'md-heart'} size={32} color={'#e53935'} />
+                </TouchableOpacity>
+              </View>
+              <Text style={styles.footerText}>{this.props.route.params.likes} likes</Text>
+            </View>
+            <View style={styles.descriptionContainer}>
+              <Text style={styles.descriptionText}>{this.props.route.params.description}</Text>
             </View>
           </View>
         </View>
-        <View style={styles.mediaContainer}>
-          <Image style={styles.media} source={{uri: this.props.route.params.mediaURL}}></Image>
+
+        <View style={styles.slide2}>
+          <View style={styles.profileContainer}>
+            <View style={styles.profilePictureContainer}>
+              <TouchableHighlight underlayColor={'transparent'} onPress={this.goToFriendsProfile.bind(this)}>
+                <Image style={styles.profilePicture} source={{uri: this.props.route.params.profileUrl}}></Image>
+              </TouchableHighlight>
+            </View>
+            <View style={styles.profileDetailsContainer}>
+              <View style={styles.profileNameContainer}>
+                <Text style={styles.profileText}>{this.props.currentUser.firstName} {this.props.currentUser.lastName}</Text>
+              </View>
+              <View style={styles.profileTimeContainer}>
+                <TimeAgo style={styles.timeAgoText} time={JSON.parse(this.props.route.params.createdAt)}/>
+              </View>
+            </View>
+          </View>
+          <View style={styles.mapContainer}>
+            <Components.MapView style={{flex: 1}} initialRegion={{latitude: this.props.route.params.location.latitude, longitude: this.props.route.params.location.longitude, latitudeDelta: 0.0012, longitudeDelta: 0.0001,}}>
+              <Components.MapView.Marker coordinate={this.props.route.params.location}/>
+            </Components.MapView>
+          </View>
         </View>
-        <View style={styles.likesContainer}>
-          <TouchableOpacity onPress={this.like.bind(this)}>
-            <Image style={styles.likeButton} source={like}></Image>
-          </TouchableOpacity>
-          <Text>{this.props.route.params.likes} likes</Text>
-        </View>
-        <View style={styles.descriptionContainer}>
-          <Text>{this.props.route.params.description}</Text>
-        </View>
-      </ScrollView>
+      </Swiper>
     );
   }
 }
@@ -148,8 +194,10 @@ class PinScreen extends React.Component {
 function mapStateToProps(state) {
   return {
     currentUserId: state.userState.currentUser.userId,
-    authToken:state.userState.currentUser.authToken
-  };
+    authToken:state.userState.currentUser.authToken,
+    currentUser: state.userState.currentUser,
+    profileUrl: state.userState.currentUser.profileUrl,
+   };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -159,15 +207,31 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(PinScreen);
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
+  },
+  slide1: {
     flex: 1,
   },
+  slide2: {
+    flex: 1,
+  },
+  footer: {
+    flex: 4,
+    backgroundColor: 'white',
+  },
+  footerText: {
+    fontFamily: 'AvenirNext-Italic',
+    // color: '#00284d',
+    color: '#1972FF',
+    paddingVertical: 17,
+  },
   mapContainer: {
-    flex: 3,
+    height: height-220,
   },
   profileContainer: {
+    height: 100,
     flexDirection: 'row',
-    flex: 2,
+    backgroundColor: 'white',
   },
   profilePictureContainer: {
     alignItems: 'center',
@@ -183,19 +247,36 @@ const styles = StyleSheet.create({
     flex: 3,
   },
   profileNameContainer: {
-    flex: 2,
-    justifyContent: 'center',
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingTop: 2,
+    paddingLeft: 5,
+  },
+  profileText: {
+    fontFamily: 'Avenir',
+    // color: '#00284d',
+    color: '#1972FF',
+    fontSize: 20,
+  },
+  timeAgoText: {
+    fontFamily: 'AvenirNext-Italic',
+    // color: '#00284d',
+    color: '#1972FF',
+    fontSize: 14,
   },
   profileTimeContainer: {
     flex: 1,
-    justifyContent: 'center',
-  },
-  mediaContainer: {
-    flex: 5,
+    justifyContent: 'flex-start',
+    marginTop: 3,
+    paddingLeft: 5,
   },
   media: {
-    height: Dimensions.get('window').height * 0.3,
-    width: Dimensions.get('window').width,
+    flex: 5,
+  },
+  heartIoniconContainer: {
+    paddingHorizontal: 15,
+    paddingTop: 10,
+    paddingBottom: 5,
   },
   likesContainer: {
     flex: 1,
@@ -208,6 +289,14 @@ const styles = StyleSheet.create({
     marginRight: 3,
   },
   descriptionContainer: {
-    flex: 2,
+    flex: 4,
+    alignItems: 'flex-start',
+    paddingLeft: 17,
+  },
+  descriptionText: {
+    fontFamily: 'Avenir',
+    fontSize: 20,
+    // color: '#00284d',
+    color: '#1972FF',
   },
 });

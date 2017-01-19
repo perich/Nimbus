@@ -40,10 +40,10 @@ class ProfileScreen extends React.Component {
     return (
       <ScrollView>
         <View style={styles.container}>
-          <Image style={styles.pictureContainer} source={{uri: this.props.profileURL}}>
+          <Image style={styles.pictureContainer} source={{uri: this.props.profileUrl}}>
             <Components.BlurView tint="default" intensity={90} style={StyleSheet.absoluteFill}>
               <View style={styles.pictureDetails}>
-                <Image style={styles.picture} source={{uri: this.props.profileURL}}/>
+                <Image style={styles.picture} source={{uri: this.props.profileUrl}}/>
               </View>
             </Components.BlurView>
           </Image>
@@ -62,7 +62,7 @@ function mapStateToProps(state) {
     firstName: state.userState.currentUser.firstName,
     lastName: state.userState.currentUser.lastName,
     email: state.userState.email,
-    profileURL: state.userState.currentUser.profileUrl,
+    profileUrl: state.userState.currentUser.profileUrl,
   };
 }
 

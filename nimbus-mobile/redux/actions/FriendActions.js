@@ -15,7 +15,6 @@ export function setFriend(friend) {
     .then((response) => response.json())
     .then((data) => {
       var markers = [];
-      console.log('data records', data.records);
       if (data.records) {
         for (var i = 0; i < data.records.length; i++) {
           markers.push({
@@ -32,7 +31,7 @@ export function setFriend(friend) {
             // Replaced with sessions
             firstName: friend.firstName,
             lastName: friend.lastName,
-            profileURL: friend.profileURL,
+            profileUrl: friend.profileUrl,
             email: friend.email,
             userId: friend.id,
             // Replaced with sessions
