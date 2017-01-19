@@ -47,26 +47,28 @@ class AddPinScreen extends React.Component {
     let { image } = this.state;
     return (
       <View>
-        <View style={styles.container}>
+        
           <View style={styles.photoContainer}>
           {image &&
             <Image source={{uri: image}} style={{width: width, height: width}} /> }
           </View>
-          <TouchableOpacity style={styles.pickImageContainer} onPress={this._pickImage}>
-            <View>
-              <Text style={styles.pickImageText}>Camera Roll</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.pickImageContainer} onPress={this._takePhoto}>
-            <View>
-              <Text style={styles.pickImageText}>Take a Photo</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+
+          <View style={styles.container}>
+            <TouchableOpacity style={styles.pickImageContainer} onPress={this._pickImage}>
+              <View>
+                <Text style={styles.pickImageText}>Camera Roll</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.pickImageContainer} onPress={this._takePhoto}>
+              <View>
+                <Text style={styles.pickImageText}>Take a Photo</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
 
         <TouchableOpacity onPress={this.addPinDesc.bind(this)} style={styles.next} >
           <View>
-            <Text style={styles.pickImageText}>Next</Text>
+            <Text style={styles.nextText}>Next</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -153,29 +155,28 @@ function mapDispatchToProps(dispatch) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: '#00284d',
     alignItems: 'center',
-    backgroundColor: '#1972FF',
+    height: 120,
+    paddingTop: 10,
   },
   pickImageContainer: {
-    backgroundColor: '#bcbfc2',
+    backgroundColor: 'white',
     height: 40,
-    width: 350,
+    width: width * 0.95,
     borderRadius: 15,
-    borderWidth: 1,
-    borderColor: '#9B9FA4',
     alignItems: 'center',
     justifyContent: 'center',
     margin: 3,
   },
   pickImageText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16
   },
   photoContainer: {
     width: width,
     height: width,
-    margin: 5,
+    backgroundColor: '#00284d',
   },
   addPhotoContainer: {
     flex: 5,
@@ -187,6 +188,10 @@ const styles = StyleSheet.create({
     width: width,
     alignItems: 'center',
     justifyContent: 'center',
-    top: 488,
+    bottom: 8,
+  },
+  nextText: {
+    color: 'white',
+    fontSize: 18
   }
 });
