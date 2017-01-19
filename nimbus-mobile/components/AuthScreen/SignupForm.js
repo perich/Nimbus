@@ -33,12 +33,6 @@ class SignupForm extends Component {
     }
   }
 
-
-  // _simulateSignup = (username, password, fullName) => {
-  //   this.setState({ isLoading: true })
-  //   setTimeout(() => this.setState({ isLoggedIn: true, isLoading: false }), 1000)
-  // }
-
   signup() {
     fetch(`${API_URL}/api/signup`, {
       method: 'POST',
@@ -124,7 +118,7 @@ class SignupForm extends Component {
         </View>
         <View style={styles.footer}>
 
-          <View ref={(ref) => this.buttonRef = ref} animation={'bounceIn'} duration={600} delay={400}>
+          <View ref={(ref) => this.buttonRef = ref} animation={'flipInY'} duration={600} delay={400}>
             <CustomButton
               onPress={this.signup.bind(this)}
               isEnabled={isValid}
@@ -197,10 +191,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   createAccountButton: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   createAccountButtonText: {
     color: '#3E464D',
+    fontFamily: 'Avenir',
   },
   formNav: {
     flexDirection: 'row',
@@ -210,5 +205,6 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.6)',
     alignSelf: 'center',
     paddingVertical: 15,
+    fontFamily: 'Avenir',
   }
 })

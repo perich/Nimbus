@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     color: 'white',
     margin: IS_ANDROID ? -1 : 0,
     height: 42,
-    padding: 7
+    padding: 7,
+    fontFamily: 'Avenir',
   }
 })

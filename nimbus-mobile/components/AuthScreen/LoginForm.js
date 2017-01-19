@@ -58,7 +58,7 @@ class LoginForm extends Component {
 
         </View>
         <View style={styles.footer}>
-          <View ref={(ref) => this.buttonRef = ref} animation={'bounceIn'} duration={600} delay={400}>
+          <View ref={(ref) => this.buttonRef = ref} animation={'flipInY'} duration={600} delay={400}>
             <CustomButton
               onPress={() => this.props.login()}
               isEnabled={isValid}
@@ -138,11 +138,13 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     color: '#3E464D',
+    fontFamily: 'Avenir',
   },
   signupLink: {
     color: 'rgba(255,255,255,0.6)',
     alignSelf: 'center',
     paddingVertical: 15,
     paddingHorizontal: 3,
+    fontFamily: 'Avenir',
   }
 })
