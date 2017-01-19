@@ -44,7 +44,7 @@ class PinScreen extends React.Component {
         color: 'white',
         fontFamily: 'Avenir',
       },
-      backgroundColor: '#00284d'
+      backgroundColor: '#00284d',
     },
   }
 

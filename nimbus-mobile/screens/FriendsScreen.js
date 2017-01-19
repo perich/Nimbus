@@ -19,14 +19,25 @@ import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../redux/actions/index.js';
 
 class FriendsScreen extends React.Component {
+
   static route = {
     navigationBar: {
       title: 'Friends',
+      tintColor: 'white',
+      titleStyle: {
+        color: 'white',
+        fontFamily: 'Avenir',
+        fontSize: 20,
+      },
+      backgroundColor: '#00284d',
       renderRight: function() {
         return (
-          <AddFriendButton />
-        )
-      } 
+            <AddFriendButton 
+              buttonStyle={styles.addFriendButton}
+              textStyle={styles.addFriendButtonText}
+            />
+        );
+      },
     }
   }
 
@@ -102,12 +113,24 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#313131',
   },
+  addFriendButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addFriendButtonText: {
+    color: 'white',
+    fontFamily: 'Avenir',
+    textAlign: 'center',
+    fontSize: 12,
+    marginTop: 15,
+    marginRight: 10,
+  },
   addFriendText: {
-    marginTop: 10,
+    marginTop: 12,
     marginRight: 10,
     textAlign: 'center',
     color: 'blue',
-    fontSize: 20,
+    fontSize: 16,
   },
   signOutText: {
     fontSize: 15,
