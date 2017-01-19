@@ -33,19 +33,19 @@ class HomeScreen extends React.Component {
       var lat = obj.coords.latitude;
       var long = obj.coords.longitude;
       var time = obj.timestamp;
-      console.log('latitude: ', lat, 'longitude: ', lat)
+      console.log('latitude: ', lat, 'longitude: ', long)
       // console.log('TIME: ', time)
     }
 
     // wait at least 4 minutes in between updates 
     // and only invoke the callback if the user has moved more than 10 meters
     var options = {
-      enableHighAccuracy: true,
+      enableHighAccuracy: false,
       timeInterval: 240000,
       distanceInterval: 1000
     }
 
-    Location.watchPositionAsync(options, cb)
+    // Location.watchPositionAsync(options, cb)
 
     var that = this;
     navigator.geolocation.getCurrentPosition(function(location) {
