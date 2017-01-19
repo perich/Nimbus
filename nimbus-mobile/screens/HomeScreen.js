@@ -112,13 +112,13 @@ class HomeScreen extends React.Component {
     if (this.props.mapIsReady) {    
       return (
         <View style={styles.container}>
-          <TouchableHighlight style={styles.addButton} underlayColor={'transparent'} onPress={this.goToAddPin.bind(this)}>
+          <TouchableHighlight style={styles.addButton} underlayColor={'#e6e6e6'} onPress={this.goToAddPin.bind(this)}>
             <Text style={styles.addPlus}>+</Text>
           </TouchableHighlight>
 
           <TouchableHighlight
-            style={styles.friendsButton} 
-            underlayColor={'transparent'} 
+            style={styles.friendsButton}
+            underlayColor={'#e6e6e6'}
             onPress={this.getPins.bind(this)}>
             <Text style={styles.addText}>Friends</Text>
            </TouchableHighlight>
@@ -126,8 +126,8 @@ class HomeScreen extends React.Component {
           <Components.MapView style={{flex: 1}} showsUserLocation={true} initialRegion={{latitude: this.props.userLocation.latitude, longitude: this.props.userLocation.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421,}}>
 
           <TouchableHighlight
-            style={styles.publicButton} 
-            underlayColor={'transparent'} 
+            style={styles.publicButton}
+            underlayColor={'#e6e6e6'}
             onPress={this.getPinsPublic.bind(this)}>
             <Text style={styles.addText}>Public</Text>
           </TouchableHighlight>
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     height: 50,
     width: 50,
-    bottom: 35,
+    bottom: 40,
     right: width / 2 - 25,
     zIndex: 999
   },
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'lightgrey',
     backgroundColor: 'white',
-    height: 28,
+    height: 35,
     width: width / 2,
     // top: height / 22,
     bottom: 0,
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'lightgrey',
     backgroundColor: 'white',
-    height: 28,
+    height: 35,
     width: width / 2,
     // top: height / 22,
     bottom: 0,
