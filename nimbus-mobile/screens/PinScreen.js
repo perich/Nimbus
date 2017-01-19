@@ -24,6 +24,7 @@ const like = require('../assets/images/like.png');
 import Swiper from 'react-native-swiper';
 import { Ionicons } from '@exponent/vector-icons';
 import { View } from 'react-native-animatable';
+import * as helpers from '../utilities/helpers.js';
 
 let { width, height } = Dimensions.get('window');
 
@@ -38,7 +39,7 @@ class PinScreen extends React.Component {
   static route = {
     navigationBar: {
       title(params) {
-        return `${params.firstName} ${params.lastName}'s Post`;
+        return `${helpers.capitalizeFirstChar(params.firstName)} ${helpers.capitalizeFirstChar(params.lastName)}'s Post`;
       },
       tintColor: 'white',
       titleStyle: {
@@ -149,7 +150,7 @@ class PinScreen extends React.Component {
             </View>
             <View style={styles.profileDetailsContainer}>
               <View style={styles.profileNameContainer}>
-                <Text style={styles.profileText}>{this.props.route.params.firstName} {this.props.route.params.lastName}</Text>
+                <Text style={styles.profileText}>{helpers.capitalizeFirstChar(this.props.route.params.firstName)} {helpers.capitalizeFirstChar(this.props.route.params.lastName)}</Text>
               </View>
               <View style={styles.profileTimeContainer}>
                 <TimeAgo style={styles.timeAgoText} time={JSON.parse(this.props.route.params.createdAt)}/>
