@@ -70,26 +70,16 @@ export function getPins(currentUser) {
           likes: data[i]._fields[0].properties.likes,
           description: data[i]._fields[0].properties.description,
           createdAt: data[i]._fields[0].properties.createdAt,
-          // Replaced with sessions
-// <<<<<<< HEAD
           firstName: helpers.capitalizeFirstChar(data[i]._fields[1].properties.firstName),
           lastName: helpers.capitalizeFirstChar(data[i]._fields[1].properties.lastName),
           profileUrl: data[i]._fields[1].properties.photo,
           email: data[i]._fields[1].properties.email || 'Facebook User',
           userId: data[i]._fields[1].properties.id,
-// =======
-//           firstName: currentUser.firstName,
-//           lastName: currentUser.lastName,
-//           profileUrl: currentUser.profileUrl,
-//           email: currentUser.email || 'Facebook User',
-//           userId: currentUser.userId,
-// >>>>>>> Change all profileURL to profileUrl camel-case
-          // Replaced with sessions
           pinColor: mapToColor[data[i]._fields[0].properties.category],
         });
       }
 
-      dispatch(handlePins({ markers }))
+      dispatch(handlePins({ markers }));
     })
     .catch((error) => {
       console.log("*** ERROR ***");
@@ -135,13 +125,11 @@ export function getPinsPublic(currentUser) {
             likes: data[i]._fields[0].properties.likes,
             description: data[i]._fields[0].properties.description,
             createdAt: data[i]._fields[0].properties.createdAt,
-            // Replaced with sessions
             firstName: helpers.capitalizeFirstChar(data[i]._fields[1].properties.firstName),
             lastName: helpers.capitalizeFirstChar(data[i]._fields[1].properties.lastName),
             profileUrl: data[i]._fields[1].properties.photo,
             email: data[i]._fields[1].properties.email || 'Facebook User',
             userId: data[i]._fields[1].properties.id,
-            // Replaced with sessions
             pinColor: mapToColor[data[i]._fields[0].properties.category],
           });
         }
