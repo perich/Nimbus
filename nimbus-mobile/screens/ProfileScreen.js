@@ -75,7 +75,7 @@ class ProfileScreen extends React.Component {
           createdAt: data[i]._fields[0].properties.createdAt,
           firstName: helpers.capitalizeFirstChar(that.props.firstName),
           lastName: helpers.capitalizeFirstChar(that.props.lastName),
-          profileURL: that.props.photo,
+          profileUrl: that.props.photo,
           email: that.props.email || 'Facebook User',
           userId: that.props.id,
           pinColor: mapToColor[data[i]._fields[0].properties.category],
@@ -104,13 +104,13 @@ class ProfileScreen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <Image style={styles.pictureContainer} source={{uri: this.props.profileURL}}>
+        <Image style={styles.pictureContainer} source={{uri: this.props.profileUrl}}>
           <Components.BlurView tint="default" intensity={90} style={StyleSheet.absoluteFill}>
             <TouchableOpacity style={styles.settingsButtonContainer} onPress={this.goToSettings.bind(this)}>
               <Image style={styles.settingsButton} source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Gear_1.svg/2000px-Gear_1.svg.png'}}/>
             </TouchableOpacity>
             <View style={styles.pictureDetails}>
-              <Image style={styles.picture} source={{uri: this.props.profileURL}}/>
+              <Image style={styles.picture} source={{uri: this.props.profileUrl}}/>
               <Text style={styles.name}>{this.props.firstName} {this.props.lastName}</Text>
             </View>
           </Components.BlurView>
@@ -140,7 +140,7 @@ function mapStateToProps(state) {
     firstName: state.userState.currentUser.firstName,
     lastName: state.userState.currentUser.lastName,
     email: state.userState.email,
-    profileURL: state.userState.currentUser.profileUrl,
+    profileUrl: state.userState.currentUser.profileUrl,
     authToken: state.userState.currentUser.authToken,
   };
 }
