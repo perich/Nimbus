@@ -37,7 +37,14 @@ class AddFriendScreen extends React.Component {
   static route = {
     navigationBar: {
       title: 'Add Friend',
-      searchResults: ''
+      tintColor: 'white',
+      titleStyle: {
+        color: 'white',
+        fontFamily: 'Avenir',
+        fontSize: 20,
+      },
+      backgroundColor: '#00284d',
+      searchResults: '',
     },
   }
 
@@ -109,7 +116,7 @@ class AddFriendScreen extends React.Component {
         {
           this.state.searchResults.map(searchResult => (
             <View key={searchResult.id} style={styles.subContainer}>
-              <Image style={styles.photo} source={{uri: searchResult.photo}} />
+              <Image resizeMode={'cover'} style={styles.photo} source={{uri: searchResult.photo}} />
               <Text style={styles.name}> {searchResult.firstName + searchResult.lastName} </Text> 
               <View style={styles.addButtonContainer}>
                 <TouchableNativeFeedback onPress={this.addFriend.bind(this, searchResult.id)} style={styles.addButton}>

@@ -22,9 +22,13 @@ export default class AddFriendButton extends React.Component {
     this.props.navigator.push('addFriend');
   }
   render() {
+    const {...otherProps} = this.props;
     return (
-      <TouchableOpacity onPress={this.addFriend.bind(this)}>
-        <Text>Add Friend</Text>
+      <TouchableOpacity 
+        onPress={this.addFriend.bind(this)}
+        style={this.props.buttonStyle}
+      >
+        <Text style={this.props.textStyle}>Add Friend</Text>
       </TouchableOpacity>
     );
   }
