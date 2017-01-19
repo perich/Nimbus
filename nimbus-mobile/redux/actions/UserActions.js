@@ -76,6 +76,7 @@ export function getPins(currentUser) {
           email: data[i]._fields[1].properties.email || 'Facebook User',
           userId: data[i]._fields[1].properties.id,
           pinColor: mapToColor[data[i]._fields[0].properties.category],
+          category: data[i]._fields[0].properties.category, 
         });
       }
 
