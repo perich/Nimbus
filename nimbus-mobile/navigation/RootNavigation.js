@@ -68,12 +68,6 @@ class RootNavigation extends React.Component {
             renderIcon={isSelected => this._renderIcon('md-people', isSelected)}>
             <StackNavigation initialRoute={Router.getRoute('friends')}/>
           </TabNavigationItem>
-
-          <TabNavigationItem
-            id="settings"
-            renderIcon={isSelected => this._renderIcon('md-cog', isSelected)}>
-            <StackNavigation initialRoute={Router.getRoute('settings')}/>
-          </TabNavigationItem>
         </TabNavigation>
       );
     }

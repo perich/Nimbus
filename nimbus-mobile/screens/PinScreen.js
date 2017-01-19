@@ -141,7 +141,7 @@ class PinScreen extends React.Component {
             </View>
             <View style={styles.profileDetailsContainer}>
               <View style={styles.profileNameContainer}>
-                <Text style={styles.profileText}>{this.props.currentUser.firstName} {this.props.currentUser.lastName}</Text>
+                <Text style={styles.profileText}>{this.props.route.params.firstName} {this.props.route.params.lastName}</Text>
               </View>
               <View style={styles.profileTimeContainer}>
                 <TimeAgo style={styles.timeAgoText} time={JSON.parse(this.props.route.params.createdAt)}/>
