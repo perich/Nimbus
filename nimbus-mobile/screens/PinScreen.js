@@ -76,12 +76,12 @@ class PinScreen extends React.Component {
 
   goToFriendsProfile() {
     console.log('goToFriendsProfile', this.props.route.params)
-    let { userId, firstName, lastName, profileURL, email } = this.props.route.params;
+    let { userId, firstName, lastName, profileUrl, email } = this.props.route.params;
     let friend = {
       id: userId,
       firstName,
       lastName,
-      profileURL,
+      profileUrl,
       email,
     };
     this.props.setFriend(friend);
@@ -122,7 +122,7 @@ class PinScreen extends React.Component {
   }
 
   render() {
-    let profilePicture = this.props.profileURL ? { uri: this.props.profileUrl } : noUserImg;
+    // let profilePicture = this.props.profileURL ? { uri: this.props.profileUrl } : noUserImg;
 
     return (
 
@@ -139,7 +139,7 @@ class PinScreen extends React.Component {
           <View style={styles.profileContainer}>
             <View style={styles.profilePictureContainer}>
               <TouchableHighlight underlayColor={'transparent'} onPress={this.goToFriendsProfile.bind(this)}>
-                <Image style={styles.profilePicture} source={profilePicture}></Image>
+                <Image style={styles.profilePicture} source={{uri: this.props.route.params.profileUrl}}></Image>
               </TouchableHighlight>
             </View>
             <View style={styles.profileDetailsContainer}>
@@ -171,7 +171,7 @@ class PinScreen extends React.Component {
           <View style={styles.profileContainer}>
             <View style={styles.profilePictureContainer}>
               <TouchableHighlight underlayColor={'transparent'} onPress={this.goToFriendsProfile.bind(this)}>
-                <Image style={styles.profilePicture} source={profilePicture}></Image>
+                <Image style={styles.profilePicture} source={{uri: this.props.route.params.profileUrl}}></Image>
               </TouchableHighlight>
             </View>
             <View style={styles.profileDetailsContainer}>

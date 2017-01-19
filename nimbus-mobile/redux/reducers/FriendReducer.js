@@ -27,7 +27,7 @@ export const friendState = createReducer(initialFriendState, {
   [types.SET_FRIEND_MARKERS] (state, action) {
     return Object.assign({}, state, {
       id: action.friend.id,
-      profileURL: action.friend.profileURL,
+      profileUrl: action.friend.profileUrl,
       firstName: action.friend.firstName,
       lastName: action.friend.lastName,
       email: action.friend.email || 'Facebook User',
