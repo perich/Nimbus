@@ -44,7 +44,7 @@ class PinScreen extends React.Component {
         color: 'white',
         fontFamily: 'Avenir',
       },
-      backgroundColor: '#00284d'
+      backgroundColor: '#00284d',
     },
   }
 
@@ -122,7 +122,6 @@ class PinScreen extends React.Component {
 
   render() {
     return (
-
       <Swiper
         style={styles.wrapper} 
         showPagination={true}
@@ -131,7 +130,6 @@ class PinScreen extends React.Component {
         activeDotColor={'#1B8FFF'}
         dotColor={'#9B9FA4'}
       >
-
         <View style={styles.slide1}>
           <View style={styles.profileContainer}>
             <View style={styles.profilePictureContainer}>
@@ -163,7 +161,6 @@ class PinScreen extends React.Component {
             </View>
           </View>
         </View>
-
         <View style={styles.slide2}>
           <View style={styles.profileContainer}>
             <View style={styles.profilePictureContainer}>
@@ -184,6 +181,8 @@ class PinScreen extends React.Component {
             <Components.MapView style={{flex: 1}} initialRegion={{latitude: this.props.route.params.location.latitude, longitude: this.props.route.params.location.longitude, latitudeDelta: 0.0012, longitudeDelta: 0.0001,}}>
               <Components.MapView.Marker coordinate={this.props.route.params.location}/>
             </Components.MapView>
+          </View>
+          <View style={{height: 56, width, backgroundColor: 'green',}}>
           </View>
         </View>
       </Swiper>
@@ -215,33 +214,51 @@ const styles = StyleSheet.create({
   slide2: {
     flex: 1,
   },
+  descriptionContainer: {
+    flex: 4,
+    alignItems: 'center',
+    paddingLeft: 17,
+    paddingTop: 10,
+  },
+  descriptionText: {
+    fontFamily: 'Avenir',
+    fontSize: 20,
+    color: '#1972FF',
+  },
   footer: {
     flex: 4,
     backgroundColor: 'white',
   },
   footerText: {
     fontFamily: 'AvenirNext-Italic',
-    // color: '#00284d',
     color: '#1972FF',
     paddingVertical: 17,
   },
+  heartIoniconContainer: {
+    paddingHorizontal: 15,
+    paddingTop: 10,
+    paddingBottom: 5,
+  },
+  likeButton: {
+    height: 13,
+    width: 13,
+    marginRight: 3,
+  },
+  likesContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   mapContainer: {
-    height: height-220,
+    flex: 1,
+  },
+  media: {
+    flex: 5,
   },
   profileContainer: {
     height: 100,
     flexDirection: 'row',
     backgroundColor: 'white',
-  },
-  profilePictureContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-  },
-  profilePicture: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
   },
   profileDetailsContainer: {
     flex: 3,
@@ -252,17 +269,20 @@ const styles = StyleSheet.create({
     paddingTop: 2,
     paddingLeft: 5,
   },
+  profilePicture: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+  },
+  profilePictureContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
   profileText: {
     fontFamily: 'Avenir',
-    // color: '#00284d',
     color: '#1972FF',
     fontSize: 20,
-  },
-  timeAgoText: {
-    fontFamily: 'AvenirNext-Italic',
-    // color: '#00284d',
-    color: '#1972FF',
-    fontSize: 14,
   },
   profileTimeContainer: {
     flex: 1,
@@ -270,33 +290,9 @@ const styles = StyleSheet.create({
     marginTop: 3,
     paddingLeft: 5,
   },
-  media: {
-    flex: 5,
-  },
-  heartIoniconContainer: {
-    paddingHorizontal: 15,
-    paddingTop: 10,
-    paddingBottom: 5,
-  },
-  likesContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  likeButton: {
-    height: 13,
-    width: 13,
-    marginRight: 3,
-  },
-  descriptionContainer: {
-    flex: 4,
-    alignItems: 'flex-start',
-    paddingLeft: 17,
-  },
-  descriptionText: {
-    fontFamily: 'Avenir',
-    fontSize: 20,
-    // color: '#00284d',
+  timeAgoText: {
+    fontFamily: 'AvenirNext-Italic',
     color: '#1972FF',
+    fontSize: 14,
   },
 });

@@ -17,7 +17,14 @@ import { ActionCreators } from '../redux/actions/index.js';
 class SettingsScreen extends React.Component {
   static route = {
     navigationBar: {
-      title: 'Settings'
+      title: 'Settings',
+      tintColor: 'white',
+      titleStyle: {
+        color: 'white',
+        fontFamily: 'Avenir',
+        fontSize: 20,
+      },
+      backgroundColor: '#00284d',
     },
   }
 
