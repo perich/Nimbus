@@ -4,6 +4,7 @@ import {
   Button,
   Text,
   Image,
+  Linking,
   ScrollView,
   TouchableHighlight,
   TouchableOpacity,
@@ -70,8 +71,6 @@ class PinScreen extends React.Component {
       console.log('***ERRROR***');
       console.warn(error);
     })
-      // if yes, this.setState({liked: true});
-      // else, this.setState({liked: false});
   }
 
   goToFriendsProfile() {
@@ -117,7 +116,18 @@ class PinScreen extends React.Component {
   }
 
   getDirections() {
-    return null;
+    console.log('get directions')
+    var lat = this.props.route.params.location.latitude
+    var long =this.props.route.params.location.longitude
+    var uri = `http://maps.apple.com/?daddr=${lat},${long}`
+
+    Linking.canOpenURL(uri).then(supported => {
+      if (supported) {
+        Linking.openURL(uri);
+      } else {
+        console.log('Don\'t know how to open URI: ' + uri);
+      }
+    });
   }
 
   render() {
@@ -178,7 +188,8 @@ class PinScreen extends React.Component {
             </View>
           </View>
           <View style={styles.mapContainer}>
-            <Components.MapView style={{flex: 1}} initialRegion={{latitude: this.props.route.params.location.latitude, longitude: this.props.route.params.location.longitude, latitudeDelta: 0.0012, longitudeDelta: 0.0001,}}>
+            <Button title={'Get Directions'} onPress={this.getDirections.bind(this)}><Text>Get Directions</Text></Button>
+            <Components.MapView style={{flex: 1}} scrollEnabled={false} initialRegion={{latitude: this.props.route.params.location.latitude, longitude: this.props.route.params.location.longitude, latitudeDelta: 0.0012, longitudeDelta: 0.0001,}}>
               <Components.MapView.Marker coordinate={this.props.route.params.location}/>
             </Components.MapView>
           </View>
@@ -212,7 +223,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   slide2: {
-    flex: 1,
+    flex: 0.5,
   },
   descriptionContainer: {
     flex: 4,
