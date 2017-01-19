@@ -15,26 +15,24 @@ export function setFriend(friend) {
     .then((response) => response.json())
     .then((data) => {
       var markers = [];
-      if (data.records) {
-        for (var i = 0; i < data.records.length; i++) {
+      if (data) {
+        for (var i = 0; i < data.length; i++) {
           markers.push({
             id: i,
             location: {
-              latitude: JSON.parse(data.records[i]._fields[0].properties.location).latitude,
-              longitude: JSON.parse(data.records[i]._fields[0].properties.location).longitude,
+              latitude: JSON.parse(data[i]._fields[0].properties.location).latitude,
+              longitude: JSON.parse(data[i]._fields[0].properties.location).longitude,
             },
-            mediaURL: data.records[i]._fields[0].properties.mediaUrl,
+            mediaURL: data[i]._fields[0].properties.mediaUrl,
             likes: 69420,
-            description: data.records[i]._fields[0].properties.description,
-            createdAt: data.records[i]._fields[0].properties.createdAt,
+            description: data[i]._fields[0].properties.description,
+            createdAt: data[i]._fields[0].properties.createdAt,
             pinColor:  '#4286f4',
-            // Replaced with sessions
             firstName: friend.firstName,
             lastName: friend.lastName,
             profileUrl: friend.profileUrl,
             email: friend.email,
             userId: friend.id,
-            // Replaced with sessions
           });
         }
       }
