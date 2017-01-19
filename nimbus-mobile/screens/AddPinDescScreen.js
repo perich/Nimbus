@@ -85,42 +85,49 @@ class AddPinDescScreen extends React.Component {
 
     return (
       <ScrollView style={styles.container}>
-        <TextInput 
-          style={styles.descriptionBox} 
-          multiline={false} 
-          numberOfLines={4} 
-          onChangeText={(description) => this.setState({description})} 
-          placeholder='Write a caption...' 
-          value={this.state.description} 
-        />
-        <Text style={styles.labelText}>Category:</Text>
-        <PickerIOS
-          style={styles.selectMenu}
-          selectedValue={this.state.category}
-          onValueChange={(category) => this.setState({category, modelIndex: 0})}>
-          {this.state.categories.map((category) => (
-            <PickerIOS.Item
-              key={category.key}
-              value={category.name}
-              label={category.name}
-            />
-          ))}
-        </PickerIOS>
+        <View style={styles.descFlex}>
+          <TextInput 
+            style={styles.descriptionBox} 
+            multiline={true} 
+            numberOfLines={3} 
+            onChangeText={(description) => this.setState({description})} 
+            placeholder='Write a caption...' 
+            value={this.state.description} 
+          />
+        </View>
 
-        <Text style={styles.labelText}>Public</Text>
-        <Switch
-          style={styles.privacyMenu}
-          onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
-          value={this.state.falseSwitchIsOn}
-          onChange={(checked) => {
-            if (checked === false && this.state.privacy === "private") {
-              this.state.privacy = "public"
-            }
-            if (checked === true && this.state.privacy === "public") {
-              this.state.privacy = "private"
-            }
-          }} 
-        />
+        <View style={styles.catFlex}>
+          <Text style={styles.labelText}>Category</Text>
+          <PickerIOS
+            style={styles.selectMenu}
+            selectedValue={this.state.category}
+            onValueChange={(category) => this.setState({category, modelIndex: 0})}>
+            {this.state.categories.map((category) => (
+              <PickerIOS.Item
+                key={category.key}
+                value={category.name}
+                label={category.name}
+              />
+            ))}
+          </PickerIOS>
+        </View>
+
+        <View style={styles.privFlex}>
+          <Text style={styles.flexText}>Public</Text>
+          <Switch
+            style={styles.privacyMenu}
+            onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
+            value={this.state.falseSwitchIsOn}
+            onChange={(checked) => {
+              if (checked === false && this.state.privacy === "private") {
+                this.state.privacy = "public"
+              }
+              if (checked === true && this.state.privacy === "public") {
+                this.state.privacy = "private"
+              }
+            }} 
+          />
+        </View>
 
         
         <TouchableOpacity onPress={this._handlePinPost.bind(this)} style={styles.submit} >
@@ -144,9 +151,9 @@ class AddPinDescScreen extends React.Component {
         privacy: that.state.privacy,
         category: that.state.category
     };
-
     try {
       let response = await that._postPin(pinData);
+      console.log(response);
       that.props.navigator.push('home');
     } catch(e) {
       throw e;
@@ -167,11 +174,10 @@ class AddPinDescScreen extends React.Component {
     };
 
     return fetch(postUrl, options);
-    console.log(pinData);
   }
 
   _goBack() {
-    this.props.navigator.pop();
+    this.props.navigator.push('home');
   }
 }
 
@@ -180,7 +186,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(AddPinDescScreen);
 function mapStateToProps(state) {
   return {
     authToken: state.userState.currentUser.authToken,
-    userId: state.userState.currentUser.userID,
+    userId: state.userState.currentUser.userId,
   };
 }
 
@@ -191,6 +197,7 @@ function mapDispatchToProps(dispatch) {
 const styles = StyleSheet.create({
   container: {
     height: height,
+    backgroundColor: '#00284d',
   },
   submit: {
     backgroundColor: '#2f95dc',
@@ -198,24 +205,54 @@ const styles = StyleSheet.create({
     width: width,
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: -108,
+    bottom: -46,
   },
   submitText: {
     color: 'white',
-    fontSize: 16
+    fontSize: 18
   },
   descriptionBox: {
     height: 100,
-    margin: 5,
-    paddingTop: 15,
+    fontSize: 16,
   },
   selectMenu: {
     height: 200,
   },
+  descFlex: {
+    padding: 10,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    flex: 0.8,
+    justifyContent: 'flex-start',
+    backgroundColor: 'white',
+    borderRadius: 15,
+  },
+  catFlex: {
+    backgroundColor: 'white',
+    padding: 10,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    borderRadius: 15,
+  },
+  privFlex: {
+    flexDirection: 'row',
+    padding: 10,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: 'white',
+    borderRadius: 15,
+  },
   privacyMenu: {
-
+    left: 230,
   },
   labelText: {
     fontSize: 16,
   },
+  flexText: {
+    top: 5,
+    fontSize: 16,
+  }
 });
