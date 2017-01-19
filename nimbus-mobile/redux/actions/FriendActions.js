@@ -32,7 +32,7 @@ export function setFriend(friend) {
             // Replaced with sessions
             firstName: friend.firstName,
             lastName: friend.lastName,
-            profileURL: friend.profileURL,
+            profileUrl: friend.profileUrl,
             email: friend.email,
             userId: friend.id,
             // Replaced with sessions

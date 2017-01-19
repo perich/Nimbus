@@ -36,10 +36,10 @@ class FriendProfileScreen extends React.Component {
       return (
         <ScrollView>
           <View style={styles.container}>
-            <Image style={styles.pictureContainer} source={{uri: this.props.profileURL}}>
+            <Image style={styles.pictureContainer} source={{uri: this.props.profileUrl}}>
               <Components.BlurView tint="default" intensity={90} style={StyleSheet.absoluteFill}>
                 <View style={styles.pictureDetails}>
-                  <Image style={styles.picture} source={{uri: this.props.profileURL}}/>
+                  <Image style={styles.picture} source={{uri: this.props.profileUrl}}/>
                 </View>
               </Components.BlurView>
             </Image>
@@ -69,7 +69,7 @@ class FriendProfileScreen extends React.Component {
 function mapStateToProps(state) {
   return {
     id: state.friendState.id,
-    profileURL: state.friendState.profileURL,
+    profileUrl: state.friendState.profileUrl,
     firstName: state.friendState.firstName,
     lastName: state.friendState.lastName,
     email: state.friendState.email,
