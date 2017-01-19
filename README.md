@@ -1,12 +1,12 @@
 # Sharemap
 
-Share points of interest with friends and keep a record of your travels and experiences.
+Share points of interest with friends, and keep a record of your travels and experiences.
 
 ## Team
 
   - __Product Owner__: Tim Chin
   - __Scrum Master__: Graham Perich
-  - __Development Team Members__: Steven Jing, Chris "Strong Guy" Lu
+  - __Development Team Members__: Steven Jing, Chris Lu
 
 ## Table of Contents
 
@@ -20,15 +20,12 @@ Share points of interest with friends and keep a record of your travels and expe
 
 ## Usage
 
-> Some usage instructions
+To use the app, download `Exponent` from the app store and load our experience
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- Node ~6.0
+- Neo4j 3.1.x
 
 ## Development
 
@@ -43,7 +40,6 @@ npm start
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
 
 
 ## Contributing
