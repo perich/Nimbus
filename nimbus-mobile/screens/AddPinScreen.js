@@ -46,7 +46,7 @@ class AddPinScreen extends React.Component {
   render() {
     let { image } = this.state;
     return (
-      <View>
+      <ScrollView>
         
           <View style={styles.photoContainer}>
           {image &&
@@ -71,7 +71,7 @@ class AddPinScreen extends React.Component {
             <Text style={styles.nextText}>Next</Text>
           </View>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     );
   }
 

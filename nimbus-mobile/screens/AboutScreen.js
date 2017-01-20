@@ -40,10 +40,13 @@ class AboutScreen extends React.Component {
       <ScrollView>
         <View style={styles.container}>
           <Image style={styles.logo} source={imgLogo}/>
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor, ex id posuere sagittis, lorem nisl ultrices tortor, eu venenatis massa ligula id sapien. Aliquam lobortis, metus ut ornare lacinia, elit lectus vestibulum augue, euismod accumsan nunc massa sed erat. Vestibulum in cursus libero. Nulla malesuada sollicitudin elit, nec pharetra quam fermentum eget. Etiam mattis dolor sit amet aliquam imperdiet. Duis nec pretium risus, convallis rutrum dui. Ut non mauris et augue lobortis fermentum nec ut dui. Vestibulum sollicitudin augue ac risus varius, dictum vehicula sem maximus. Suspendisse potenti. Donec rutrum turpis et ultricies maximus. Aenean suscipit nisl sed metus egestas ornare. Mauris id elementum velit. Phasellus ut ultrices dui, nec sagittis nisi.
-          </Text>
-          <Swiper height={300} showPagination={true} loop={false} activeDotColor={'#1B8FFF'} dotColor={'#9B9FA4'} >
+          <View style={styles.introContainer}>
+            <Text style={styles.introText}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor, ex id posuere sagittis, lorem nisl ultrices tortor, eu venenatis massa ligula id sapien. Aliquam lobortis, metus ut ornare lacinia, elit lectus vestibulum augue, euismod accumsan nunc massa sed erat. Vestibulum in cursus libero. Nulla malesuada sollicitudin elit, nec pharetra quam fermentum eget. Etiam mattis dolor sit amet aliquam imperdiet. Duis nec pretium risus, convallis rutrum dui. Ut non mauris et augue lobortis fermentum nec ut dui. Vestibulum sollicitudin augue ac risus varius, dictum vehicula sem maximus. Suspendisse potenti. Donec rutrum turpis et ultricies maximus. Aenean suscipit nisl sed metus egestas ornare. Mauris id elementum velit. Phasellus ut ultrices dui, nec sagittis nisi.
+            </Text>
+          </View>
+          <Text style={styles.founderTitle}>Meet the Founders</Text>
+          <Swiper height={280} showPagination={true} loop={false} activeDotColor={'#1B8FFF'} dotColor={'#9B9FA4'} >
             <View style={styles.founderCard}>
               <Image style={styles.founderImg} source={Chris} />
               <Text style={styles.founderText}>Chris Lu</Text>
@@ -82,21 +85,40 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#00284d',
   },
   logo: {
     height: 160,
     width: 160,
   },
+  introContainer: {
+    borderRadius: 15,
+    backgroundColor: 'white',
+    margin: 10,
+  },
+  introText: {
+    borderRadius: 15,
+    fontFamily: 'Avenir',
+    margin: 10,
+  },
   founderCard: {
     justifyContent: 'center',
     alignItems: 'center',
+    margin: 5,
   },
   founderImg: {
     height: 200,
     width: 200,
     borderRadius: 100,
   },
+  founderTitle: {
+    fontSize: 24,
+    textAlign: 'center',
+    fontFamily: 'Avenir',
+    color: 'white',
+  },
   founderText: {
+    color: 'white',
     fontFamily: 'Avenir',
   }
 });
