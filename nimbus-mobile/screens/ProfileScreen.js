@@ -236,18 +236,3 @@ const styles = StyleSheet.create({
     fontFamily: 'AvenirNext-Italic',
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

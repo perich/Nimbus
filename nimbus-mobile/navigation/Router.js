@@ -14,6 +14,7 @@ import AddPinDescScreen from '../screens/AddPinDescScreen';
 import AddFriendScreen from '../screens/AddFriendScreen';
 import AddFriendButton from '../components/AddFriendButton';
 import PinScreen from '../screens/PinScreen';
+import AboutScreen from '../screens/AboutScreen';
 import RootNavigation from './RootNavigation';
 
 import FreshLoginScreen from '../screens/FreshLoginScreen';
@@ -31,5 +32,6 @@ export default createRouter(() => ({
   rootNavigation: () => RootNavigation,
   pinView: () => PinScreen,
   friendProfile: () => FriendProfileScreen,
-  addPinDesc: () => AddPinDescScreen
+  addPinDesc: () => AddPinDescScreen,
+  about: () => AboutScreen,
 }));

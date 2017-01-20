@@ -31,12 +31,52 @@ class SettingsScreen extends React.Component {
   logout() {
     var result = this.props.logoutUser();
   }
+
+  deleteAcc() {
+    var result = this.props.logoutUser();
+  }
+
+  goToAbout() {
+    this.props.navigator.push('about');
+  }
  
   render() {
     return (
       <ScrollView>
         <View style={styles.cardLabel}>
           <Text style={styles.cardLabelText}>Your account</Text>
+        </View>
+
+        <View style={styles.card}>
+          <TouchableNativeFeedback
+            onPress={this.goToAbout.bind(this)}
+            fallback={TouchableHighlight}
+            underlayColor="#eee">
+            <View style={[styles.cardBody, {flexDirection: 'row'}]}>
+              <MaterialIcons
+                name="cloud-queue"
+                size={25}
+              />
+
+              <Text style={styles.signOutText}>About Nimbus</Text>
+            </View>
+          </TouchableNativeFeedback>
+        </View>
+
+        <View style={styles.card}>
+          <TouchableNativeFeedback
+            onPress={this.deleteAcc.bind(this)}
+            fallback={TouchableHighlight}
+            underlayColor="#eee">
+            <View style={[styles.cardBody, {flexDirection: 'row'}]}>
+              <MaterialIcons
+                name="phonelink-erase"
+                size={25}
+              />
+
+              <Text style={styles.signOutText}>Delete Account</Text>
+            </View>
+          </TouchableNativeFeedback>
         </View>
 
         <View style={styles.card}>
