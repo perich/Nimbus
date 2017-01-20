@@ -117,6 +117,7 @@ class ProfileScreen extends React.Component {
         </Image>
         {this.state.userMarkers.map(marker => (
           <TouchableOpacity key={marker.id} style={styles.markerContainer} onPress={this.displayPin.bind(this, marker)}>
+
             <Image source={{uri: marker.mediaURL}} style={styles.markerImage}></Image>
             <View style={styles.markerDetails}>
               <View style={styles.timeAgoContainer}>
@@ -175,31 +176,33 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
   settingsButton: {
-    height: 35,
-    width: 35,
+    height: 25,
+    width: 25,
     zIndex: 999,
   },
   pictureContainer: {
-    height: 200,
+    height: 170,
+    marginBottom: 5,
   },
   blur: {
-    height: 200,
+    height: 170,
   },
   pictureDetails: {
-    height: 200,
+    height: 170,
     justifyContent: 'center',
     alignItems: 'center',
   },
   picture: {
-    height: 135,
-    width: 135,
-    borderRadius: 67,
+    height: 100,
+    width: 100,
+    borderRadius: 50,
   },
   name: {
-    fontFamily: 'AvenirNext-Italic',
+    fontFamily: 'Avenir',
     textAlign: 'center',
     padding: 5,
     fontWeight: 'bold',
+    letterSpacing: 1.5,
     fontSize: 24,
   },
   email: {
@@ -212,8 +215,7 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
     height: 80,
-    marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 5,    
   },
   markerImage: {
     flex: 1,

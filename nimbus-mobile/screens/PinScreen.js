@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  LayoutAnimation,
 } from 'react-native';
 import {
   ExponentLinksView,
@@ -32,21 +33,20 @@ class PinScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      liked: false
+      liked: false,
     }
   }
 
   static route = {
     navigationBar: {
       title(params) {
-        return `${helpers.capitalizeFirstChar(params.firstName)} ${helpers.capitalizeFirstChar(params.lastName)}'s Post`;
+        return `${helpers.capitalizeFirstChar(params.firstName)} ${helpers.capitalizeFirstChar(params.lastName)}'s Pin`;
       },
-      tintColor: 'white',
+      // tintColor: 'white',
       titleStyle: {
-        color: 'white',
+        // color: 'white',
         fontFamily: 'Avenir',
       },
-      backgroundColor: '#00284d',
     },
   }
 
@@ -63,6 +63,7 @@ class PinScreen extends React.Component {
     }).then((response) => response.json())
       .then((data) => {
         console.log('pin likes', data);
+        console.log('category', this.props.route);
         data.forEach(id => {
           if (id === this.props.currentUserId) {
             this.setState({liked: true});
@@ -143,11 +144,13 @@ class PinScreen extends React.Component {
       >
         <View style={styles.slide1}>
           <View style={styles.profileContainer}>
+
             <View style={styles.profilePictureContainer}>
               <TouchableHighlight underlayColor={'transparent'} onPress={this.goToFriendsProfile.bind(this)}>
                 <Image style={styles.profilePicture} source={{uri: this.props.route.params.profileUrl}}></Image>
               </TouchableHighlight>
             </View>
+
             <View style={styles.profileDetailsContainer}>
               <View style={styles.profileNameContainer}>
                 <Text style={styles.profileText}>{helpers.capitalizeFirstChar(this.props.route.params.firstName)} {helpers.capitalizeFirstChar(this.props.route.params.lastName)}</Text>
@@ -156,17 +159,21 @@ class PinScreen extends React.Component {
                 <TimeAgo style={styles.timeAgoText} time={JSON.parse(this.props.route.params.createdAt)}/>
               </View>
             </View>
+
           </View>
           <Image style={styles.media}  resizeMode={'stretch'} source={{uri: this.props.route.params.mediaURL}}></Image>
           <View style={styles.footer}>
+
             <View style={styles.likesContainer}>
-              <View style={styles.heartIoniconContainer} animation="tada" delay={600} duration={800}>
+              <View style={styles.heartIoniconContainer}>
                 <TouchableOpacity onPress={this.like.bind(this)}>
-                  <Ionicons name={'md-heart'} size={32} color={'#e53935'} />
+                  <Ionicons name={'md-heart'} size={26} color={'#e53935'} />
                 </TouchableOpacity>
               </View>
-              <Text style={styles.footerText}>{this.props.route.params.likes} likes</Text>
+              <Text style={styles.footerText}>{this.props.route.params.likes} Likes</Text>
+              <Text style={styles.categoryText}>Category: {this.props.route.params.category}</Text>
             </View>
+
             <View style={styles.descriptionContainer}>
               <Text style={styles.descriptionText}>{this.props.route.params.description}</Text>
             </View>
@@ -242,9 +249,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   footerText: {
-    fontFamily: 'AvenirNext-Italic',
-    color: '#1972FF',
-    paddingVertical: 17,
+    fontFamily: 'Avenir',
+    fontSize: 16,
+    paddingVertical: 12,
   },
   heartIoniconContainer: {
     paddingHorizontal: 15,
@@ -292,9 +299,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   profileText: {
-    fontFamily: 'Avenir',
-    color: '#1972FF',
+
+    fontFamily: 'Avenir-Heavy',
     fontSize: 20,
+    paddingTop: 3,
+  },
+
+  timeAgoText: {
+    fontFamily: 'AvenirNext-Italic',
+    fontSize: 14,
+    paddingBottom: 3,
   },
   profileTimeContainer: {
     flex: 1,
@@ -302,9 +316,37 @@ const styles = StyleSheet.create({
     marginTop: 3,
     paddingLeft: 5,
   },
-  timeAgoText: {
-    fontFamily: 'AvenirNext-Italic',
-    color: '#1972FF',
-    fontSize: 14,
+  media: {
+    flex: 5,
+  },
+  heartIoniconContainer: {
+    paddingHorizontal: 15,
+    paddingTop: 10,
+    paddingBottom: 5,
+  },
+  likesContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  likeButton: {
+    height: 13,
+    width: 13,
+    marginRight: 3,
+  },
+  descriptionContainer: {
+    flex: 4,
+    alignItems: 'flex-start',
+    paddingLeft: 16,
+  },
+  descriptionText: {
+    fontFamily: 'Avenir',
+    fontSize: 18,
+  },
+  categoryText: {
+    fontSize: 16,
+    paddingTop: 12,
+    paddingLeft: 100,
+    fontFamily: 'Avenir',
   },
 });
