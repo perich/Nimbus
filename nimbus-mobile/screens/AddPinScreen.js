@@ -37,6 +37,16 @@ class AddPinScreen extends React.Component {
     navigationBar: {
       title: 'Add a Pin',
     },
+    // navigationBar: {
+    //   title: 'Add Pin',
+    //   tintColor: 'white',
+    //   titleStyle: {
+    //     color: 'white',
+    //     fontFamily: 'Avenir',
+    //     fontSize: 20,
+    //   },
+    //   backgroundColor: '#00284d',
+    // }
   }
 
   addPinDesc() {
@@ -46,25 +56,25 @@ class AddPinScreen extends React.Component {
   render() {
     let { image } = this.state;
     return (
-      <View>
-        
-          <View style={styles.photoContainer}>
-          {image &&
-            <Image source={{uri: image}} style={{width: width, height: width}} /> }
-          </View>
+      <View style={styles.container}>
+      
+        <View style={styles.photoContainer}>
+        {image &&
+          <Image source={{uri: image}} style={{width: width, height: width}} /> }
+        </View>
 
-          <View style={styles.container}>
-            <TouchableOpacity style={styles.pickImageContainer} onPress={this._pickImage}>
-              <View>
-                <Text style={styles.pickImageText}>Camera Roll</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.pickImageContainer} onPress={this._takePhoto}>
-              <View>
-                <Text style={styles.pickImageText}>Take a Photo</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.pickContainer}>
+          <TouchableOpacity style={styles.pickImageContainer} onPress={this._pickImage}>
+            <View>
+              <Text style={styles.pickImageText}>Camera Roll</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.pickImageContainer} onPress={this._takePhoto}>
+            <View>
+              <Text style={styles.pickImageText}>Take a Photo</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
         <TouchableOpacity onPress={this.addPinDesc.bind(this)} style={styles.next} >
           <View>
@@ -155,14 +165,17 @@ function mapDispatchToProps(dispatch) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  pickContainer: {
     backgroundColor: '#00284d',
     alignItems: 'center',
-    height: 120,
     paddingTop: 10,
+    flex: 2,
   },
   pickImageContainer: {
     backgroundColor: 'white',
-    height: 40,
+    height: height / 16,
     width: width * 0.95,
     borderRadius: 15,
     alignItems: 'center',
@@ -176,19 +189,18 @@ const styles = StyleSheet.create({
   photoContainer: {
     width: width,
     height: width,
+    flex: 7,
     backgroundColor: '#00284d',
   },
   addPhotoContainer: {
-    flex: 5,
     backgroundColor: 'skyblue',
   },
   next: {
     backgroundColor: '#2f95dc',
-    height: 60,
     width: width,
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: 8,
+    flex: 1,
   },
   nextText: {
     color: 'white',

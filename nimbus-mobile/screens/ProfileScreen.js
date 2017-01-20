@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   email: {
     textAlign: 'center',
     padding: 3,
-  },
+  }, 
   markerContainer: {
     flexDirection: 'row',
     backgroundColor: 'white',
@@ -236,18 +236,3 @@ const styles = StyleSheet.create({
     fontFamily: 'AvenirNext-Italic',
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

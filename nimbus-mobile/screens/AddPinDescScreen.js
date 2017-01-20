@@ -18,6 +18,7 @@ import Exponent from 'exponent';
 import {
   ExponentLinksView,
 } from '@exponent/samples';
+import dismissKeyboard from 'react-native-dismiss-keyboard'
 import { connect } from 'react-redux';
 import { ActionCreators } from '../redux/actions/index.js';
 import { bindActionCreators } from 'redux';
@@ -30,7 +31,6 @@ class AddPinDescScreen extends React.Component {
   constructor(props) {
   	super(props);
   	this.state = {
-      trueSwitchIsOn: true,
       falseSwitchIsOn: false,
   		description: null,
     	privacy: 'private',
@@ -84,17 +84,17 @@ class AddPinDescScreen extends React.Component {
     let { props } = this.state;
 
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.descFlex}>
-          <TextInput 
-            style={styles.descriptionBox} 
-            multiline={true} 
-            numberOfLines={3} 
-            onChangeText={(description) => this.setState({description})} 
-            placeholder='Write a caption...' 
-            value={this.state.description} 
-          />
-        </View>
+      <View style={styles.container}>
+        <TextInput 
+          style={styles.descriptionBox} 
+          multiline={true} 
+          numberOfLines={3} 
+          returnKeyType='done'
+          onKeyPress={this.handleKeyDown}
+          onChangeText={(description) => this.setState({description})} 
+          placeholder='Write a caption...' 
+          value={this.state.description} 
+        />
 
         <View style={styles.catFlex}>
           <Text style={styles.labelText}>Category</Text>
@@ -116,16 +116,16 @@ class AddPinDescScreen extends React.Component {
           <Text style={styles.flexText}>Public</Text>
           <Switch
             style={styles.privacyMenu}
-            onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
+            onValueChange={(value) => {
+              this.setState({falseSwitchIsOn: value})
+              if (value) {
+                this.setState({privacy: "public"})
+              }
+              if (!value) {
+                this.setState({privacy: "private"})
+              }
+            }}
             value={this.state.falseSwitchIsOn}
-            onChange={(checked) => {
-              if (checked === false && this.state.privacy === "private") {
-                this.state.privacy = "public"
-              }
-              if (checked === true && this.state.privacy === "public") {
-                this.state.privacy = "private"
-              }
-            }} 
           />
         </View>
 
@@ -133,9 +133,15 @@ class AddPinDescScreen extends React.Component {
         <TouchableOpacity onPress={this._handlePinPost.bind(this)} style={styles.submit} >
           <Text style={styles.submitText}>Submit</Text>
         </TouchableOpacity>
-      </ScrollView>
+      </View>
     );
   }
+
+  handleKeyDown = function(e) {
+    if(e.nativeEvent.key == "Enter"){
+        dismissKeyboard();
+    }
+  };
 
   _handlePinPost = async () => {
     var that = this;
@@ -196,37 +202,23 @@ function mapDispatchToProps(dispatch) {
 
 const styles = StyleSheet.create({
   container: {
-    height: height,
+    flex: 1,
     backgroundColor: '#00284d',
-  },
-  submit: {
-    backgroundColor: '#2f95dc',
-    height: 60,
-    width: width,
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: -46,
   },
   submitText: {
     color: 'white',
     fontSize: 18
   },
   descriptionBox: {
-    height: 100,
     fontSize: 16,
-  },
-  selectMenu: {
-    height: 200,
-  },
-  descFlex: {
     padding: 10,
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
-    flex: 0.8,
     justifyContent: 'flex-start',
     backgroundColor: 'white',
     borderRadius: 15,
+    flex: 2,
   },
   catFlex: {
     backgroundColor: 'white',
@@ -235,6 +227,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     borderRadius: 15,
+    flex: 4, 
   },
   privFlex: {
     flexDirection: 'row',
@@ -244,9 +237,18 @@ const styles = StyleSheet.create({
     marginRight: 10,
     backgroundColor: 'white',
     borderRadius: 15,
+    flex: 1
+  },
+  submit: {
+    backgroundColor: '#2f95dc',
+    flex: 1,
+    width: width,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
   },
   privacyMenu: {
-    left: 230,
+    left: width * 0.6,
   },
   labelText: {
     fontSize: 16,
