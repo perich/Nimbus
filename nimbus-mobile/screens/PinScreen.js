@@ -46,6 +46,7 @@ class PinScreen extends React.Component {
       titleStyle: {
         // color: 'white',
         fontFamily: 'Avenir',
+        fontSize: 20,
       },
     },
   }
@@ -188,7 +189,7 @@ class PinScreen extends React.Component {
             </View>
             <View style={styles.profileDetailsContainer}>
               <View style={styles.profileNameContainer}>
-                <Text style={styles.profileText}>{this.props.route.params.firstName} {this.props.route.params.lastName}</Text>
+                <Text style={styles.profileText}>{helpers.capitalizeFirstChar(this.props.route.params.firstName)} {helpers.capitalizeFirstChar(this.props.route.params.lastName)}</Text>
               </View>
               <View style={styles.profileTimeContainer}>
                 <TimeAgo style={styles.timeAgoText} time={JSON.parse(this.props.route.params.createdAt)}/>
@@ -245,13 +246,15 @@ const styles = StyleSheet.create({
     color: '#1972FF',
   },
   footer: {
-    flex: 4,
+    flex: 3,
     backgroundColor: 'white',
   },
   footerText: {
     fontFamily: 'Avenir',
     fontSize: 16,
     paddingVertical: 12,
+    flex: 3,
+    flexDirection: 'row'
   },
   heartIoniconContainer: {
     paddingHorizontal: 15,
@@ -272,7 +275,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   media: {
-    flex: 5,
+    flex: 6,
+    width: width,
+    height: width,
   },
   profileContainer: {
     height: 100,
@@ -323,6 +328,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 10,
     paddingBottom: 5,
+    flex: 1
   },
   likesContainer: {
     flex: 1,
@@ -342,11 +348,15 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontFamily: 'Avenir',
     fontSize: 18,
+    flex: 3,
+    flexDirection: 'row'
   },
   categoryText: {
     fontSize: 16,
     paddingTop: 12,
     paddingLeft: 100,
     fontFamily: 'Avenir',
+    flex: 5,
+    flexDirection: 'row',
   },
 });

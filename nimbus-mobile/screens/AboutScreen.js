@@ -25,13 +25,10 @@ class AboutScreen extends React.Component {
   static route = {
     navigationBar: {
       title: 'About Nimbus',
-      tintColor: 'white',
       titleStyle: {
-        color: 'white',
         fontFamily: 'Avenir',
         fontSize: 20,
       },
-      backgroundColor: '#00284d',
     },
   }
  

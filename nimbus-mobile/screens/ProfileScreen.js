@@ -34,7 +34,12 @@ class ProfileScreen extends React.Component {
 
   static route = {
     navigationBar: {
-      title: 'Your Profile'
+      title: 'Your Profile',
+      titleStyle: {
+        // color: 'white',
+        fontFamily: 'Avenir',
+        fontSize: 20,
+      },
     },
   }
 
@@ -75,10 +80,11 @@ class ProfileScreen extends React.Component {
           createdAt: data[i]._fields[0].properties.createdAt,
           firstName: helpers.capitalizeFirstChar(that.props.firstName),
           lastName: helpers.capitalizeFirstChar(that.props.lastName),
-          profileUrl: that.props.photo,
+          profileUrl: that.props.profileUrl,
           email: that.props.email || 'Facebook User',
           userId: that.props.id,
           pinColor: mapToColor[data[i]._fields[0].properties.category],
+          category: data[i]._fields[0].properties.category,
         });
       }
       that.setState({
@@ -169,8 +175,8 @@ const styles = StyleSheet.create({
   },
   settingsButtonContainer: {
     position: 'absolute',
-    top: 15,
-    right: 15,
+    top: 10,
+    right: 0,
     height: 35,
     width: 35,
     zIndex: 999,

@@ -25,7 +25,12 @@ class FriendProfileScreen extends React.Component {
     navigationBar: {
       title(params) {
         return `${helpers.capitalizeFirstChar(params.firstName)} ${helpers.capitalizeFirstChar(params.lastName)}'s Profile`;
-      }
+      },
+      titleStyle: {
+        // color: 'white',
+        fontFamily: 'Avenir',
+        fontSize: 20,
+      },
     },
   }
 

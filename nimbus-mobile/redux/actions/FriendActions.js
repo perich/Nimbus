@@ -33,6 +33,7 @@ export function setFriend(friend) {
             profileUrl: friend.profileUrl,
             email: friend.email,
             userId: friend.id,
+            category: data[i]._fields[0].properties.category,
           });
         }
       }

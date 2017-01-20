@@ -36,6 +36,11 @@ class AddPinScreen extends React.Component {
   static route = {
     navigationBar: {
       title: 'Add a Pin',
+      titleStyle: {
+        // color: 'white',
+        fontFamily: 'Avenir',
+        fontSize: 20,
+      },
     },
     // navigationBar: {
     //   title: 'Add Pin',

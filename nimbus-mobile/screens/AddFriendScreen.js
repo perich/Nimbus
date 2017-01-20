@@ -40,13 +40,13 @@ class AddFriendScreen extends React.Component {
   static route = {
     navigationBar: {
       title: 'Add Friend',
-      tintColor: 'white',
+      // tintColor: 'white',
       titleStyle: {
-        color: 'white',
+        // color: 'white',
         fontFamily: 'Avenir',
         fontSize: 20,
       },
-      backgroundColor: '#00284d',
+      // backgroundColor: '#00284d',
       searchResults: '',
     },
   }
@@ -109,8 +109,11 @@ class AddFriendScreen extends React.Component {
 
     return (
       <View style={styles.mainContainer}>
-        <Text style={{textAlign: 'center', margin: 7}}>Type a friend's first name and last name</Text>
-        <TextInput style={styles. textInput} onChangeText={(text) => this.setState({text: text})} value={this.state.text} />
+        <TextInput style={styles. textInput} 
+          onChangeText={(text) => this.setState({text: text})} 
+          value={this.state.text}
+          placeholder="Enter a first and last name"
+       />
         <Button title='Search...' onPress={this.searchFriends} />
         {this.state.searchResults.map(searchResult => (
           <View style={styles.card} key={searchResult.id}>
@@ -168,6 +171,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     margin: 7,
+    padding: 10,
   },
   addButton: {
     height: 25,
