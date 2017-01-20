@@ -28,7 +28,7 @@ export default class AddFriendButton extends React.Component {
         onPress={this.addFriend.bind(this)}
         style={this.props.buttonStyle}
       >
-        <Text style={this.props.textStyle}>Add Friend</Text>
+        <MaterialIcons name={"person-add"} size={32} color={"#00284d"}/>
       </TouchableOpacity>
     );
   }
