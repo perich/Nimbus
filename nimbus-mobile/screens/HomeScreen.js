@@ -13,13 +13,21 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
-  View,
+  Dimensions,
+  View
 } from 'react-native';
+import {
+  FontAwesome,
+  Ionicons,
+} from '@exponent/vector-icons';
 import { MonoText } from '../components/StyledText';
 import Router from '../navigation/Router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../redux/actions/index.js';
+
+var width = Dimensions.get('window').width;
+var height = Dimensions.get('window').height;
 
 class HomeScreen extends React.Component {
   static route = {
@@ -52,6 +60,8 @@ class HomeScreen extends React.Component {
       that.props.setLocation(location, true);      
       that.props.getPins(that.props.currentUser);
     });
+
+
 
     var getPushToken = async function() {
       if (!that.props.currentUser.pushToken) {
@@ -102,24 +112,34 @@ class HomeScreen extends React.Component {
     if (this.props.mapIsReady) {    
       return (
         <View style={styles.container}>
-          <TouchableHighlight style={styles.addButton} underlayColor={'transparent'} onPress={this.goToAddPin.bind(this)}>
-            <Text style={styles.addText}>+</Text>
+          <TouchableHighlight style={styles.addButton} underlayColor={'#e6e6e6'} onPress={this.goToAddPin.bind(this)}>
+            <Text style={styles.addPlus}>+</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.publicButton} underlayColor={'transparent'} onPress={this.getPinsPublic.bind(this)}>
-            <Text style={styles.addText}>A</Text>
-          </TouchableHighlight>
-          <TouchableHighlight style={styles.friendsButton} underlayColor={'transparent'} onPress={this.getPins.bind(this)}>
-            <Text style={styles.addText}>F</Text>
-          </TouchableHighlight>
+
+          <TouchableHighlight
+            style={styles.friendsButton}
+            underlayColor={'#e6e6e6'}
+            onPress={this.getPins.bind(this)}>
+            <Text style={styles.addText}>Friends</Text>
+           </TouchableHighlight>
+
           <Components.MapView style={{flex: 1}} showsUserLocation={true} initialRegion={{latitude: this.props.userLocation.latitude, longitude: this.props.userLocation.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421,}}>
-            {this.props.markers.map(marker => (
-                <Components.MapView.Marker
-                  key={marker.id}
-                  coordinate={marker.location}
-                  pinColor={marker.pinColor}
-                  onSelect={this.displayPin.bind(this, marker)}
-                />
-              ))}
+
+          <TouchableHighlight
+            style={styles.publicButton}
+            underlayColor={'#e6e6e6'}
+            onPress={this.getPinsPublic.bind(this)}>
+            <Text style={styles.addText}>Public</Text>
+          </TouchableHighlight>
+
+          {this.props.markers.map(marker => (
+            <Components.MapView.Marker
+              key={marker.id}
+              coordinate={marker.location}
+              pinColor={marker.pinColor}
+              onSelect={this.displayPin.bind(this, marker)}
+            />
+          ))}
           </Components.MapView>
         </View>
       );
@@ -155,45 +175,51 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     backgroundColor: 'white',
-    opacity: 0.6,
-    borderWidth: 2,
-    borderColor: 'grey',
+    opacity: 0.9,
+    borderWidth: 1,
+    borderColor: 'lightgrey',
     borderRadius: 50,
     height: 50,
     width: 50,
-    bottom: 15,
-    right: 15,
+    bottom: 40,
+    right: width / 2 - 25,
     zIndex: 999
+  },
+  friendsButton: {
+    justifyContent: 'center',
+    position: 'absolute',
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    backgroundColor: 'white',
+    height: 35,
+    width: width / 2,
+    // top: height / 22,
+    bottom: 0,
+    left: 0,
+    zIndex: 999,
+    alignSelf: 'stretch',
   },
   publicButton: {
     justifyContent: 'center',
     position: 'absolute',
+    borderWidth: 1,
+    borderColor: 'lightgrey',
     backgroundColor: 'white',
-    opacity: 0.6,
-    borderWidth: 2,
-    borderColor: 'grey',
-    borderRadius: 50,
-    height: 50,
-    width: 50,
-    bottom: 15,
-    right: 70,
+    height: 35,
+    width: width / 2,
+    // top: height / 22,
+    bottom: 0,
+    right: 0,
     zIndex: 999,
+    alignSelf: 'stretch',
   },  
-  friendsButton: {
-    justifyContent: 'center',
-    position: 'absolute',
-    backgroundColor: 'white',
-    opacity: 0.6,
-    borderWidth: 2,
-    borderColor: 'grey',
-    borderRadius: 50,
-    height: 50,
-    width: 50,
-    bottom: 15,
-    right: 140,
-    zIndex: 999,
-  },
   addText: {
+    textAlign: 'center',
+    color: 'grey',
+    backgroundColor: 'transparent',
+    fontSize: 16
+  },
+  addPlus: {
     textAlign: 'center',
     color: 'grey',
     backgroundColor: 'transparent',
