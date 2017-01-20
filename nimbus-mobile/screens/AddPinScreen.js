@@ -37,6 +37,16 @@ class AddPinScreen extends React.Component {
     navigationBar: {
       title: 'Add a Pin',
     },
+    // navigationBar: {
+    //   title: 'Add Pin',
+    //   tintColor: 'white',
+    //   titleStyle: {
+    //     color: 'white',
+    //     fontFamily: 'Avenir',
+    //     fontSize: 20,
+    //   },
+    //   backgroundColor: '#00284d',
+    // }
   }
 
   addPinDesc() {
@@ -71,7 +81,7 @@ class AddPinScreen extends React.Component {
             <Text style={styles.nextText}>Next</Text>
           </View>
         </TouchableOpacity>
-      </ScrollView>
+      </View>
     );
   }
 

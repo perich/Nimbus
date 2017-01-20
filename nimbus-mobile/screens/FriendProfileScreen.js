@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingVertical: 12,
     paddingHorizontal: 10,
+    marginBottom: 5, 
   },
   mapContainer: {
     borderRadius: 10,
@@ -110,27 +111,29 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   pictureContainer: {
-    height: 200,
+    height: 170,
+    marginBottom: 5,
   },
   blur: {
-    height: 200,
+    height: 170,
   },
   pictureDetails: {
-    height: 200,
+    height: 170,
     justifyContent: 'center',
     alignItems: 'center',
   },
   picture: {
-    height: 135,
-    width: 135,
-    borderRadius: 67,
+    height: 100,
+    width: 100,
+    borderRadius: 50,
   },
   name: {
+    fontFamily: 'Avenir',
     textAlign: 'center',
     padding: 5,
     fontWeight: 'bold',
+    letterSpacing: 1.5,
     fontSize: 24,
-    fontFamily: 'AvenirNext-Italic',
   },
   email: {
     textAlign: 'center',
@@ -145,8 +148,7 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
     height: 80,
-    marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   markerImage: {
     flex: 1,
