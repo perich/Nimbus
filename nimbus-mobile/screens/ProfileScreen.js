@@ -75,10 +75,11 @@ class ProfileScreen extends React.Component {
           createdAt: data[i]._fields[0].properties.createdAt,
           firstName: helpers.capitalizeFirstChar(that.props.firstName),
           lastName: helpers.capitalizeFirstChar(that.props.lastName),
-          profileUrl: that.props.photo,
+          profileUrl: that.props.profileUrl,
           email: that.props.email || 'Facebook User',
           userId: that.props.id,
           pinColor: mapToColor[data[i]._fields[0].properties.category],
+          category: data[i]._fields[0].properties.category,
         });
       }
       that.setState({
