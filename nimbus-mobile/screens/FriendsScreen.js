@@ -28,7 +28,7 @@ class FriendsScreen extends React.Component {
       titleStyle: {
         // color: 'white',
         fontFamily: 'Avenir',
-        // fontSize: 20,
+        fontSize: 20,
       },
       // backgroundColor: '#00284d',
       renderRight: function() {

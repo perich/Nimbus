@@ -34,7 +34,12 @@ class ProfileScreen extends React.Component {
 
   static route = {
     navigationBar: {
-      title: 'Your Profile'
+      title: 'Your Profile',
+      titleStyle: {
+        // color: 'white',
+        fontFamily: 'Avenir',
+        fontSize: 20,
+      },
     },
   }
 
@@ -170,8 +175,8 @@ const styles = StyleSheet.create({
   },
   settingsButtonContainer: {
     position: 'absolute',
-    top: 15,
-    right: 15,
+    top: 10,
+    right: 0,
     height: 35,
     width: 35,
     zIndex: 999,

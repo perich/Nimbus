@@ -46,6 +46,7 @@ class PinScreen extends React.Component {
       titleStyle: {
         // color: 'white',
         fontFamily: 'Avenir',
+        fontSize: 20,
       },
     },
   }
