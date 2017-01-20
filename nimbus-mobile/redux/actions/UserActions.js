@@ -132,6 +132,7 @@ export function getPinsPublic(currentUser) {
             email: data[i]._fields[1].properties.email || 'Facebook User',
             userId: data[i]._fields[1].properties.id,
             pinColor: mapToColor[data[i]._fields[0].properties.category],
+            category: data[i]._fields[0].properties.category
           });
         }
         dispatch(handlePins({ markers }));
@@ -139,33 +140,7 @@ export function getPinsPublic(currentUser) {
         console.log('error');
         console.log(error);
       })
-// =======
-//     .then((data) => {
-//       var markers = [];          
-//       for (var i = 0; i < data.length; i++) {
-//         markers.push({
-//           id: i,
-//           location: {
-//             latitude: JSON.parse(data[i]._fields[0].properties.location).latitude,
-//             longitude: JSON.parse(data[i]._fields[0].properties.location).longitude,
-//           },
-//           mediaURL: data[i]._fields[0].properties.mediaUrl,
-//           likes: 69420,
-//           description: data[i]._fields[0].properties.description,
-//           createdAt: data[i]._fields[0].properties.createdAt,
-//           // Replaced with sessions
-//           firstName: currentUser.firstName,
-//           lastName: currentUser.lastName,
-//           profileUrl: currentUser.profileUrl,
-//           email: currentUser.email || 'Facebook User',
-//           userId: currentUser.userId,
-//           // Replaced with sessions
-//           pinColor: mapToColor[data[i]._fields[0].properties.category],
-//         });
-//       }
-//       dispatch(handlePins({ markers }));
-//     })
-// >>>>>>> Change all profileURL to profileUrl camel-case
+
     .catch((error) => {
       console.log("UserActions.js: getPins(): *** ERROR ***");
       console.log(error);

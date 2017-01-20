@@ -24,13 +24,13 @@ class FriendsScreen extends React.Component {
   static route = {
     navigationBar: {
       title: 'Friends',
-      tintColor: 'white',
+      // tintColor: 'white',
       titleStyle: {
-        color: 'white',
+        // color: 'white',
         fontFamily: 'Avenir',
-        fontSize: 20,
+        // fontSize: 20,
       },
-      backgroundColor: '#00284d',
+      // backgroundColor: '#00284d',
       renderRight: function() {
         return (
             <AddFriendButton 
