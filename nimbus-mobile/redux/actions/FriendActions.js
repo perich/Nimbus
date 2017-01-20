@@ -24,7 +24,7 @@ export function setFriend(friend) {
               longitude: JSON.parse(data[i]._fields[0].properties.location).longitude,
             },
             mediaURL: data[i]._fields[0].properties.mediaUrl,
-            likes: 69420,
+            likes: data[i]._fields[0].properties.likes,
             description: data[i]._fields[0].properties.description,
             createdAt: data[i]._fields[0].properties.createdAt,
             pinColor:  '#4286f4',
@@ -33,6 +33,7 @@ export function setFriend(friend) {
             profileUrl: friend.profileUrl,
             email: friend.email,
             userId: friend.id,
+            category: data[i]._fields[0].properties.category,
           });
         }
       }
