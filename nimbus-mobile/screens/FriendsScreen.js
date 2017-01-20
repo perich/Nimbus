@@ -33,10 +33,12 @@ class FriendsScreen extends React.Component {
       // backgroundColor: '#00284d',
       renderRight: function() {
         return (
+          <View>
             <AddFriendButton 
               buttonStyle={styles.addFriendButton}
-              textStyle={styles.addFriendButtonText}
+              // textStyle={styles.addFriendButtonText}
             />
+          </View>
         );
       },
     }
@@ -114,6 +116,8 @@ const styles = StyleSheet.create({
   addFriendButton: {
     alignItems: 'center',
     justifyContent: 'center',
+    paddingRight: 10,
+    paddingTop: 5,
   },
   friendPhoto: {
     height: 25,
@@ -121,7 +125,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   addFriendButtonText: {
-    color: 'white',
+    color: '#00284d',
     fontFamily: 'Avenir',
     textAlign: 'center',
     fontSize: 12,
