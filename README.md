@@ -1,47 +1,39 @@
-# Sharemap
+# Nimbus
 
-Share points of interest with friends, and keep a record of your travels and experiences.
+Share points of interest with friends, and keep a record of your travels and experiences. A fullstack social media application built with JavaScript!
 
-## Team
+### Team
 
-  - __Product Owner__: Tim Chin
+  - __Product Owner & UX Lead__: Tim Chin
   - __Scrum Master__: Graham Perich
   - __Development Team Members__: Steven Jing, Chris Lu
 
-## Table of Contents
+### Usage
 
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-1. [Team](#team)
-1. [Contributing](#contributing)
+To use the app, download `Exponent` from the app store and load our experience.
 
-## Usage
+### Tech Stack
+— React Native
+— Exponent.js
+- Node.js 
+— Express.js
+- Neo4j 
 
-To use the app, download `Exponent` from the app store and load our experience
+### Screenshots
+![Login Screen]
+(http://i.imgur.com/ZIJnY54.png)
 
-## Requirements
+![Home Screen]
+(http://i.imgur.com/H5lcCMx.jpg)
 
-- Node ~6.0
-- Neo4j 3.1.x
+![Pin Screen]
+(http://i.imgur.com/kQiycYu.jpg)
 
-## Development
+![Profile Screen]
+(http://i.imgur.com/CEOCPjp.jpg)
 
-### Installing Dependencies
+### UX Mockups
 
-From within the root directory:
-
-```sh
-npm install
-npm start
-```
-
-### Roadmap
+[View PDF Online Here](https://www.docdroid.net/Euhm5eK/nimbus.pdf.html)
 
 
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
