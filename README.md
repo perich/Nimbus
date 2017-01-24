@@ -14,26 +14,35 @@ To use the app, download `Exponent` from the app store and load our experience.
 
 ### Tech Stack
 
-— React Native
+- React Native
 
-— Exponent.js
+- Exponent.js
 
 - Node.js 
 
-— Express.js
+- Express.js
 
 - Neo4j 
-
-### Screenshots
-<img src="http://i.imgur.com/ZIJnY54.png" alt="Login Screen" style="width: 200px;"/>
-<img src="http://i.imgur.com/H5lcCMx.jpg" alt="Home Screen" style="width: 200px;"/>
-<img src="http://i.imgur.com/kQiycYu.jpg" alt="Pin Screen" style="width: 200px;"/>
-<img src="http://i.imgur.com/CEOCPjp.jpg" alt="Profile Screen" style="width: 200px;"/>
 
 
 
 ### UX Mockups
 
 [View PDF Online Here](https://www.docdroid.net/Euhm5eK/nimbus.pdf.html)
+
+## Screenshots
+
+#### Login Screen
+<img src="http://i.imgur.com/ZIJnY54.png" alt="Login Screen" style="max-width: 400px;"/>
+#### Home Screen
+<img src="http://i.imgur.com/H5lcCMx.jpg" alt="Home Screen" style="max-width: 400px;"/>
+#### Pin Screen
+<img src="http://i.imgur.com/kQiycYu.jpg" alt="Pin Screen" style="max-width: 400px;"/>
+#### Profile Screen
+<img src="http://i.imgur.com/CEOCPjp.jpg" alt="Profile Screen" style="max-width: 400px;"/>
+
+
+
+
 
 
