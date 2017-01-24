@@ -35,10 +35,13 @@ To use the app, download `Exponent` from the app store and load our experience.
 #### Login Screen
 <img src="http://i.imgur.com/ZIJnY54.png" alt="Login Screen" style="max-width: 400px;"/>
 #### Home Screen
+
 <img src="http://i.imgur.com/H5lcCMx.jpg" alt="Home Screen" style="max-width: 400px;"/>
 #### Pin Screen
+
 <img src="http://i.imgur.com/kQiycYu.jpg" alt="Pin Screen" style="max-width: 400px;"/>
 #### Profile Screen
+
 <img src="http://i.imgur.com/CEOCPjp.jpg" alt="Profile Screen" style="max-width: 400px;"/>
 
 
