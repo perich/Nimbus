@@ -13,24 +13,29 @@ Share points of interest with friends, and keep a record of your travels and exp
 To use the app, download `Exponent` from the app store and load our experience.
 
 ### Tech Stack
+
 — React Native
+
 — Exponent.js
+
 - Node.js 
+
 — Express.js
+
 - Neo4j 
 
 ### Screenshots
 ![Login Screen]
-(http://i.imgur.com/ZIJnY54.png)
+(http://i.imgur.com/ZIJnY54.png =250x)
 
 ![Home Screen]
-(http://i.imgur.com/H5lcCMx.jpg)
+(http://i.imgur.com/H5lcCMx.jpg =250x)
 
 ![Pin Screen]
-(http://i.imgur.com/kQiycYu.jpg)
+(http://i.imgur.com/kQiycYu.jpg =250x)
 
 ![Profile Screen]
-(http://i.imgur.com/CEOCPjp.jpg)
+(http://i.imgur.com/CEOCPjp.jpg =250x)
 
 ### UX Mockups
 
