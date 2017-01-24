@@ -25,17 +25,12 @@ To use the app, download `Exponent` from the app store and load our experience.
 - Neo4j 
 
 ### Screenshots
-![Login Screen]
-(http://i.imgur.com/ZIJnY54.png =250x)
+<img src="http://i.imgur.com/ZIJnY54.png" alt="Login Screen" style="width: 200px;"/>
+<img src="http://i.imgur.com/H5lcCMx.jpg" alt="Home Screen" style="width: 200px;"/>
+<img src="http://i.imgur.com/kQiycYu.jpg" alt="Pin Screen" style="width: 200px;"/>
+<img src="http://i.imgur.com/CEOCPjp.jpg" alt="Profile Screen" style="width: 200px;"/>
 
-![Home Screen]
-(http://i.imgur.com/H5lcCMx.jpg =250x)
 
-![Pin Screen]
-(http://i.imgur.com/kQiycYu.jpg =250x)
-
-![Profile Screen]
-(http://i.imgur.com/CEOCPjp.jpg =250x)
 
 ### UX Mockups
 
